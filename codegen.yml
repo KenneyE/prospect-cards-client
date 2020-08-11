@@ -1,0 +1,23 @@
+overwrite: true
+schema: 'http://localhost:3000/v0/schema'
+generates:
+  src/types/graphql.tsx:
+    documents:
+      - src/queries/**/*.{js,ts}
+      - src/fragments/**/*.{js,ts}
+      - src/mutations/**/*.{js,ts}
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHOC: false
+      withHooks: true
+      hooksImportFrom: '@apollo/react-hooks'
+  ./graphql.schema.json:
+    plugins:
+      - introspection
+  src/types/fragmentTypes.ts:
+    overwrite: true
+    plugins:
+      - fragment-matcher
