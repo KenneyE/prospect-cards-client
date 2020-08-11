@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginComponent from './Login'
 import { Redirect, withRouter, RouteComponentProps } from 'react-router'
-import { useAuthQuery } from 'types/graphql'
+import { Maybe, useAuthQuery } from 'types/graphql'
 
 const Login = (props: RouteComponentProps): Maybe<JSX.Element> => {
   const { data, loading } = useAuthQuery()

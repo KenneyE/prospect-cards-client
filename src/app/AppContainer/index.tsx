@@ -1,8 +1,8 @@
 import React from 'react'
 import Dumb from './AppContainer'
-import { useAuthQuery } from 'types/graphql'
+import {Maybe, useAuthQuery} from 'types/graphql'
 
-const AppContainer = (): Maybe<JSX.>Element => {
+const AppContainer = (): Maybe<JSX.Element> => {
   const { data, loading } = useAuthQuery({ fetchPolicy: 'cache-only' })
 
   if (loading) return null

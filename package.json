@@ -23,10 +23,13 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "node ./node_modules/.bin/eslint ./src/ --ext=js,jsx,ts,tsx --fix",
+    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}' --loglevel=silent",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,7 +69,6 @@
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "react-app-rewired": "^2.1.6",
     "ts-jest": "^26.2.0"
   }
 }

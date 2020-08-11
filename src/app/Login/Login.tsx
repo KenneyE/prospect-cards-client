@@ -1,39 +1,41 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { RouteComponentProps } from 'react-router'
+import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import TextField from '@material-ui/core/TextField'
-import withStyles, {
-  WithStyles,
+import {
   StyleRules,
 } from '@material-ui/core/styles/withStyles'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { toast } from 'react-toastify'
-import LoadingButton from 'app/common/LoadingButton'
+import { makeStyles } from '@material-ui/core/styles'
 
-const styles = (theme: Theme): StyleRules => ({
-  button: {
-    marginTop: theme.spacing(),
-  },
-  card: {
-    width: '400px',
-    margin: 'auto',
-  },
-  media: {
-    margin: 20,
-    marginBottom: 0,
-    height: 50,
-  },
-})
+const useStyles = makeStyles(
+  (theme: Theme): StyleRules => ({
+    button: {
+      marginTop: theme.spacing(),
+    },
+    card: {
+      width: '400px',
+      margin: 'auto',
+    },
+    media: {
+      margin: 20,
+      marginBottom: 0,
+      height: 50,
+    },
+  }),
+)
 
-interface Props extends WithStyles<typeof styles>, RouteComponentProps {}
 interface SignInResp {
   success: boolean;
   message: string;
 }
 
-const Login = ({ classes, history, location }: Props): JSX.Element => {
+const Login = ({ history, location }: RouteComponentProps): JSX.Element => {
+  const classes = useStyles()
   const [fields, setFields] = useState({
     email: '',
     password: '',
@@ -41,7 +43,7 @@ const Login = ({ classes, history, location }: Props): JSX.Element => {
   const [loading, setLoading] = useState(false)
 
   const handleChange = (name: string): ((event: SyntheticEvent) => void) => (
-    event: SyntheticEvent
+    event: SyntheticEvent,
   ): void => {
     const target = event.target as HTMLTextAreaElement
 
@@ -70,6 +72,7 @@ const Login = ({ classes, history, location }: Props): JSX.Element => {
         setLoading(false)
 
         if (data.success) {
+          // @ts-ignore
           const referrer = location.state && location.state.from
           history.push(referrer || '/')
         } else {
@@ -109,8 +112,7 @@ const Login = ({ classes, history, location }: Props): JSX.Element => {
             fullWidth
           />
           <br />
-          <LoadingButton
-            loading={ loading }
+          <Button
             fullWidth
             variant='contained'
             color='primary'
@@ -118,11 +120,11 @@ const Login = ({ classes, history, location }: Props): JSX.Element => {
             className={ classes.button }
           >
             Sign In
-          </LoadingButton>
+          </Button>
         </form>
       </CardContent>
     </Card>
   )
 }
 
-export default withStyles(styles)(Login)
+export default Login

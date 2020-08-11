@@ -1,11 +1,11 @@
 overwrite: true
-schema: 'http://localhost:3000/v0/schema'
+schema: 'http://localhost:3000/v1/schema'
 generates:
   src/types/graphql.tsx:
     documents:
-      - src/queries/**/*.{js,ts}
-      - src/fragments/**/*.{js,ts}
-      - src/mutations/**/*.{js,ts}
+      - src/graphql/queries/**/*.ts
+      - src/graphql/fragments/**/*.ts
+      - src/graphql/mutations/**/*.ts
     plugins:
       - typescript
       - typescript-operations

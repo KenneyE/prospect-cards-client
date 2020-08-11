@@ -11,6 +11,7 @@ import Container from '@material-ui/core/Container'
 import Router from 'app/Router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import theme from 'lib/theme'
 
 const useStyles = makeStyles(
   (theme: Theme): StyleRules => ({
@@ -35,7 +36,7 @@ const AppContainer = ({ loggedIn }: Props): JSX.Element => {
   const classes = useStyles()
 
   return (
-    <MuiThemeProvider theme={ {} }>
+    <MuiThemeProvider theme={ theme }>
       <CssBaseline />
       <div className={ classes.root }>
         <main className={ classes.content }>
