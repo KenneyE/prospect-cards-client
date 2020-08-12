@@ -5,9 +5,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import TextField from '@material-ui/core/TextField'
-import {
-  StyleRules,
-} from '@material-ui/core/styles/withStyles'
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { toast } from 'react-toastify'
 import { makeStyles } from '@material-ui/core/styles'
@@ -59,26 +57,25 @@ const Login = ({ history, location }: RouteComponentProps): JSX.Element => {
     event.preventDefault()
     setLoading(true)
 
-    fetch(`${process.env.REACT_APP_API_URI}/users/sign_in.json`, {
+    fetch(`${process.env.REACT_APP_API_URI}/users/sign_in`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ user: fields }),
-    })
-      .then((response): Promise<SignInResp> => response.json())
-      .then((data: SignInResp): void => {
-        setLoading(false)
+    }).then((response): void => {
+      setLoading(false)
 
-        if (data.success) {
-          // @ts-ignore
-          const referrer = location.state && location.state.from
-          history.push(referrer || '/')
-        } else {
-          toast.error(data.message)
-        }
-      })
+      const token = response.headers.get('Authorization')
+      if (response.status === 200 && token) {
+        localStorage.setItem('fund-reporter-token', token)
+        // @ts-ignore
+        const referrer = location.state && location.state.from
+        history.push(referrer || '/')
+      } else {
+        toast.error(response.statusText)
+      }
+    })
   }
 
   const { email, password } = fields
