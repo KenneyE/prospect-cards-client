@@ -7,7 +7,7 @@ interface Props {
 
 const LogoutButton = ({ onClick }: Props): JSX.Element => {
 
-  return <Button onClick={ onClick }>Log out</Button>
+  return <Button variant='outlined' color='primary' onClick={ onClick }>Log out</Button>
 }
 
 export default LogoutButton
