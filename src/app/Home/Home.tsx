@@ -3,7 +3,8 @@ import LogoutButton from 'app/common/LogoutButton'
 
 const Home = (): JSX.Element => {
   return <div>
-    Hello signed in user
+    Hello sweet world. Please give me purpose... 
+    <br/>
     <LogoutButton />
   </div>
 }
