@@ -12,7 +12,20 @@
       }
       const result: IntrospectionResultData = {
   "__schema": {
-    "types": []
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "ActiveRecordInterface",
+        "possibleTypes": [
+          {
+            "name": "Listing"
+          },
+          {
+            "name": "User"
+          }
+        ]
+      }
+    ]
   }
 };
       export default result;

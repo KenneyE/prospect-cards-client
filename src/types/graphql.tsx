@@ -9,6 +9,24 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** An ISO 8601-encoded datetime */
+  ISO8601DateTime: any;
+};
+
+export type ActiveRecordInterface = {
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
+
+export type Listing = ActiveRecordInterface & {
+  __typename?: 'Listing';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type Mutation = {
@@ -20,6 +38,16 @@ export type Mutation = {
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
+  viewer: User;
+};
+
+export type User = ActiveRecordInterface & {
+  __typename?: 'User';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  listings: Array<Listing>;
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
