@@ -5,6 +5,7 @@ import {
   DataSearch,
   ReactiveList,
   ResultCard,
+  MultiList,
 } from '@appbaseio/reactivesearch'
 import { Grid } from '@material-ui/core'
 
@@ -12,21 +13,31 @@ const { ResultCardsWrapper } = ReactiveList
 
 const Home = (): JSX.Element => {
   return (
-    <ReactiveBase app='listings' url='http://localhost:9200/'>
+    <ReactiveBase app='listings' url='http://localhost:9200'>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 2 }>
+          <MultiList
+            componentId='name-list'
+            dataField='player.name'
+            title='Player'
+            size={ 100 }
+            showCheckbox
+            showCount
+            showSearch
+          />
           <DataSearch
-            componentId='SearchSensor'
-            dataField={ ['player.name'] }
+            componentId='description-search'
+            dataField='description'
+            title='Description'
           />
         </Grid>
         <Grid item xs={ 10 }>
           <ReactiveList
+            dataField='player.name'
             componentId='SearchResult'
             react={ {
-              and: ['SearchSensor'],
+              and: ['description-search', 'name-list'],
             } }
-            dataField='player.name'
           >
             {({ data, error, loading }) => (
               <ResultCardsWrapper>
