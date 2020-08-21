@@ -1,30 +1,14 @@
 
-      export interface IntrospectionResultData {
-        __schema: {
-          types: {
-            kind: string;
-            name: string;
-            possibleTypes: {
-              name: string;
-            }[];
-          }[];
-        };
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
       }
-      const result: IntrospectionResultData = {
-  "__schema": {
-    "types": [
-      {
-        "kind": "INTERFACE",
-        "name": "ActiveRecordInterface",
-        "possibleTypes": [
-          {
-            "name": "Listing"
-          },
-          {
-            "name": "User"
-          }
-        ]
-      }
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {
+    "ActiveRecordInterface": [
+      "Listing",
+      "User"
     ]
   }
 };

@@ -7,7 +7,9 @@ import {
   ResultCard,
   MultiList,
 } from '@appbaseio/reactivesearch'
-import { Grid } from '@material-ui/core'
+import { Button, Grid, LinearProgress, Typography } from '@material-ui/core'
+import PrivateComponent from 'app/PrivateComponent'
+import { Link } from 'react-router-dom'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -41,6 +43,9 @@ const Home = (): JSX.Element => {
           >
             {({ data, error, loading }) => (
               <ResultCardsWrapper>
+                {loading && <LinearProgress />}
+                {error && <Typography>{error}</Typography>}
+
                 {data.map((item: any) => (
                   <ResultCard key={ item._id }>
                     <ResultCard.Image src={ item.image } />
@@ -50,9 +55,6 @@ const Home = (): JSX.Element => {
                       } }
                     />
                     <ResultCard.Description>
-                      <div>
-                        <div>({item.average_rating} avg)</div>
-                      </div>
                       <span>{item.description}</span>
                     </ResultCard.Description>
                   </ResultCard>
@@ -62,6 +64,11 @@ const Home = (): JSX.Element => {
           </ReactiveList>
         </Grid>
       </Grid>
+      <PrivateComponent>
+        <Button component={ Link } to='listings/new' variant='contained'>
+          Create a Listing
+        </Button>
+      </PrivateComponent>
       <LogoutButton />
     </ReactiveBase>
   )

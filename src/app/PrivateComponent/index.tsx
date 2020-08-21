@@ -1,12 +1,10 @@
-import { ReactNode } from 'react'
-import { RouteProps } from 'react-router-dom'
 import { useAuthQuery, Maybe } from 'types/graphql'
 
 interface Props {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
-const PrivateComponent = ({ children }: RouteProps): Maybe<ReactNode> => {
+const PrivateComponent = ({ children }: Props): Maybe<JSX.Element> => {
   const { data } = useAuthQuery()
 
   if (!data?.auth) return null
