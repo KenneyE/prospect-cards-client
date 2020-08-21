@@ -48,7 +48,7 @@ const Home = (): JSX.Element => {
 
                 {data.map((item: any) => (
                   <ResultCard key={ item._id }>
-                    <ResultCard.Image src={ item.image } />
+                    <ResultCard.Image src={ `http://localhost:3000/${item.image}` } />
                     <ResultCard.Title
                       dangerouslySetInnerHTML={ {
                         __html: item.title,
