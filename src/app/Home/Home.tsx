@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 const { ResultCardsWrapper } = ReactiveList
 
 const Home = (): JSX.Element => {
-  console.log('eric', process.env.REACT_APP_ELASTICSEARCH_URI)
   return (
     <>
       <ReactiveBase
