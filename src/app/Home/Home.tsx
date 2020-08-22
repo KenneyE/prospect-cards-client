@@ -41,10 +41,9 @@ const Home = (): JSX.Element => {
               and: ['description-search', 'name-list'],
             } }
           >
-            {({ data, error, loading }) => (
+            {({ data, loading }) => (
               <ResultCardsWrapper>
                 {loading && <LinearProgress />}
-                {error && <Typography>{error}</Typography>}
 
                 {data.map((item: any) => (
                   <ResultCard key={ item._id }>
