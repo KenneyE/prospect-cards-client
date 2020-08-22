@@ -20,7 +20,6 @@ const Home = (): JSX.Element => {
       <ReactiveBase
         app='listings'
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
-        credentials={ process.env.REACT_APP_ELASTICSEARCH_CREDS }
       >
         <Grid container spacing={ 3 }>
           <Grid item xs={ 2 }>
