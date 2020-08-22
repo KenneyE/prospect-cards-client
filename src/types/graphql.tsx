@@ -61,6 +61,16 @@ export type SaveListingPayload = {
   viewer: User;
 };
 
+export type StripeAccount = ActiveRecordInterface & {
+  __typename?: 'StripeAccount';
+  chargesEnabled: Scalars['Boolean'];
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  onboardingLink: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 
 export type User = ActiveRecordInterface & {
   __typename?: 'User';
@@ -68,6 +78,7 @@ export type User = ActiveRecordInterface & {
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
   listings: Array<Listing>;
+  stripeAccount: StripeAccount;
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
@@ -86,6 +97,21 @@ export type SaveListingMutation = (
       & Pick<User, 'id'>
     ) }
   )> }
+);
+
+export type SellerSetupQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SellerSetupQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { stripeAccount: (
+      { __typename?: 'StripeAccount' }
+      & Pick<StripeAccount, 'id' | 'chargesEnabled' | 'onboardingLink'>
+    ) }
+  ) }
 );
 
 export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
@@ -132,6 +158,43 @@ export function useSaveListingMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type SaveListingMutationHookResult = ReturnType<typeof useSaveListingMutation>;
 export type SaveListingMutationResult = ApolloReactCommon.MutationResult<SaveListingMutation>;
 export type SaveListingMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveListingMutation, SaveListingMutationVariables>;
+export const SellerSetupDocument = gql`
+    query sellerSetup {
+  viewer {
+    id
+    stripeAccount {
+      id
+      chargesEnabled
+      onboardingLink
+    }
+  }
+}
+    `;
+
+/**
+ * __useSellerSetupQuery__
+ *
+ * To run a query within a React component, call `useSellerSetupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSellerSetupQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSellerSetupQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSellerSetupQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SellerSetupQuery, SellerSetupQueryVariables>) {
+        return ApolloReactHooks.useQuery<SellerSetupQuery, SellerSetupQueryVariables>(SellerSetupDocument, baseOptions);
+      }
+export function useSellerSetupLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SellerSetupQuery, SellerSetupQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SellerSetupQuery, SellerSetupQueryVariables>(SellerSetupDocument, baseOptions);
+        }
+export type SellerSetupQueryHookResult = ReturnType<typeof useSellerSetupQuery>;
+export type SellerSetupLazyQueryHookResult = ReturnType<typeof useSellerSetupLazyQuery>;
+export type SellerSetupQueryResult = ApolloReactCommon.QueryResult<SellerSetupQuery, SellerSetupQueryVariables>;
 export const AuthDocument = gql`
     query auth {
   auth

@@ -71,15 +71,17 @@ const Home = (): JSX.Element => {
         </Button>
       </PrivateComponent>
       <PrivateComponent>
-        <Button component={ Link } to='listings/new' variant='contained'>
+        <Button component={ Link } to='account/sell' variant='contained'>
           Start Selling
         </Button>
       </PrivateComponent>
-      <PrivateComponent loggedOut={
-        <Button component={ Link } to='/login' variant='contained'>
-          Log in
-        </Button>
-      }>
+      <PrivateComponent
+        loggedOut={
+          <Button component={ Link } to='/login' variant='contained'>
+            Log in
+          </Button>
+        }
+      >
         <LogoutButton />
       </PrivateComponent>
     </ReactiveBase>
