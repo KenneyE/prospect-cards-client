@@ -15,7 +15,7 @@ const { ResultCardsWrapper } = ReactiveList
 
 const Home = (): JSX.Element => {
   return (
-    <ReactiveBase app='listings' url='http://localhost:9200'>
+    <ReactiveBase app='listings' url={ process.env.ELASTICSEARCH_URI }>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 2 }>
           <MultiList
