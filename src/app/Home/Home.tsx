@@ -7,7 +7,7 @@ import {
   ResultCard,
   MultiList,
 } from '@appbaseio/reactivesearch'
-import { Button, Grid, LinearProgress, Typography } from '@material-ui/core'
+import { Button, Grid, LinearProgress } from '@material-ui/core'
 import PrivateComponent from 'app/PrivateComponent'
 import { Link } from 'react-router-dom'
 
@@ -47,7 +47,9 @@ const Home = (): JSX.Element => {
 
                 {data.map((item: any) => (
                   <ResultCard key={ item._id }>
-                    <ResultCard.Image src={ `http://localhost:3000/${item.image}` } />
+                    <ResultCard.Image
+                      src={ `http://localhost:3000/${item.image}` }
+                    />
                     <ResultCard.Title
                       dangerouslySetInnerHTML={ {
                         __html: item.title,
@@ -68,7 +70,18 @@ const Home = (): JSX.Element => {
           Create a Listing
         </Button>
       </PrivateComponent>
-      <LogoutButton />
+      <PrivateComponent>
+        <Button component={ Link } to='listings/new' variant='contained'>
+          Start Selling
+        </Button>
+      </PrivateComponent>
+      <PrivateComponent loggedOut={
+        <Button component={ Link } to='/login' variant='contained'>
+          Log in
+        </Button>
+      }>
+        <LogoutButton />
+      </PrivateComponent>
     </ReactiveBase>
   )
 }

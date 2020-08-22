@@ -69,7 +69,7 @@ const handleError = onError(({ graphQLErrors, networkError, response }) => {
     window.location.pathname !== '/login'
   ) {
     // This also causes a browser refresh, which clears the cache.
-    window.location.pathname = '/login'
+    // window.location.pathname = '/login'
   }
 })
 
