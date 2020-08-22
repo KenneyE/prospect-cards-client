@@ -14,61 +14,64 @@ import { Link } from 'react-router-dom'
 const { ResultCardsWrapper } = ReactiveList
 
 const Home = (): JSX.Element => {
+  console.log('eric', process.env.REACT_APP_ELASTICSEARCH_URI)
   return (
-    <ReactiveBase
-      app='listings'
-      url={ process.env.ELASTICSEARCH_URI }
-      credentials={ process.env.ELASTICSEARCH_CREDS }
-    >
-      <Grid container spacing={ 3 }>
-        <Grid item xs={ 2 }>
-          <MultiList
-            componentId='name-list'
-            dataField='player.name'
-            title='Player'
-            size={ 100 }
-            showCheckbox
-            showCount
-            showSearch
-          />
-          <DataSearch
-            componentId='description-search'
-            dataField='description'
-            title='Description'
-          />
-        </Grid>
-        <Grid item xs={ 10 }>
-          <ReactiveList
-            dataField='player.name'
-            componentId='SearchResult'
-            react={ {
-              and: ['description-search', 'name-list'],
-            } }
-          >
-            {({ data, loading }) => (
-              <ResultCardsWrapper>
-                {loading && <LinearProgress />}
+    <>
+      <ReactiveBase
+        app='listings'
+        url={ process.env.REACT_APP_ELASTICSEARCH_URI }
+        credentials={ process.env.REACT_APP_ELASTICSEARCH_CREDS }
+      >
+        <Grid container spacing={ 3 }>
+          <Grid item xs={ 2 }>
+            <MultiList
+              componentId='name-list'
+              dataField='player.name'
+              title='Player'
+              size={ 100 }
+              showCheckbox
+              showCount
+              showSearch
+            />
+            <DataSearch
+              componentId='description-search'
+              dataField='description'
+              title='Description'
+            />
+          </Grid>
+          <Grid item xs={ 10 }>
+            <ReactiveList
+              dataField='player.name'
+              componentId='SearchResult'
+              react={ {
+                and: ['description-search', 'name-list'],
+              } }
+            >
+              {({ data, loading }) => (
+                <ResultCardsWrapper>
+                  {loading && <LinearProgress />}
 
-                {data.map((item: any) => (
-                  <ResultCard key={ item._id }>
-                    <ResultCard.Image
-                      src={ `http://localhost:3000/${item.image}` }
-                    />
-                    <ResultCard.Title
-                      dangerouslySetInnerHTML={ {
-                        __html: item.title,
-                      } }
-                    />
-                    <ResultCard.Description>
-                      <span>{item.description}</span>
-                    </ResultCard.Description>
-                  </ResultCard>
-                ))}
-              </ResultCardsWrapper>
-            )}
-          </ReactiveList>
+                  {data.map((item: any) => (
+                    <ResultCard key={ item._id }>
+                      <ResultCard.Image
+                        src={ `http://localhost:3000/${item.image}` }
+                      />
+                      <ResultCard.Title
+                        dangerouslySetInnerHTML={ {
+                          __html: item.title,
+                        } }
+                      />
+                      <ResultCard.Description>
+                        <span>{item.description}</span>
+                      </ResultCard.Description>
+                    </ResultCard>
+                  ))}
+                </ResultCardsWrapper>
+              )}
+            </ReactiveList>
+          </Grid>
         </Grid>
-      </Grid>
+      </ReactiveBase>
       <PrivateComponent>
         <Button component={ Link } to='listings/new' variant='contained'>
           Create a Listing
@@ -88,7 +91,7 @@ const Home = (): JSX.Element => {
       >
         <LogoutButton />
       </PrivateComponent>
-    </ReactiveBase>
+    </>
   )
 }
 
