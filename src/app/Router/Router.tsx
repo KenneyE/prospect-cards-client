@@ -12,7 +12,7 @@ const Router = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path='/' component={ Home } />
-      <Route exact path='/listings/new' component={ NewListing } />
+      <PrivateRoute exact path='/listings/new' component={ NewListing } />
       <PrivateRoute exact path='/account/sell' component={ SellerSetup } />
 
       <Route exact path='/login' component={ Login } />
