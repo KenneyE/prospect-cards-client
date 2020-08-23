@@ -1,5 +1,3 @@
-import React from 'react'
-import useStyles from './styles'
 import { SellerSetupQuery } from 'types/graphql'
 
 interface Props {
@@ -12,10 +10,9 @@ const SellerSetup = ({
       stripeAccount: { onboardingLink },
     },
   },
-}: Props): JSX.Element => {
-  const classes = useStyles()
-
-  return <div>{onboardingLink}</div>
+}: Props): null => {
+  window.location.href = onboardingLink
+  return null
 }
 
 export default SellerSetup
