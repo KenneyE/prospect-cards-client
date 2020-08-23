@@ -5,7 +5,9 @@ import ErrorMessage from 'app/common/ErrorMessage'
 import { useStripeAccountQuery } from 'types/graphql'
 
 const SellerSetup = (): JSX.Element => {
-  const { data, loading, error } = useStripeAccountQuery()
+  const { data, loading, error } = useStripeAccountQuery({
+    fetchPolicy: 'network-only',
+  })
 
   if (loading) return <Spinner />
   if (!data || error) return <ErrorMessage message={ error?.message } />
