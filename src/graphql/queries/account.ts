@@ -1,10 +1,10 @@
 import gql from 'graphql-tag'
 
 gql`
-  query sellerSetup {
+  query stripeAccount($refresh: Boolean) {
     viewer {
       id
-      stripeAccount {
+      stripeAccount(refresh: $refresh) {
         id
         chargesEnabled
         onboardingLink

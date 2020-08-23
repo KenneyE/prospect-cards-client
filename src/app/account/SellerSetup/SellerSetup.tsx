@@ -1,7 +1,7 @@
-import { SellerSetupQuery } from 'types/graphql'
+import { StripeAccountQuery } from 'types/graphql'
 
 interface Props {
-  data: SellerSetupQuery;
+  data: StripeAccountQuery;
 }
 
 const SellerSetup = ({

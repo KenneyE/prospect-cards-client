@@ -651,7 +651,18 @@
           {
             "name": "stripeAccount",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "refresh",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,

@@ -2,10 +2,10 @@ import React from 'react'
 import Dumb from './SellerSetup'
 import Spinner from 'app/common/Spinner'
 import ErrorMessage from 'app/common/ErrorMessage'
-import { useSellerSetupQuery } from 'types/graphql'
+import { useStripeAccountQuery } from 'types/graphql'
 
 const SellerSetup = (): JSX.Element => {
-  const { data, loading, error } = useSellerSetupQuery()
+  const { data, loading, error } = useStripeAccountQuery()
 
   if (loading) return <Spinner />
   if (!data || error) return <ErrorMessage message={ error?.message } />

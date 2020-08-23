@@ -82,6 +82,11 @@ export type User = ActiveRecordInterface & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+
+export type UserStripeAccountArgs = {
+  refresh?: Maybe<Scalars['Boolean']>;
+};
+
 export type SaveListingMutationVariables = Exact<{
   listing: ListingInput;
 }>;
@@ -99,10 +104,12 @@ export type SaveListingMutation = (
   )> }
 );
 
-export type SellerSetupQueryVariables = Exact<{ [key: string]: never; }>;
+export type StripeAccountQueryVariables = Exact<{
+  refresh?: Maybe<Scalars['Boolean']>;
+}>;
 
 
-export type SellerSetupQuery = (
+export type StripeAccountQuery = (
   { __typename?: 'Query' }
   & { viewer: (
     { __typename?: 'User' }
@@ -158,11 +165,11 @@ export function useSaveListingMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type SaveListingMutationHookResult = ReturnType<typeof useSaveListingMutation>;
 export type SaveListingMutationResult = ApolloReactCommon.MutationResult<SaveListingMutation>;
 export type SaveListingMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveListingMutation, SaveListingMutationVariables>;
-export const SellerSetupDocument = gql`
-    query sellerSetup {
+export const StripeAccountDocument = gql`
+    query stripeAccount($refresh: Boolean) {
   viewer {
     id
-    stripeAccount {
+    stripeAccount(refresh: $refresh) {
       id
       chargesEnabled
       onboardingLink
@@ -172,29 +179,30 @@ export const SellerSetupDocument = gql`
     `;
 
 /**
- * __useSellerSetupQuery__
+ * __useStripeAccountQuery__
  *
- * To run a query within a React component, call `useSellerSetupQuery` and pass it any options that fit your needs.
- * When your component renders, `useSellerSetupQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useStripeAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStripeAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSellerSetupQuery({
+ * const { data, loading, error } = useStripeAccountQuery({
  *   variables: {
+ *      refresh: // value for 'refresh'
  *   },
  * });
  */
-export function useSellerSetupQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SellerSetupQuery, SellerSetupQueryVariables>) {
-        return ApolloReactHooks.useQuery<SellerSetupQuery, SellerSetupQueryVariables>(SellerSetupDocument, baseOptions);
+export function useStripeAccountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<StripeAccountQuery, StripeAccountQueryVariables>) {
+        return ApolloReactHooks.useQuery<StripeAccountQuery, StripeAccountQueryVariables>(StripeAccountDocument, baseOptions);
       }
-export function useSellerSetupLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SellerSetupQuery, SellerSetupQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SellerSetupQuery, SellerSetupQueryVariables>(SellerSetupDocument, baseOptions);
+export function useStripeAccountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<StripeAccountQuery, StripeAccountQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<StripeAccountQuery, StripeAccountQueryVariables>(StripeAccountDocument, baseOptions);
         }
-export type SellerSetupQueryHookResult = ReturnType<typeof useSellerSetupQuery>;
-export type SellerSetupLazyQueryHookResult = ReturnType<typeof useSellerSetupLazyQuery>;
-export type SellerSetupQueryResult = ApolloReactCommon.QueryResult<SellerSetupQuery, SellerSetupQueryVariables>;
+export type StripeAccountQueryHookResult = ReturnType<typeof useStripeAccountQuery>;
+export type StripeAccountLazyQueryHookResult = ReturnType<typeof useStripeAccountLazyQuery>;
+export type StripeAccountQueryResult = ApolloReactCommon.QueryResult<StripeAccountQuery, StripeAccountQueryVariables>;
 export const AuthDocument = gql`
     query auth {
   auth
