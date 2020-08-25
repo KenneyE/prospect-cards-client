@@ -1,5 +1,4 @@
 import React from 'react'
-import useStyles from './styles'
 import { StripeAccountQuery } from 'types/graphql'
 import { Button, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'

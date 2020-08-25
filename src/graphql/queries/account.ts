@@ -12,3 +12,9 @@ gql`
     }
   }
 `
+
+gql`
+  query addPayment {
+    stripeCheckoutSessionId
+  }
+`

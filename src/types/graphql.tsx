@@ -51,6 +51,7 @@ export type MutationSaveListingArgs = {
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
+  stripeCheckoutSessionId: Scalars['String'];
   viewer: User;
 };
 
@@ -119,6 +120,14 @@ export type StripeAccountQuery = (
       & Pick<StripeAccount, 'id' | 'chargesEnabled' | 'onboardingLink'>
     ) }
   ) }
+);
+
+export type AddPaymentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AddPaymentQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'stripeCheckoutSessionId'>
 );
 
 export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
@@ -203,6 +212,36 @@ export function useStripeAccountLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type StripeAccountQueryHookResult = ReturnType<typeof useStripeAccountQuery>;
 export type StripeAccountLazyQueryHookResult = ReturnType<typeof useStripeAccountLazyQuery>;
 export type StripeAccountQueryResult = ApolloReactCommon.QueryResult<StripeAccountQuery, StripeAccountQueryVariables>;
+export const AddPaymentDocument = gql`
+    query addPayment {
+  stripeCheckoutSessionId
+}
+    `;
+
+/**
+ * __useAddPaymentQuery__
+ *
+ * To run a query within a React component, call `useAddPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddPaymentQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddPaymentQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddPaymentQuery, AddPaymentQueryVariables>) {
+        return ApolloReactHooks.useQuery<AddPaymentQuery, AddPaymentQueryVariables>(AddPaymentDocument, baseOptions);
+      }
+export function useAddPaymentLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddPaymentQuery, AddPaymentQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AddPaymentQuery, AddPaymentQueryVariables>(AddPaymentDocument, baseOptions);
+        }
+export type AddPaymentQueryHookResult = ReturnType<typeof useAddPaymentQuery>;
+export type AddPaymentLazyQueryHookResult = ReturnType<typeof useAddPaymentLazyQuery>;
+export type AddPaymentQueryResult = ApolloReactCommon.QueryResult<AddPaymentQuery, AddPaymentQueryVariables>;
 export const AuthDocument = gql`
     query auth {
   auth
