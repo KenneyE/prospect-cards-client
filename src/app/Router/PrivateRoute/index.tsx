@@ -12,6 +12,7 @@ const PrivateRoute = (props: RouteProps): Maybe<JSX.Element> => {
     // Prevent any chance of store leaking into unauthorized space.
     // Also prevents weird loop of expired creds being stored, preventing login.
     client.resetStore()
+    window.location.href = '/'
   }
 
   return (

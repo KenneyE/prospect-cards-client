@@ -28,6 +28,7 @@ export default makeStyles(
       border: 1,
       borderRadius: 3,
       marginTop: theme.spacing(),
+      marginBottom: theme.spacing(),
     },
   }),
 )

@@ -46,6 +46,20 @@ export type Mutation = {
 
 export type MutationSaveListingArgs = {
   listing: ListingInput;
+  player: PlayerInput;
+};
+
+export type Player = ActiveRecordInterface & {
+  __typename?: 'Player';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
+export type PlayerInput = {
+  name: Scalars['String'];
 };
 
 export type Query = {
@@ -80,8 +94,14 @@ export type User = ActiveRecordInterface & {
   id: Scalars['Int'];
   listings: Array<Listing>;
   paymentIntent: Scalars['String'];
+  players: Array<Player>;
   stripeAccount: StripeAccount;
   updatedAt: Scalars['ISO8601DateTime'];
+};
+
+
+export type UserPlayersArgs = {
+  name?: Maybe<Scalars['String']>;
 };
 
 
@@ -89,8 +109,14 @@ export type UserStripeAccountArgs = {
   refresh?: Maybe<Scalars['Boolean']>;
 };
 
+export type PlayerFragment = (
+  { __typename?: 'Player' }
+  & Pick<Player, 'id' | 'name'>
+);
+
 export type SaveListingMutationVariables = Exact<{
   listing: ListingInput;
+  player: PlayerInput;
 }>;
 
 
@@ -146,14 +172,36 @@ export type FakeChargeQuery = (
   { __typename?: 'Query' }
   & { viewer: (
     { __typename?: 'User' }
-    & Pick<User, 'paymentIntent'>
+    & Pick<User, 'id' | 'paymentIntent'>
   ) }
 );
 
+export type PlayersQueryVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+}>;
 
+
+export type PlayersQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { players: Array<(
+      { __typename?: 'Player' }
+      & PlayerFragment
+    )> }
+  ) }
+);
+
+export const PlayerFragmentDoc = gql`
+    fragment player on Player {
+  id
+  name
+}
+    `;
 export const SaveListingDocument = gql`
-    mutation saveListing($listing: ListingInput!) {
-  saveListing(listing: $listing) {
+    mutation saveListing($listing: ListingInput!, $player: PlayerInput!) {
+  saveListing(listing: $listing, player: $player) {
     viewer {
       id
     }
@@ -177,6 +225,7 @@ export type SaveListingMutationFn = ApolloReactCommon.MutationFunction<SaveListi
  * const [saveListingMutation, { data, loading, error }] = useSaveListingMutation({
  *   variables: {
  *      listing: // value for 'listing'
+ *      player: // value for 'player'
  *   },
  * });
  */
@@ -287,6 +336,7 @@ export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQuery
 export const FakeChargeDocument = gql`
     query fakeCharge {
   viewer {
+    id
     paymentIntent
   }
 }
@@ -316,3 +366,39 @@ export function useFakeChargeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type FakeChargeQueryHookResult = ReturnType<typeof useFakeChargeQuery>;
 export type FakeChargeLazyQueryHookResult = ReturnType<typeof useFakeChargeLazyQuery>;
 export type FakeChargeQueryResult = ApolloReactCommon.QueryResult<FakeChargeQuery, FakeChargeQueryVariables>;
+export const PlayersDocument = gql`
+    query players($name: String) {
+  viewer {
+    id
+    players(name: $name) {
+      ...player
+    }
+  }
+}
+    ${PlayerFragmentDoc}`;
+
+/**
+ * __usePlayersQuery__
+ *
+ * To run a query within a React component, call `usePlayersQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePlayersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePlayersQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function usePlayersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PlayersQuery, PlayersQueryVariables>) {
+        return ApolloReactHooks.useQuery<PlayersQuery, PlayersQueryVariables>(PlayersDocument, baseOptions);
+      }
+export function usePlayersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PlayersQuery, PlayersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PlayersQuery, PlayersQueryVariables>(PlayersDocument, baseOptions);
+        }
+export type PlayersQueryHookResult = ReturnType<typeof usePlayersQuery>;
+export type PlayersLazyQueryHookResult = ReturnType<typeof usePlayersLazyQuery>;
+export type PlayersQueryResult = ApolloReactCommon.QueryResult<PlayersQuery, PlayersQueryVariables>;

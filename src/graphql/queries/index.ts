@@ -9,7 +9,19 @@ gql`
 gql`
   query fakeCharge {
     viewer {
+      id
       paymentIntent
+    }
+  }
+`
+
+gql`
+  query players($name: String) {
+    viewer {
+      id
+      players(name: $name) {
+        ...player
+      }
     }
   }
 `

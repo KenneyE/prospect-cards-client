@@ -8,6 +8,7 @@
   "possibleTypes": {
     "ActiveRecordInterface": [
       "Listing",
+      "Player",
       "StripeAccount",
       "User"
     ]

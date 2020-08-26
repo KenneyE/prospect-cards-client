@@ -9,10 +9,16 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Form, Formik } from 'formik'
-import { ListingInput, SaveListingMutationFn, Scalars } from 'types/graphql'
+import {
+  ListingInput,
+  PlayerInput,
+  SaveListingMutationFn,
+  Scalars,
+} from 'types/graphql'
 import useStyles from './styles'
 import LoadingButton from 'app/common/LoadingButton'
 import { Link } from 'react-router-dom'
+import PlayerInputField from 'app/PlayerInputField'
 
 interface Props {
   loading: boolean;
@@ -24,11 +30,15 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
 
   const initialValues: {
     listing: ListingInput;
+    player: PlayerInput;
   } = {
     listing: {
       title: '',
       description: '',
       images: [],
+    },
+    player: {
+      name: '',
     },
   }
 
@@ -95,7 +105,9 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                 fullWidth
                 onChange={ handleChange }
               />
-
+              <PlayerInputField
+                onChange={ (name: string) => setFieldValue('player.name', name) }
+              />
               <Dropzone
                 onDrop={ (images): void => {
                   if (images.length === 0) {
@@ -118,7 +130,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                   getInputProps,
                   isDragActive,
                 }): JSX.Element => (
-                  <Card>
+                  <Card className={ classes.dropzone }>
                     <CardContent { ...getRootProps() }>
                       <input { ...getInputProps() } />
                       {isDragActive ? (
