@@ -38,6 +38,7 @@ const PlayerInputField = ({
       getOptionLabel={ (option) => option.name }
       options={ options }
       loading={ loading }
+      onInputChange={ (event, value) => handleChange(value) }
       renderInput={ (params) => (
         <TextField
           value={ value }
