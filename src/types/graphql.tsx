@@ -79,6 +79,7 @@ export type User = ActiveRecordInterface & {
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
   listings: Array<Listing>;
+  paymentIntent: Scalars['String'];
   stripeAccount: StripeAccount;
   updatedAt: Scalars['ISO8601DateTime'];
 };
@@ -136,6 +137,17 @@ export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
 export type AuthQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'auth'>
+);
+
+export type FakeChargeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FakeChargeQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'paymentIntent'>
+  ) }
 );
 
 
@@ -272,3 +284,35 @@ export function useAuthLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type AuthQueryHookResult = ReturnType<typeof useAuthQuery>;
 export type AuthLazyQueryHookResult = ReturnType<typeof useAuthLazyQuery>;
 export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQueryVariables>;
+export const FakeChargeDocument = gql`
+    query fakeCharge {
+  viewer {
+    paymentIntent
+  }
+}
+    `;
+
+/**
+ * __useFakeChargeQuery__
+ *
+ * To run a query within a React component, call `useFakeChargeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFakeChargeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFakeChargeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFakeChargeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FakeChargeQuery, FakeChargeQueryVariables>) {
+        return ApolloReactHooks.useQuery<FakeChargeQuery, FakeChargeQueryVariables>(FakeChargeDocument, baseOptions);
+      }
+export function useFakeChargeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FakeChargeQuery, FakeChargeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FakeChargeQuery, FakeChargeQueryVariables>(FakeChargeDocument, baseOptions);
+        }
+export type FakeChargeQueryHookResult = ReturnType<typeof useFakeChargeQuery>;
+export type FakeChargeLazyQueryHookResult = ReturnType<typeof useFakeChargeLazyQuery>;
+export type FakeChargeQueryResult = ApolloReactCommon.QueryResult<FakeChargeQuery, FakeChargeQueryVariables>;

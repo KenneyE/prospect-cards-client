@@ -10,6 +10,7 @@ import SellerSetup from 'app/account/SellerSetup'
 import StripeAccountVerification from 'app/account/StripeAccountVerification'
 import AddPayment from 'app/account/AddPayment'
 import PaymentAdded from 'app/account/PaymentAdded'
+import TestStuff from 'app/TestStuff'
 
 const Router = (): JSX.Element => {
   return (
@@ -20,6 +21,7 @@ const Router = (): JSX.Element => {
       <PrivateRoute exact path='/account/add_payment' component={ AddPayment } />
       <PrivateRoute exact path='/account/payment_added' component={ PaymentAdded } />
       <PrivateRoute exact path='/account/verification' component={ StripeAccountVerification } />
+      <PrivateRoute exact path='/account/test' component={ TestStuff } />
 
       <Route exact path='/login' component={ Login } />
       <Redirect to='/' />

@@ -5,3 +5,11 @@ gql`
     auth
   }
 `
+
+gql`
+  query fakeCharge {
+    viewer {
+      paymentIntent
+    }
+  }
+`

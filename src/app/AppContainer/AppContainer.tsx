@@ -11,7 +11,10 @@ import Container from '@material-ui/core/Container'
 import Router from 'app/Router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import {Elements} from '@stripe/react-stripe-js'
+
 import theme from 'lib/theme'
+import stripe from 'lib/stripe'
 
 const useStyles = makeStyles(
   (theme: Theme): StyleRules => ({
@@ -38,15 +41,17 @@ const AppContainer = ({ loggedIn }: Props): JSX.Element => {
   return (
     <MuiThemeProvider theme={ theme }>
       <CssBaseline />
-      <div className={ classes.root }>
-        <main className={ classes.content }>
-          <div className={ classes.appBarSpacer } />
-          <Container maxWidth='xl' className={ classes.container }>
-            <Router />
-          </Container>
-        </main>
-      </div>
-      <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
+      <Elements stripe={ stripe }>
+        <div className={ classes.root }>
+          <main className={ classes.content }>
+            <div className={ classes.appBarSpacer } />
+            <Container maxWidth='xl' className={ classes.container }>
+              <Router />
+            </Container>
+          </main>
+        </div>
+        <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
+      </Elements>
     </MuiThemeProvider>
   )
 }

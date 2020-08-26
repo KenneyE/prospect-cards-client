@@ -5,6 +5,7 @@ import HttpsRedirect from 'react-https-redirect'
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 import AppContainer from 'app/AppContainer'
+import {Elements} from '@stripe/react-stripe-js';
 
 import client from './apollo'
 
