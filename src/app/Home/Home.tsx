@@ -83,6 +83,11 @@ const Home = (): JSX.Element => {
           Add Payment Method
         </Button>
       </PrivateComponent>
+      <PrivateComponent>
+        <Button component={ Link } to='membership/new' variant='contained'>
+          Become a Member
+        </Button>
+      </PrivateComponent>
       <PrivateComponent
         loggedOut={
           <Button component={ Link } to='/login' variant='contained'>

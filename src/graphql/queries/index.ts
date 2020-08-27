@@ -25,3 +25,17 @@ gql`
     }
   }
 `
+
+
+gql`
+  query products {
+    viewer {
+      id
+      availableProducts {
+        token
+        price
+        term
+      }
+    }
+  }
+`

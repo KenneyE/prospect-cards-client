@@ -14,7 +14,7 @@ gql`
 `
 
 gql`
-  query addPayment {
-    stripeCheckoutSessionId
+  query addPayment($price: String) {
+    stripeCheckoutSessionId(price: $price)
   }
 `
