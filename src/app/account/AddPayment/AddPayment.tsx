@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import { useStripe } from '@stripe/react-stripe-js'
 import ErrorMessage from 'app/common/ErrorMessage'
+import { Link } from 'react-router-dom'
 
 interface Props {
   data: AddPaymentQuery;
@@ -26,7 +27,14 @@ const AddPayment = ({
     }
   }
 
-  return <Button onClick={ handleClick }>Add Payment Method</Button>
+  return (
+    <>
+      <Button variant='outlined' component={ Link } to='/'>
+        Home
+      </Button>
+      <Button  variant='contained' onClick={ handleClick }>Add Payment Method</Button>
+    </>
+  )
 }
 
 export default AddPayment
