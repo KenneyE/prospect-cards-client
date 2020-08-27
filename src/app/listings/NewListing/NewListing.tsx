@@ -18,7 +18,22 @@ import {
 import useStyles from './styles'
 import LoadingButton from 'app/common/LoadingButton'
 import { Link } from 'react-router-dom'
+import * as Yup from 'yup'
 import PlayerInputField from 'app/PlayerInputField'
+
+const ListingSchema = Yup.object().shape({
+  listing: Yup.object().shape({
+    title: Yup.string()
+      .min(5, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    description: Yup.string()
+      .min(25, 'Too Short!')
+      .required('Required'),
+    images: Yup.array().required('Required'),
+  }),
+  player: Yup.object().shape({ name: Yup.string().required('Required') }),
+})
 
 interface Props {
   loading: boolean;
@@ -48,6 +63,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
         Home
       </Button>
       <Formik
+        validationSchema={ ListingSchema }
         initialValues={ initialValues }
         onSubmit={ (variables, { setSubmitting, resetForm }): void => {
           saveListing({ variables }).then((): void => {
@@ -56,7 +72,13 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
           })
         } }
       >
-        {({ values, handleChange, setFieldValue }): JSX.Element => {
+        {({
+          values,
+          handleChange,
+          setFieldValue,
+          errors,
+          touched,
+        }): JSX.Element => {
           // const handleDelete = (
           //   documentName: string,
           // ): (() => void) => (): void => {
@@ -93,6 +115,9 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                 fullWidth
                 onChange={ handleChange }
               />
+              {errors.listing?.title && touched.listing?.title ? (
+                <div>{errors.listing.title}</div>
+              ) : null}
 
               <TextField
                 margin='normal'
@@ -105,9 +130,15 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                 fullWidth
                 onChange={ handleChange }
               />
+              {errors.listing?.description && touched.listing?.description ? (
+                <div>{errors.listing.description}</div>
+              ) : null}
               <PlayerInputField
                 onChange={ (name: string) => setFieldValue('player.name', name) }
               />
+              {errors.player?.name && touched.player?.name ? (
+                <div>{errors.player.name}</div>
+              ) : null}
               <Dropzone
                 onDrop={ (images): void => {
                   if (images.length === 0) {
@@ -148,7 +179,9 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                 )}
               </Dropzone>
               {thumbs}
-
+              {errors.listing?.images && touched.listing?.images ? (
+                <div>{errors.listing.images}</div>
+              ) : null}
               <LoadingButton
                 loading={ loading }
                 type='submit'
