@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 // import PrivateRoute from './PrivateRoute'
 import Login from 'app/Login'
 import NewListing from 'app/listings/NewListing'
+import ShowListing from 'app/listings/ShowListing'
 import Home from 'app/Home'
 import PrivateRoute from 'app/Router/PrivateRoute'
 import SellerSetup from 'app/account/SellerSetup'
@@ -18,6 +19,7 @@ const Router = (): JSX.Element => {
     <Switch>
       <Route exact path='/' component={ Home } />
       <PrivateRoute exact path='/listings/new' component={ NewListing } />
+      <PrivateRoute exact path='/listings/:id' component={ ShowListing } />
       <PrivateRoute exact path='/account/sell' component={ SellerSetup } />
       <PrivateRoute path='/account/add_payment/:price?' component={ AddPayment } />
       <PrivateRoute exact path='/account/payment_added' component={ PaymentAdded } />

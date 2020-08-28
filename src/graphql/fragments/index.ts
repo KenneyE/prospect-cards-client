@@ -6,3 +6,12 @@ gql`
     name
   }
 `
+
+gql`
+  fragment listing on Listing {
+    id
+    title
+    description
+  }
+`
+
