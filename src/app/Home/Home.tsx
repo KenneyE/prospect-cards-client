@@ -10,6 +10,8 @@ import {
 import { Button, Grid, LinearProgress } from '@material-ui/core'
 import PrivateComponent from 'app/PrivateComponent'
 import { Link } from 'react-router-dom'
+import { Experiment, Variant } from '@marvelapp/react-ab-test'
+import emitter from 'lib/abEmitter'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -97,6 +99,16 @@ const Home = (): JSX.Element => {
       >
         <LogoutButton />
       </PrivateComponent>
+      {/*<Experiment name='My Example'>*/}
+      {/*  <Variant name='A'>*/}
+      {/*    <div>Section A</div>*/}
+      {/*  </Variant>*/}
+      {/*  <Variant name='B'>*/}
+      {/*    <div>Section B</div>*/}
+      {/*  </Variant>*/}
+      {/*</Experiment>*/}
+      {/*<Button onClick={ () => { console.log('win'); emitter.emitWin('My Example') }}>Succeed</Button>*/}
+
     </>
   )
 }
