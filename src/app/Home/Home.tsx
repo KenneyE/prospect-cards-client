@@ -7,9 +7,7 @@ import {
   ResultCard,
   MultiList,
 } from '@appbaseio/reactivesearch'
-import { Button, Grid, LinearProgress } from '@material-ui/core'
-import PrivateComponent from 'app/PrivateComponent'
-import { Link } from 'react-router-dom'
+import { Grid, LinearProgress } from '@material-ui/core'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -68,35 +66,7 @@ const Home = (): JSX.Element => {
           </Grid>
         </Grid>
       </ReactiveBase>
-      <PrivateComponent>
-        <Button component={ Link } to='listings/new' variant='contained'>
-          Create a Listing
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/sell' variant='contained'>
-          Start Selling
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/add_payment' variant='contained'>
-          Add Payment Method
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='membership/new' variant='contained'>
-          Become a Member
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent
-        loggedOut={
-          <Button component={ Link } to='/login' variant='contained'>
-            Log in
-          </Button>
-        }
-      >
-        <LogoutButton />
-      </PrivateComponent>
+
     </>
   )
 }

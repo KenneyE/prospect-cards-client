@@ -4,7 +4,7 @@ import Dumb from './LogoutButton'
 const LogoutButton = (): JSX.Element => {
   const handleClick = (): void => {
     localStorage.removeItem('fund-reporter-token')
-    window.location.replace('/login')
+    window.location.reload()
   }
 
   return <Dumb onClick={ handleClick }/>
