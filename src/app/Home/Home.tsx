@@ -1,5 +1,4 @@
 import React from 'react'
-import LogoutButton from 'app/common/LogoutButton'
 import {
   ReactiveBase,
   DataSearch,
@@ -37,6 +36,7 @@ const Home = (): JSX.Element => {
           </Grid>
           <Grid item xs={ 10 }>
             <ReactiveList
+              infiniteScroll
               dataField='player.name'
               componentId='SearchResult'
               react={ {

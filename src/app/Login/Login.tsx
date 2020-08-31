@@ -1,12 +1,14 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { RouteComponentProps } from 'react-router'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
 import TextField from '@material-ui/core/TextField'
 import { StyleRules } from '@material-ui/core/styles/withStyles'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { toast } from 'react-toastify'
 import { makeStyles } from '@material-ui/core/styles'
-import {Typography} from '@material-ui/core'
 
 const useStyles = makeStyles(
   (theme: Theme): StyleRules => ({
@@ -30,7 +32,11 @@ interface SignInResp {
   message: string;
 }
 
-const Login = (): JSX.Element => {
+interface Props extends RouteComponentProps {
+  refresh: () => Promise<void>;
+}
+
+const Login = ({ history, location, refresh }: Props): JSX.Element => {
   const classes = useStyles()
   const [fields, setFields] = useState({
     email: '',
@@ -61,13 +67,16 @@ const Login = (): JSX.Element => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ user: fields }),
-    }).then((response): void => {
+    }).then(async(response): Promise<void> => {
       setLoading(false)
 
       const token = response.headers.get('Authorization')
       if (response.status === 200 && token) {
         localStorage.setItem('fund-reporter-token', token)
-        window.location.reload()
+        await refresh()
+        // @ts-ignore
+        const referrer = location.state && location.state.from
+        history.push(referrer || '/')
       } else {
         toast.error(response.statusText)
       }
@@ -77,38 +86,46 @@ const Login = (): JSX.Element => {
   const { email, password } = fields
 
   return (
-    <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
-      <Typography>Login</Typography>
-      <TextField
-        id='user-email'
-        label='Email'
-        value={ email }
-        onChange={ handleChange('email') }
-        margin='normal'
-        autoFocus
-        fullWidth
+    <Card className={ classes.card }>
+      <CardMedia
+        className={ classes.media }
+        image={ `${process.env.PUBLIC_URL}/logos/CanyonCompliance-orange.png` }
+        title='Contemplative Reptile'
       />
-      <br />
-      <TextField
-        id='user-password'
-        label='Password'
-        type='password'
-        value={ password }
-        onChange={ handleChange('password') }
-        margin='normal'
-        fullWidth
-      />
-      <br />
-      <Button
-        fullWidth
-        variant='contained'
-        color='primary'
-        type='submit'
-        className={ classes.button }
-      >
-        Sign In
-      </Button>
-    </form>
+      <CardContent>
+        <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
+          <TextField
+            id='user-email'
+            label='Email'
+            value={ email }
+            onChange={ handleChange('email') }
+            margin='normal'
+            autoFocus
+            fullWidth
+          />
+          <br />
+          <TextField
+            id='user-password'
+            label='Password'
+            type='password'
+            value={ password }
+            onChange={ handleChange('password') }
+            margin='normal'
+            fullWidth
+          />
+          <br />
+          <Button
+            fullWidth
+            variant='contained'
+            color='primary'
+            type='submit'
+            className={ classes.button }
+          >
+            Sign In
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   )
 }
 
