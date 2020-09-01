@@ -3,7 +3,6 @@ import useStyles from './styles'
 import {
   Badge,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Toolbar,
@@ -11,7 +10,6 @@ import {
   AppBar,
   Divider,
 } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import MailIcon from '@material-ui/icons/Mail'
@@ -21,10 +19,7 @@ import LogoutButton from 'app/common/LogoutButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 
-interface Props {
-  loggedIn?: boolean;
-}
-const NavBar = ({ loggedIn = false }: Props): JSX.Element => {
+const NavBar = (): JSX.Element => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [
@@ -67,22 +62,30 @@ const NavBar = ({ loggedIn = false }: Props): JSX.Element => {
       <MenuItem onClick={ handleMenuClose }>My account</MenuItem>
       <Divider />
       <PrivateComponent>
-        <MenuItem component={ Link } to='account/add_payment'>
+        <MenuItem
+          onClick={ handleMenuClose }
+          component={ Link }
+          to='account/add_payment'
+        >
           Add Payment Method
         </MenuItem>
       </PrivateComponent>
       <PrivateComponent>
-        <MenuItem component={ Link } to='listings/new'>
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='listings/new'>
           Create a Listing
         </MenuItem>
       </PrivateComponent>
       <PrivateComponent>
-        <MenuItem component={ Link } to='account/sell'>
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='account/sell'>
           Start Selling
         </MenuItem>
       </PrivateComponent>
       <PrivateComponent>
-        <MenuItem component={ Link } to='membership/new'>
+        <MenuItem
+          onClick={ handleMenuClose }
+          component={ Link }
+          to='membership/new'
+        >
           Become a Member
         </MenuItem>
       </PrivateComponent>
@@ -150,19 +153,6 @@ const NavBar = ({ loggedIn = false }: Props): JSX.Element => {
           <Typography className={ classes.title } variant='h6' noWrap>
             Krispy Kards
           </Typography>
-          <div className={ classes.search }>
-            <div className={ classes.searchIcon }>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder='Search…'
-              classes={ {
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              } }
-              inputProps={ { 'aria-label': 'search' } }
-            />
-          </div>
           <div className={ classes.grow } />
           <div className={ classes.sectionDesktop }>
             <IconButton aria-label='show 4 new mails' color='inherit'>

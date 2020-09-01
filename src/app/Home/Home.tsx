@@ -18,11 +18,19 @@ const Home = (): JSX.Element => {
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 2 }>
+          <Grid item md={ 2 } xs={ 12 }>
+            <DataSearch
+              componentId='all-search'
+              dataField={ ['player.name', 'description'] }
+              title='Search'
+              fuzziness='AUTO'
+            />
+            <br/>
             <MultiList
               componentId='name-list'
-              dataField='player.name'
+              dataField='player.name_as_keyword'
               title='Player'
+              placeholder='Player Name'
               size={ 100 }
               showCheckbox
               showCount
@@ -31,16 +39,17 @@ const Home = (): JSX.Element => {
             <DataSearch
               componentId='description-search'
               dataField='description'
+              placeholder='Description'
               title='Description'
             />
           </Grid>
-          <Grid item xs={ 10 }>
+          <Grid item md={ 10 } xs={ 12 }>
             <ReactiveList
               infiniteScroll
               dataField='player.name'
               componentId='SearchResult'
               react={ {
-                and: ['description-search', 'name-list'],
+                and: ['all-search', 'description-search', 'name-list'],
               } }
             >
               {({ data, loading }) => (
@@ -56,7 +65,8 @@ const Home = (): JSX.Element => {
                         } }
                       />
                       <ResultCard.Description>
-                        <span>{item.description}</span>
+                        <p>Player: {item.player.name}</p>
+                        <p>Description: {item.description}</p>
                       </ResultCard.Description>
                     </ResultCard>
                   ))}
@@ -66,7 +76,6 @@ const Home = (): JSX.Element => {
           </Grid>
         </Grid>
       </ReactiveBase>
-
     </>
   )
 }
