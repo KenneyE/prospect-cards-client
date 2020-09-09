@@ -32,7 +32,11 @@ interface SignInResp {
   message: string;
 }
 
-const Login = ({ history, location }: RouteComponentProps): JSX.Element => {
+interface Props extends RouteComponentProps {
+  refresh: () => Promise<void>;
+}
+
+const Login = ({ history, location, refresh }: Props): JSX.Element => {
   const classes = useStyles()
   const [fields, setFields] = useState({
     email: '',
@@ -63,12 +67,13 @@ const Login = ({ history, location }: RouteComponentProps): JSX.Element => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ user: fields }),
-    }).then((response): void => {
+    }).then(async(response): Promise<void> => {
       setLoading(false)
 
       const token = response.headers.get('Authorization')
       if (response.status === 200 && token) {
         localStorage.setItem('fund-reporter-token', token)
+        await refresh()
         // @ts-ignore
         const referrer = location.state && location.state.from
         history.push(referrer || '/')

@@ -1,5 +1,4 @@
 import React from 'react'
-import LogoutButton from 'app/common/LogoutButton'
 import {
   ReactiveBase,
   DataSearch,
@@ -7,9 +6,9 @@ import {
   ResultCard,
   MultiList,
 } from '@appbaseio/reactivesearch'
-import { Button, Grid, LinearProgress } from '@material-ui/core'
-import PrivateComponent from 'app/PrivateComponent'
-import { Link } from 'react-router-dom'
+import { Grid, LinearProgress } from '@material-ui/core'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -21,11 +20,19 @@ const Home = (): JSX.Element => {
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 2 }>
+          <Grid item md={ 2 } xs={ 12 }>
+            <DataSearch
+              componentId='all-search'
+              dataField={ ['player.name', 'description'] }
+              title='Search'
+              fuzziness='AUTO'
+            />
+            <br />
             <MultiList
               componentId='name-list'
-              dataField='player.name'
+              dataField='player.name_as_keyword'
               title='Player'
+              placeholder='Player Name'
               size={ 100 }
               showCheckbox
               showCount
@@ -34,15 +41,17 @@ const Home = (): JSX.Element => {
             <DataSearch
               componentId='description-search'
               dataField='description'
+              placeholder='Description'
               title='Description'
             />
           </Grid>
-          <Grid item xs={ 10 }>
+          <Grid item md={ 10 } xs={ 12 }>
             <ReactiveList
+              infiniteScroll
               dataField='player.name'
               componentId='SearchResult'
               react={ {
-                and: ['description-search', 'name-list'],
+                and: ['all-search', 'description-search', 'name-list'],
               } }
             >
               {({ data, loading }) => (
@@ -51,14 +60,30 @@ const Home = (): JSX.Element => {
 
                   {data.map((item: any) => (
                     <ResultCard key={ item._id }>
-                      <ResultCard.Image src={ item.image } />
+                      <Carousel
+                        showThumbs={ false }
+                        showStatus={ false }
+                        showIndicators={ item.image_urls.length > 1 }
+                      >
+                        {item.image_urls.map((image: string, ind: number) => {
+                          return (
+                            <img
+                              key={ image }
+                              src={ image }
+                              alt={ `Image ${ind} of ${item.player.name}` }
+                              style={ { width: 100, maxHeight: 140 } }
+                            />
+                          )
+                        })}
+                      </Carousel>
                       <ResultCard.Title
                         dangerouslySetInnerHTML={ {
                           __html: item.title,
                         } }
                       />
                       <ResultCard.Description>
-                        <span>{item.description}</span>
+                        <p>Player: {item.player.name}</p>
+                        <p>Description: {item.description}</p>
                       </ResultCard.Description>
                     </ResultCard>
                   ))}
@@ -68,35 +93,6 @@ const Home = (): JSX.Element => {
           </Grid>
         </Grid>
       </ReactiveBase>
-      <PrivateComponent>
-        <Button component={ Link } to='listings/new' variant='contained'>
-          Create a Listing
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/sell' variant='contained'>
-          Start Selling
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/add_payment' variant='contained'>
-          Add Payment Method
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='membership/new' variant='contained'>
-          Become a Member
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent
-        loggedOut={
-          <Button component={ Link } to='/login' variant='contained'>
-            Log in
-          </Button>
-        }
-      >
-        <LogoutButton />
-      </PrivateComponent>
     </>
   )
 }
