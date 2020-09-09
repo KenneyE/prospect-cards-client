@@ -9,6 +9,7 @@ import {
 import { Grid, LinearProgress } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import './carousel.css'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -64,6 +65,7 @@ const Home = (): JSX.Element => {
                         showThumbs={ false }
                         showStatus={ false }
                         infiniteLoop
+                        centerMode={ item.image_urls.length > 1 }
                         showIndicators={ item.image_urls.length > 1 }
                       >
                         {item.image_urls.map((image: string, ind: number) => {
