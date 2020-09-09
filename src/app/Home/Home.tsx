@@ -7,6 +7,8 @@ import {
   MultiList,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -25,7 +27,7 @@ const Home = (): JSX.Element => {
               title='Search'
               fuzziness='AUTO'
             />
-            <br/>
+            <br />
             <MultiList
               componentId='name-list'
               dataField='player.name_as_keyword'
@@ -58,7 +60,22 @@ const Home = (): JSX.Element => {
 
                   {data.map((item: any) => (
                     <ResultCard key={ item._id }>
-                      <ResultCard.Image src={ item.image } />
+                      <Carousel
+                        showThumbs={ false }
+                        showStatus={ false }
+                        showIndicators={ item.image_urls.length > 1 }
+                      >
+                        {item.image_urls.map((image: string, ind: number) => {
+                          return (
+                            <img
+                              key={ image }
+                              src={ image }
+                              alt={ `Image ${ind} of ${item.player.name}` }
+                              style={ { width: 100, maxHeight: 140 } }
+                            />
+                          )
+                        })}
+                      </Carousel>
                       <ResultCard.Title
                         dangerouslySetInnerHTML={ {
                           __html: item.title,
