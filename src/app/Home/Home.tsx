@@ -5,6 +5,7 @@ import {
   ReactiveList,
   ResultCard,
   MultiList,
+  SingleList,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
@@ -24,7 +25,7 @@ const Home = (): JSX.Element => {
           <Grid item md={ 2 } xs={ 12 }>
             <DataSearch
               componentId='all-search'
-              dataField={ ['player.name', 'description'] }
+              dataField={ ['player.name', 'category.name', 'description'] }
               title='Search'
               fuzziness='AUTO'
             />
@@ -39,6 +40,12 @@ const Home = (): JSX.Element => {
               showCount
               showSearch
             />
+            <SingleList
+              dataField='category.name'
+              showRadio
+              componentId='category-search'
+              title='Category'
+            />
             <DataSearch
               componentId='description-search'
               dataField='description'
@@ -52,7 +59,12 @@ const Home = (): JSX.Element => {
               dataField='player.name'
               componentId='SearchResult'
               react={ {
-                and: ['all-search', 'description-search', 'name-list'],
+                and: [
+                  'all-search',
+                  'description-search',
+                  'name-list',
+                  'category-search',
+                ],
               } }
             >
               {({ data, loading }) => (
