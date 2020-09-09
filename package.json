@@ -90,7 +90,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "pretty-quick --staged",
-      "eslint --cache --fix"
+      "eslint --fix"
     ]
   }
 }
