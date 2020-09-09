@@ -71,7 +71,7 @@ const Home = (): JSX.Element => {
                             <img
                               key={ image }
                               src={ image }
-                              alt={ `Image ${ind} of ${item.player.name}` }
+                              alt={ `${item.player.name} No. ${ind}` }
                               style={ { width: 100, maxHeight: 140 } }
                             />
                           )
