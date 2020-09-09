@@ -38,7 +38,7 @@
     "eject": "react-scripts eject",
     "lint": "node ./node_modules/.bin/eslint ./src/ --ext=js,jsx,ts,tsx --fix",
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}' --loglevel=silent",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "get-schema": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,7 +68,6 @@
     "@types/yup": "^0.29.6",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
-    "eslint": "^7.8.1",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard-react": "^9.2.0",

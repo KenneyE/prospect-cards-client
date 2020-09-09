@@ -18,14 +18,22 @@ import MoreIcon from '@material-ui/icons/MoreVert'
 import LogoutButton from 'app/common/LogoutButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
+import { AccountQuery } from 'types/graphql'
 
-const NavBar = (): JSX.Element => {
+interface Props {
+  data?: AccountQuery;
+}
+
+const NavBar = ({ data }: Props): JSX.Element => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [
     mobileMoreAnchorEl,
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null)
+
+  const isSeller = data?.viewer.stripeAccount.chargesEnabled
+  const hasSubscription = data?.viewer.hasActiveSubscription
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -71,24 +79,36 @@ const NavBar = (): JSX.Element => {
         </MenuItem>
       </PrivateComponent>
       <PrivateComponent>
-        <MenuItem onClick={ handleMenuClose } component={ Link } to='listings/new'>
-          Create a Listing
-        </MenuItem>
+        {isSeller ? (
+          <MenuItem
+            onClick={ handleMenuClose }
+            component={ Link }
+            to='listings/new'
+          >
+            Create a Listing
+          </MenuItem>
+        ) : (
+          <MenuItem
+            onClick={ handleMenuClose }
+            component={ Link }
+            to='account/sell'
+          >
+            Start Selling
+          </MenuItem>
+        )}
       </PrivateComponent>
-      <PrivateComponent>
-        <MenuItem onClick={ handleMenuClose } component={ Link } to='account/sell'>
-          Start Selling
-        </MenuItem>
-      </PrivateComponent>
-      <PrivateComponent>
-        <MenuItem
-          onClick={ handleMenuClose }
-          component={ Link }
-          to='membership/new'
-        >
-          Become a Member
-        </MenuItem>
-      </PrivateComponent>
+      {!hasSubscription && (
+        <PrivateComponent>
+          <MenuItem
+            onClick={ handleMenuClose }
+            component={ Link }
+            to='membership/new'
+          >
+            Become a Member
+          </MenuItem>
+        </PrivateComponent>
+      )}
+
       <Divider />
 
       <PrivateComponent

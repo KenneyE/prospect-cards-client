@@ -26,8 +26,10 @@ export type ActiveRecordInterface = {
 export type Listing = ActiveRecordInterface & {
   __typename?: 'Listing';
   createdAt: Scalars['ISO8601DateTime'];
+  description: Scalars['String'];
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
+  title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
@@ -72,8 +74,14 @@ export type Product = {
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
+  listing: Listing;
   stripeCheckoutSessionId: Scalars['String'];
   viewer: User;
+};
+
+
+export type QueryListingArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -104,6 +112,7 @@ export type User = ActiveRecordInterface & {
   availableProducts: Array<Product>;
   createdAt: Scalars['ISO8601DateTime'];
   errors: Array<Scalars['String']>;
+  hasActiveSubscription: Scalars['Boolean'];
   id: Scalars['Int'];
   listings: Array<Listing>;
   paymentIntent: Scalars['String'];
@@ -143,6 +152,21 @@ export type SaveListingMutation = (
       & Pick<User, 'id'>
     ) }
   )> }
+);
+
+export type AccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'hasActiveSubscription'>
+    & { stripeAccount: (
+      { __typename?: 'StripeAccount' }
+      & Pick<StripeAccount, 'id' | 'chargesEnabled' | 'onboardingLink'>
+    ) }
+  ) }
 );
 
 export type StripeAccountQueryVariables = Exact<{
@@ -265,6 +289,44 @@ export function useSaveListingMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type SaveListingMutationHookResult = ReturnType<typeof useSaveListingMutation>;
 export type SaveListingMutationResult = ApolloReactCommon.MutationResult<SaveListingMutation>;
 export type SaveListingMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveListingMutation, SaveListingMutationVariables>;
+export const AccountDocument = gql`
+    query account {
+  viewer {
+    id
+    hasActiveSubscription
+    stripeAccount {
+      id
+      chargesEnabled
+      onboardingLink
+    }
+  }
+}
+    `;
+
+/**
+ * __useAccountQuery__
+ *
+ * To run a query within a React component, call `useAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AccountQuery, AccountQueryVariables>) {
+        return ApolloReactHooks.useQuery<AccountQuery, AccountQueryVariables>(AccountDocument, baseOptions);
+      }
+export function useAccountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AccountQuery, AccountQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AccountQuery, AccountQueryVariables>(AccountDocument, baseOptions);
+        }
+export type AccountQueryHookResult = ReturnType<typeof useAccountQuery>;
+export type AccountLazyQueryHookResult = ReturnType<typeof useAccountLazyQuery>;
+export type AccountQueryResult = ApolloReactCommon.QueryResult<AccountQuery, AccountQueryVariables>;
 export const StripeAccountDocument = gql`
     query stripeAccount($refresh: Boolean) {
   viewer {
