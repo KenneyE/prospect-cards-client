@@ -72,7 +72,7 @@ const Home = (): JSX.Element => {
                               key={ image }
                               src={ image }
                               alt={ `${item.player.name} No. ${ind}` }
-                              style={ { width: 100, maxHeight: 140 } }
+                              style={ { height: 170, width: 'auto' } }
                             />
                           )
                         })}
