@@ -63,6 +63,7 @@ const Home = (): JSX.Element => {
                       <Carousel
                         showThumbs={ false }
                         showStatus={ false }
+                        infiniteLoop
                         showIndicators={ item.image_urls.length > 1 }
                       >
                         {item.image_urls.map((image: string, ind: number) => {
