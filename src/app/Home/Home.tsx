@@ -5,10 +5,12 @@ import {
   ReactiveList,
   ResultCard,
   MultiList,
+  SingleList,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import './carousel.css'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -23,7 +25,7 @@ const Home = (): JSX.Element => {
           <Grid item md={ 2 } xs={ 12 }>
             <DataSearch
               componentId='all-search'
-              dataField={ ['player.name', 'description'] }
+              dataField={ ['player.name', 'category.name', 'description'] }
               title='Search'
               fuzziness='AUTO'
             />
@@ -33,10 +35,22 @@ const Home = (): JSX.Element => {
               dataField='player.name_as_keyword'
               title='Player'
               placeholder='Player Name'
-              size={ 100 }
+              size={ 8 }
               showCheckbox
-              showCount
-              showSearch
+            />
+            <MultiList
+              componentId='product-type-list'
+              dataField='product_type.name'
+              title='Type'
+              placeholder='Set'
+              size={ 8 }
+              showCheckbox
+            />
+            <SingleList
+              dataField='category.name'
+              showRadio
+              componentId='category-search'
+              title='Category'
             />
             <DataSearch
               componentId='description-search'
@@ -51,7 +65,13 @@ const Home = (): JSX.Element => {
               dataField='player.name'
               componentId='SearchResult'
               react={ {
-                and: ['all-search', 'description-search', 'name-list'],
+                and: [
+                  'all-search',
+                  'description-search',
+                  'name-list',
+                  'category-search',
+                  'product-type-list',
+                ],
               } }
             >
               {({ data, loading }) => (
@@ -64,6 +84,7 @@ const Home = (): JSX.Element => {
                         showThumbs={ false }
                         showStatus={ false }
                         infiniteLoop
+                        centerMode={ item.image_urls.length > 1 }
                         showIndicators={ item.image_urls.length > 1 }
                       >
                         {item.image_urls.map((image: string, ind: number) => {

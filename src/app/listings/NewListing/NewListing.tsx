@@ -5,12 +5,15 @@ import {
   Card,
   CardContent,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
+  NewListingFieldsQuery,
   PlayerInput,
   SaveListingMutationFn,
   Scalars,
@@ -27,10 +30,10 @@ const ListingSchema = Yup.object().shape({
       .min(5, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Required'),
-    description: Yup.string()
-      .min(25, 'Too Short!')
-      .required('Required'),
-    images: Yup.array().required('Required'),
+    description: Yup.string().min(25, 'Too Short!').required('Required'),
+    images: Yup.array().min(1, 'Must include at least 1 image.'),
+    categoryId: Yup.number().required('Required'),
+    productTypeId: Yup.number().required('Required'),
   }),
   player: Yup.object().shape({ name: Yup.string().required('Required') }),
 })
@@ -38,9 +41,10 @@ const ListingSchema = Yup.object().shape({
 interface Props {
   loading: boolean;
   saveListing: SaveListingMutationFn;
+  data: NewListingFieldsQuery;
 }
 
-const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
+const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
   const classes = useStyles()
 
   const initialValues: {
@@ -51,6 +55,8 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
       title: '',
       description: '',
       images: [],
+      categoryId: data.categories[0].id,
+      productTypeId: data.productTypes[0].id,
     },
     player: {
       name: '',
@@ -136,6 +142,32 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
               <PlayerInputField
                 onChange={ (name: string) => setFieldValue('player.name', name) }
               />
+              <Select
+                style={ { width: 300 } }
+                name='listing.categoryId'
+                value={ values.listing.categoryId }
+                onChange={ handleChange }
+                variant='outlined'
+              >
+                {(data?.categories || []).map((cat) => (
+                  <MenuItem key={ cat.id } value={ cat.id }>
+                    {cat.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select
+                style={ { width: 300 } }
+                name='listing.productTypeId'
+                value={ values.listing.productTypeId }
+                onChange={ handleChange }
+                variant='outlined'
+              >
+                {(data?.productTypes || []).map((type) => (
+                  <MenuItem key={ type.id } value={ type.id }>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
               {errors.player?.name && touched.player?.name ? (
                 <div>{errors.player.name}</div>
               ) : null}

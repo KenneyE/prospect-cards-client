@@ -26,12 +26,11 @@ gql`
   }
 `
 
-
 gql`
   query products {
     viewer {
       id
-      availableProducts {
+      availableMemberships {
         token
         price
         term
