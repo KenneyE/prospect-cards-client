@@ -22,6 +22,15 @@ export type ActiveRecordInterface = {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+export type Category = ActiveRecordInterface & {
+  __typename?: 'Category';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 
 export type Listing = ActiveRecordInterface & {
   __typename?: 'Listing';
@@ -38,6 +47,19 @@ export type ListingInput = {
   title: Scalars['String'];
   description: Scalars['String'];
   images: Array<Scalars['Upload']>;
+  categoryId: Scalars['Int'];
+  productTypeId: Scalars['Int'];
+};
+
+export type Membership = ActiveRecordInterface & {
+  __typename?: 'Membership';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  price: Scalars['Int'];
+  term: Scalars['String'];
+  token: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type Mutation = {
@@ -64,17 +86,21 @@ export type PlayerInput = {
   name: Scalars['String'];
 };
 
-export type Product = {
+export type Product = ActiveRecordInterface & {
   __typename?: 'Product';
-  price: Scalars['Int'];
-  term: Scalars['String'];
-  token: Scalars['String'];
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
+  categories: Array<Category>;
   listing: Listing;
+  productTypes: Array<Product>;
   stripeCheckoutSessionId: Scalars['String'];
   viewer: User;
 };
@@ -109,7 +135,7 @@ export type StripeAccount = ActiveRecordInterface & {
 
 export type User = ActiveRecordInterface & {
   __typename?: 'User';
-  availableProducts: Array<Product>;
+  availableMemberships: Array<Membership>;
   createdAt: Scalars['ISO8601DateTime'];
   errors: Array<Scalars['String']>;
   hasActiveSubscription: Scalars['Boolean'];
@@ -240,11 +266,25 @@ export type ProductsQuery = (
   & { viewer: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
-    & { availableProducts: Array<(
-      { __typename?: 'Product' }
-      & Pick<Product, 'token' | 'price' | 'term'>
+    & { availableMemberships: Array<(
+      { __typename?: 'Membership' }
+      & Pick<Membership, 'token' | 'price' | 'term'>
     )> }
   ) }
+);
+
+export type NewListingFieldsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewListingFieldsQuery = (
+  { __typename?: 'Query' }
+  & { categories: Array<(
+    { __typename?: 'Category' }
+    & Pick<Category, 'id' | 'name'>
+  )>, productTypes: Array<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name'>
+  )> }
 );
 
 export const PlayerFragmentDoc = gql`
@@ -499,7 +539,7 @@ export const ProductsDocument = gql`
     query products {
   viewer {
     id
-    availableProducts {
+    availableMemberships {
       token
       price
       term
@@ -532,3 +572,40 @@ export function useProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
 export type ProductsQueryResult = ApolloReactCommon.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const NewListingFieldsDocument = gql`
+    query newListingFields {
+  categories {
+    id
+    name
+  }
+  productTypes {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useNewListingFieldsQuery__
+ *
+ * To run a query within a React component, call `useNewListingFieldsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewListingFieldsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewListingFieldsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewListingFieldsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NewListingFieldsQuery, NewListingFieldsQueryVariables>) {
+        return ApolloReactHooks.useQuery<NewListingFieldsQuery, NewListingFieldsQueryVariables>(NewListingFieldsDocument, baseOptions);
+      }
+export function useNewListingFieldsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NewListingFieldsQuery, NewListingFieldsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<NewListingFieldsQuery, NewListingFieldsQueryVariables>(NewListingFieldsDocument, baseOptions);
+        }
+export type NewListingFieldsQueryHookResult = ReturnType<typeof useNewListingFieldsQuery>;
+export type NewListingFieldsLazyQueryHookResult = ReturnType<typeof useNewListingFieldsLazyQuery>;
+export type NewListingFieldsQueryResult = ApolloReactCommon.QueryResult<NewListingFieldsQuery, NewListingFieldsQueryVariables>;

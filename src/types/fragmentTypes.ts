@@ -7,8 +7,11 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "ActiveRecordInterface": [
+      "Category",
       "Listing",
+      "Membership",
       "Player",
+      "Product",
       "StripeAccount",
       "User"
     ]

@@ -35,10 +35,16 @@ const Home = (): JSX.Element => {
               dataField='player.name_as_keyword'
               title='Player'
               placeholder='Player Name'
-              size={ 100 }
+              size={ 8 }
               showCheckbox
-              showCount
-              showSearch
+            />
+            <MultiList
+              componentId='product-type-list'
+              dataField='product_type.name'
+              title='Type'
+              placeholder='Set'
+              size={ 8 }
+              showCheckbox
             />
             <SingleList
               dataField='category.name'
@@ -64,6 +70,7 @@ const Home = (): JSX.Element => {
                   'description-search',
                   'name-list',
                   'category-search',
+                  'product-type-list',
                 ],
               } }
             >
