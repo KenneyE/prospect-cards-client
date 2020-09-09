@@ -31,6 +31,13 @@
     "typescript": "~3.7.2",
     "yup": "^0.29.3"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "pretty-quick --staged",
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
