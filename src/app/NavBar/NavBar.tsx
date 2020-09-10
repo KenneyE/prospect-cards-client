@@ -170,7 +170,13 @@ const NavBar = ({ data }: Props): JSX.Element => {
     <div className={ classes.grow }>
       <AppBar position='fixed'>
         <Toolbar>
-          <Typography className={ classes.title } variant='h6' noWrap>
+          <Typography
+            component={ Link }
+            to='/'
+            className={ classes.title }
+            variant='h6'
+            noWrap
+          >
             Krispy Kards
           </Typography>
           <div className={ classes.grow } />

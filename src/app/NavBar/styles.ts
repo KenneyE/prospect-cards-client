@@ -9,10 +9,8 @@ export default makeStyles(
       marginRight: theme.spacing(2),
     },
     title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
+      color: 'inherit',
+      textDecoration: 'none',
     },
     search: {
       position: 'relative',
