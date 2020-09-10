@@ -23,18 +23,18 @@ const AppContainer = ({ loggedIn }: Props): JSX.Element => {
   return (
     <MuiThemeProvider theme={ theme }>
       <CssBaseline />
-      <Elements stripe={ stripe }>
-        <NavBar />
-        <div className={ classes.root }>
-          <main className={ classes.content }>
-            <div className={ classes.appBarSpacer } />
-            <Container maxWidth='xl' className={ classes.container }>
-              <Router />
-            </Container>
-          </main>
-        </div>
-        <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
-      </Elements>
+      {/*<Elements stripe={ stripe }>*/}
+      <NavBar />
+      <div className={ classes.root }>
+        <main className={ classes.content }>
+          <div className={ classes.appBarSpacer } />
+          <Container maxWidth='xl' className={ classes.container }>
+            <Router />
+          </Container>
+        </main>
+      </div>
+      <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
+      {/*</Elements>*/}
     </MuiThemeProvider>
   )
 }

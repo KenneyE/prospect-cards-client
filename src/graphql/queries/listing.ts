@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 gql`
-  query listing($id: Int!, $track: Boolean) {
-    listing(id: $id, track: $track) {
+  query listing($id: Int!) {
+    listing(id: $id) {
       id
       title
       description
