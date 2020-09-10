@@ -23,6 +23,7 @@ const Listing = ({
         infiniteLoop
         centerMode={ imageUrls.length > 1 }
         showIndicators={ imageUrls.length > 1 }
+        width={ 400 }
       >
         {imageUrls.map((image: string, ind: number) => {
           return (
