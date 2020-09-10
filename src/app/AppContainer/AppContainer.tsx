@@ -24,7 +24,7 @@ const AppContainer = ({ loggedIn }: Props): JSX.Element => {
     <MuiThemeProvider theme={ theme }>
       <CssBaseline />
       <Elements stripe={ stripe }>
-        <NavBar/>
+        <NavBar />
         <div className={ classes.root }>
           <main className={ classes.content }>
             <div className={ classes.appBarSpacer } />
