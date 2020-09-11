@@ -38,6 +38,7 @@ export type Listing = ActiveRecordInterface & {
   description: Scalars['String'];
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
+  imageUrls: Array<Scalars['String']>;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
@@ -108,6 +109,7 @@ export type Query = {
 
 export type QueryListingArgs = {
   id: Scalars['Int'];
+  track?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -270,6 +272,20 @@ export type ProductsQuery = (
       { __typename?: 'Membership' }
       & Pick<Membership, 'token' | 'price' | 'term'>
     )> }
+  ) }
+);
+
+export type ListingQueryVariables = Exact<{
+  id: Scalars['Int'];
+  track?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type ListingQuery = (
+  { __typename?: 'Query' }
+  & { listing: (
+    { __typename?: 'Listing' }
+    & Pick<Listing, 'id' | 'title' | 'description' | 'imageUrls'>
   ) }
 );
 
@@ -572,6 +588,43 @@ export function useProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
 export type ProductsQueryResult = ApolloReactCommon.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const ListingDocument = gql`
+    query listing($id: Int!, $track: Boolean) {
+  listing(id: $id, track: $track) {
+    id
+    title
+    description
+    imageUrls
+  }
+}
+    `;
+
+/**
+ * __useListingQuery__
+ *
+ * To run a query within a React component, call `useListingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListingQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      track: // value for 'track'
+ *   },
+ * });
+ */
+export function useListingQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListingQuery, ListingQueryVariables>) {
+        return ApolloReactHooks.useQuery<ListingQuery, ListingQueryVariables>(ListingDocument, baseOptions);
+      }
+export function useListingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListingQuery, ListingQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ListingQuery, ListingQueryVariables>(ListingDocument, baseOptions);
+        }
+export type ListingQueryHookResult = ReturnType<typeof useListingQuery>;
+export type ListingLazyQueryHookResult = ReturnType<typeof useListingLazyQuery>;
+export type ListingQueryResult = ApolloReactCommon.QueryResult<ListingQuery, ListingQueryVariables>;
 export const NewListingFieldsDocument = gql`
     query newListingFields {
   categories {
