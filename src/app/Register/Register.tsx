@@ -36,11 +36,12 @@ interface Props extends RouteComponentProps {
   refresh: () => Promise<void>;
 }
 
-const Login = ({ history, location, refresh }: Props): JSX.Element => {
+const Register = ({ history, location, refresh }: Props): JSX.Element => {
   const classes = useStyles()
   const [fields, setFields] = useState({
     email: '',
     password: '',
+    password_confirmation: '',
   })
   const [loading, setLoading] = useState(false)
 
@@ -61,7 +62,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
     event.preventDefault()
     setLoading(true)
 
-    fetch(`${process.env.REACT_APP_API_URI}/users/sign_in`, {
+    fetch(`${process.env.REACT_APP_API_URI}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +76,6 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
         if (response.status === 200 && token) {
           localStorage.setItem('fund-reporter-token', token)
           await refresh()
-
           history.push(location.state?.from || '/')
         } else {
           toast.error(response.statusText)
@@ -84,7 +84,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
     )
   }
 
-  const { email, password } = fields
+  const { email, password, password_confirmation } = fields
 
   return (
     <Card className={ classes.card }>
@@ -115,6 +115,16 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
             fullWidth
           />
           <br />
+          <TextField
+            id='user-password-confirmation'
+            label='Password Confirmation'
+            type='password'
+            value={ password_confirmation }
+            onChange={ handleChange('password_confirmation') }
+            margin='normal'
+            fullWidth
+          />
+          <br />
           <Button
             fullWidth
             variant='contained'
@@ -122,7 +132,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
             type='submit'
             className={ classes.button }
           >
-            Sign In
+            Join
           </Button>
         </form>
       </CardContent>
@@ -130,4 +140,4 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
   )
 }
 
-export default Login
+export default Register

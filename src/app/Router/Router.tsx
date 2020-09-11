@@ -13,6 +13,7 @@ import AddPayment from 'app/account/AddPayment'
 import PaymentAdded from 'app/account/PaymentAdded'
 import NewMembership from 'app/memberships/NewMembership'
 import TestStuff from 'app/TestStuff'
+import Register from 'app/Register'
 
 const Router = (): JSX.Element => {
   return (
@@ -41,6 +42,7 @@ const Router = (): JSX.Element => {
       <PrivateRoute exact path='/membership/new' component={ NewMembership } />
 
       <Route exact path='/login' component={ Login } />
+      <Route exact path='/register' component={ Register } />
       <Redirect to='/' />
     </Switch>
   )
