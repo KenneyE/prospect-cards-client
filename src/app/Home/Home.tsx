@@ -7,14 +7,18 @@ import {
   MultiList,
   SingleList,
 } from '@appbaseio/reactivesearch'
-import { Grid, LinearProgress } from '@material-ui/core'
+import { Grid, LinearProgress, Typography } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './carousel.css'
+import { Link } from 'react-router-dom'
+import useStyles from './styles'
 
 const { ResultCardsWrapper } = ReactiveList
 
 const Home = (): JSX.Element => {
+  const classes = useStyles()
+
   return (
     <>
       <ReactiveBase
@@ -93,20 +97,27 @@ const Home = (): JSX.Element => {
                               key={ image }
                               src={ image }
                               alt={ `${item.player.name} No. ${ind}` }
-                              style={ { height: 170, width: 'auto' } }
+                              className={ classes.img }
                             />
                           )
                         })}
                       </Carousel>
-                      <ResultCard.Title
-                        dangerouslySetInnerHTML={ {
-                          __html: item.title,
-                        } }
-                      />
-                      <ResultCard.Description>
-                        <p>Player: {item.player.name}</p>
-                        <p>Description: {item.description}</p>
-                      </ResultCard.Description>
+                      <Link
+                        className={ classes.linkArea }
+                        to={ `/listings/${item.id}` }
+                      >
+                        <ResultCard.Title
+                          dangerouslySetInnerHTML={ {
+                            __html: item.title,
+                          } }
+                        />
+                        <ResultCard.Description>
+                          <Typography>Player: {item.player.name}</Typography>
+                          <Typography>
+                            Description: {item.description}
+                          </Typography>
+                        </ResultCard.Description>
+                      </Link>
                     </ResultCard>
                   ))}
                 </ResultCardsWrapper>
