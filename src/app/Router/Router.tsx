@@ -12,7 +12,6 @@ import StripeAccountVerification from 'app/account/StripeAccountVerification'
 import AddPayment from 'app/account/AddPayment'
 import PaymentAdded from 'app/account/PaymentAdded'
 import NewMembership from 'app/memberships/NewMembership'
-import TestStuff from 'app/TestStuff'
 import Register from 'app/Register'
 
 const Router = (): JSX.Element => {
@@ -38,7 +37,6 @@ const Router = (): JSX.Element => {
         path='/account/verification'
         component={ StripeAccountVerification }
       />
-      <PrivateRoute exact path='/account/test' component={ TestStuff } />
       <PrivateRoute exact path='/membership/new' component={ NewMembership } />
 
       <Route exact path='/login' component={ Login } />
