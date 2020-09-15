@@ -9,6 +9,7 @@ import {
   Typography,
   AppBar,
   Divider,
+  Button,
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
@@ -180,6 +181,20 @@ const NavBar = ({ data }: Props): JSX.Element => {
             Krispy Kards
           </Typography>
           <div className={ classes.grow } />
+          <PrivateComponent
+            loggedOut={
+              <Button
+                component={ Link }
+                variant='outlined'
+                color='secondary'
+                to='/register'
+              >
+                Register
+              </Button>
+            }
+          >
+            <span />
+          </PrivateComponent>
           <div className={ classes.sectionDesktop }>
             <IconButton aria-label='show 4 new mails' color='inherit'>
               <Badge badgeContent={ 4 } color='secondary'>
