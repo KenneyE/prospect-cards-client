@@ -75,8 +75,10 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
         if (response.status === 200 && token) {
           localStorage.setItem('fund-reporter-token', token)
           await refresh()
-
-          history.push(location.state?.from || '/')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const referrer = location.state && location.state.from
+          history.push(referrer || '/')
         } else {
           toast.error(response.statusText)
         }

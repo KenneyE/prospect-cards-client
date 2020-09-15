@@ -62,7 +62,7 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
     event.preventDefault()
     setLoading(true)
 
-    fetch(`${process.env.REACT_APP_API_URI}/users`, {
+    fetch(`${process.env.REACT_APP_API_URI}/users.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,10 +73,13 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
         setLoading(false)
 
         const token = response.headers.get('Authorization')
-        if (response.status === 200 && token) {
+        if (response.status === 201 && token) {
           localStorage.setItem('fund-reporter-token', token)
           await refresh()
-          history.push(location.state?.from || '/')
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const referrer = location.state && location.state.from
+          history.push(referrer || '/')
         } else {
           toast.error(response.statusText)
         }
