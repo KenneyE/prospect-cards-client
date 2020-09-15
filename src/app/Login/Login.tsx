@@ -72,7 +72,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
         setLoading(false)
 
         const token = response.headers.get('Authorization')
-        if (response.status === 200 && token) {
+        if (response.status === 201 && token) {
           localStorage.setItem('fund-reporter-token', token)
           await refresh()
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
