@@ -7,12 +7,22 @@ import {
   MultiList,
   SingleList,
 } from '@appbaseio/reactivesearch'
-import { Grid, LinearProgress, Typography } from '@material-ui/core'
+import {
+  Button,
+  Divider,
+  FormControl,
+  Grid,
+  LinearProgress,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './carousel.css'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
+import PrivateComponent from 'app/PrivateComponent'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -79,11 +89,11 @@ const Home = (): JSX.Element => {
               } }
             >
               {({ data, loading }) => (
-                <ResultCardsWrapper>
+                <ResultCardsWrapper className={ classes.resultsWrapper }>
                   {loading && <LinearProgress />}
 
                   {data.map((item: any) => (
-                    <ResultCard key={ item._id }>
+                    <Paper key={ item._id } className={ classes.resultCard }>
                       <Carousel
                         showThumbs={ false }
                         showStatus={ false }
@@ -102,23 +112,28 @@ const Home = (): JSX.Element => {
                           )
                         })}
                       </Carousel>
-                      <Link
-                        className={ classes.linkArea }
+                      <ResultCard.Title
+                        dangerouslySetInnerHTML={ {
+                          __html: item.title,
+                        } }
+                      />
+                      <Typography>Player: {item.player.name}</Typography>
+                      <Typography>Description: {item.description}</Typography>
+                      <div className={ classes.grow } />
+                      <PrivateComponent>
+                        <FormControl>
+                          <TextField variant='outlined' />
+                          <Button variant='outlined'>Make Offer</Button>
+                        </FormControl>
+                      </PrivateComponent>
+                      <Button
+                        fullWidth
+                        component={ Link }
                         to={ `/listings/${item.id}` }
                       >
-                        <ResultCard.Title
-                          dangerouslySetInnerHTML={ {
-                            __html: item.title,
-                          } }
-                        />
-                        <ResultCard.Description>
-                          <Typography>Player: {item.player.name}</Typography>
-                          <Typography>
-                            Description: {item.description}
-                          </Typography>
-                        </ResultCard.Description>
-                      </Link>
-                    </ResultCard>
+                        View
+                      </Button>
+                    </Paper>
                   ))}
                 </ResultCardsWrapper>
               )}
