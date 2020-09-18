@@ -9,7 +9,6 @@ import {
 } from '@appbaseio/reactivesearch'
 import {
   Button,
-  Divider,
   FormControl,
   Grid,
   LinearProgress,
@@ -23,6 +22,7 @@ import './carousel.css'
 import { Link } from 'react-router-dom'
 import useStyles from './styles'
 import PrivateComponent from 'app/PrivateComponent'
+import OfferForm from 'app/OfferForm'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -121,10 +121,7 @@ const Home = (): JSX.Element => {
                       <Typography>Description: {item.description}</Typography>
                       <div className={ classes.grow } />
                       <PrivateComponent>
-                        <FormControl>
-                          <TextField variant='outlined' />
-                          <Button variant='outlined'>Make Offer</Button>
-                        </FormControl>
+                        <OfferForm listingId={ item.id } />
                       </PrivateComponent>
                       <Button
                         fullWidth
