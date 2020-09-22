@@ -1,5 +1,4 @@
 import React from 'react'
-import useStyles from './styles'
 import { SaveOfferMutationFn } from 'types/graphql'
 import { Form, Formik } from 'formik'
 import { Button, TextField } from '@material-ui/core'

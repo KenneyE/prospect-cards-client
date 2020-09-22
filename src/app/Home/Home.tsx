@@ -3,26 +3,14 @@ import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
-  ResultCard,
   MultiList,
   SingleList,
 } from '@appbaseio/reactivesearch'
-import {
-  Button,
-  FormControl,
-  Grid,
-  LinearProgress,
-  Paper,
-  TextField,
-  Typography,
-} from '@material-ui/core'
-import { Carousel } from 'react-responsive-carousel'
+import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './carousel.css'
-import { Link } from 'react-router-dom'
 import useStyles from './styles'
-import PrivateComponent from 'app/PrivateComponent'
-import OfferForm from 'app/OfferForm'
+import SearchResult from 'app/listings/SearchResult'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -32,14 +20,16 @@ const Home = (): JSX.Element => {
   return (
     <>
       <ReactiveBase
-        app='listings'
+        app={ `listings${
+          process.env.NODE_ENV === 'development' ? '_development' : ''
+        }` }
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
         <Grid container spacing={ 3 }>
           <Grid item md={ 2 } xs={ 12 }>
             <DataSearch
               componentId='all-search'
-              dataField={ ['player.name', 'category.name', 'description'] }
+              dataField={ ['*'] }
               title='Search'
               fuzziness='AUTO'
             />
@@ -56,7 +46,7 @@ const Home = (): JSX.Element => {
               componentId='product-type-list'
               dataField='product_type.name'
               title='Type'
-              placeholder='Set'
+              placeholder='Search Types'
               size={ 8 }
               showCheckbox
             />
@@ -65,11 +55,12 @@ const Home = (): JSX.Element => {
               showRadio
               componentId='category-search'
               title='Category'
+              placeholder='Search Categories'
             />
             <DataSearch
               componentId='description-search'
               dataField='description'
-              placeholder='Description'
+              placeholder='Search Descriptions'
               title='Description'
             />
           </Grid>
@@ -93,44 +84,7 @@ const Home = (): JSX.Element => {
                   {loading && <LinearProgress />}
 
                   {data.map((item: any) => (
-                    <Paper key={ item._id } className={ classes.resultCard }>
-                      <Carousel
-                        showThumbs={ false }
-                        showStatus={ false }
-                        infiniteLoop
-                        centerMode={ item.image_urls.length > 1 }
-                        showIndicators={ item.image_urls.length > 1 }
-                      >
-                        {item.image_urls.map((image: string, ind: number) => {
-                          return (
-                            <img
-                              key={ image }
-                              src={ image }
-                              alt={ `${item.player.name} No. ${ind}` }
-                              className={ classes.img }
-                            />
-                          )
-                        })}
-                      </Carousel>
-                      <ResultCard.Title
-                        dangerouslySetInnerHTML={ {
-                          __html: item.title,
-                        } }
-                      />
-                      <Typography>Player: {item.player.name}</Typography>
-                      <Typography>Description: {item.description}</Typography>
-                      <div className={ classes.grow } />
-                      <PrivateComponent>
-                        <OfferForm listingId={ item.id } />
-                      </PrivateComponent>
-                      <Button
-                        fullWidth
-                        component={ Link }
-                        to={ `/listings/${item.id}` }
-                      >
-                        View
-                      </Button>
-                    </Paper>
+                    <SearchResult key={ item.id } item={ item } />
                   ))}
                 </ResultCardsWrapper>
               )}
