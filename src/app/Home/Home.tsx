@@ -27,7 +27,9 @@ const Home = ({ category }: Props): JSX.Element => {
     <>
       <ReactiveBase
         app={ `listings${
-          process.env.NODE_ENV === 'development' ? '_development' : ''
+          process.env.NODE_ENV === 'development' ?
+            '_development' :
+            '_production'
         }` }
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
