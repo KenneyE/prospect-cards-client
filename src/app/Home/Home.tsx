@@ -88,6 +88,13 @@ const Home = ({ category }: Props): JSX.Element => {
               title='Set'
               placeholder='Search Sets'
             />
+            <SingleList
+              dataField='grader.name'
+              showRadio
+              componentId='grader-search'
+              title='Graded By'
+              placeholder='Search Graders'
+            />
             <DataSearch
               componentId='description-search'
               dataField='description'
@@ -115,6 +122,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   'product-type-list',
                   'manufacturer-search',
                   'set-search',
+                  'grader.name',
                   'rookie-toggle',
                 ],
               } }
