@@ -18,9 +18,8 @@ const Router = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path='/' component={ Home } />
-      <Route exact path='/listings/:id' component={ Listing } />
-
       <PrivateRoute exact path='/listings/new' component={ NewListing } />
+      <Route exact path='/listings/:id' component={ Listing } />
 
       <PrivateRoute exact path='/account/sell' component={ SellerSetup } />
       <PrivateRoute
