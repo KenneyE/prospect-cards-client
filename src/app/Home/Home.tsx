@@ -6,6 +6,7 @@ import {
   MultiList,
   SingleList,
   ToggleButton,
+  DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -37,6 +38,16 @@ const Home = ({ category }: Props): JSX.Element => {
               dataField={ ['*'] }
               title='Search'
               fuzziness='AUTO'
+            />
+            <br />
+            <DynamicRangeSlider
+              componentId='price-slider'
+              dataField='price'
+              title='Price Range'
+              rangeLabels={ (min, max) => ({
+                start: '$' + min / 100,
+                end: '$' + max / 100,
+              }) }
             />
             <br />
             <MultiList
@@ -97,6 +108,7 @@ const Home = ({ category }: Props): JSX.Element => {
               react={ {
                 and: [
                   'all-search',
+                  'price-slider',
                   'description-search',
                   'name-list',
                   'category-search',
