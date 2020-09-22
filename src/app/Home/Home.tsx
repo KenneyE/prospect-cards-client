@@ -14,7 +14,11 @@ import SearchResult from 'app/listings/SearchResult'
 
 const { ResultCardsWrapper } = ReactiveList
 
-const Home = (): JSX.Element => {
+interface Props {
+  category?: string;
+}
+
+const Home = ({ category }: Props): JSX.Element => {
   const classes = useStyles()
 
   return (
@@ -55,6 +59,7 @@ const Home = (): JSX.Element => {
               showRadio
               componentId='category-search'
               title='Category'
+              value={ category }
               placeholder='Search Categories'
             />
             <DataSearch

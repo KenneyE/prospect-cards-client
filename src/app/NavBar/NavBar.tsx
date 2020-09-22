@@ -20,6 +20,7 @@ import LogoutButton from 'app/common/LogoutButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 import { AccountQuery } from 'types/graphql'
+import CategoryLink from 'app/common/CategoryLink'
 
 interface Props {
   data?: AccountQuery;
@@ -180,6 +181,21 @@ const NavBar = ({ data }: Props): JSX.Element => {
           >
             Krispy Kards
           </Typography>
+          <div className={ classes.grow } />
+          <Button
+            variant='outlined'
+            color='secondary'
+            component={ Link }
+            to='/listings/new'
+          >
+            Sell Something
+          </Button>
+          <CategoryLink category='Basketball' />
+          <CategoryLink category='Baseball' />
+          <CategoryLink category='Football' />
+          <CategoryLink category='Hockey' />
+          <CategoryLink category='Soccer' />
+          <CategoryLink category='Other' />
           <div className={ classes.grow } />
           <PrivateComponent
             loggedOut={

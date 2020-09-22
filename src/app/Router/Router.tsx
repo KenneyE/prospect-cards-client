@@ -18,6 +18,7 @@ const Router = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path='/' component={ Home } />
+      <Route exact path='/c/:category' component={ Home } />
       <PrivateRoute exact path='/listings/new' component={ NewListing } />
       <Route exact path='/listings/:id' component={ Listing } />
 
