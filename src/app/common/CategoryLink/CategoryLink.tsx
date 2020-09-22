@@ -8,7 +8,7 @@ interface Props {
 
 const CategoryLink = ({ category }: Props): JSX.Element => {
   return (
-    <Button component={ Link } to={ `/c/${category}` }>
+    <Button color='secondary' component={ Link } to={ `/c/${category}` }>
       {category}
     </Button>
   )
