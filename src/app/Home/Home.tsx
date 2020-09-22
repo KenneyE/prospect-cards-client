@@ -5,6 +5,7 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
+  ToggleButton,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -62,11 +63,30 @@ const Home = ({ category }: Props): JSX.Element => {
               value={ category }
               placeholder='Search Categories'
             />
+            <SingleList
+              dataField='manufacturer.name'
+              showRadio
+              componentId='manufacturer-search'
+              title='Manufacturer'
+              placeholder='Search Manufacturers'
+            />
+            <SingleList
+              dataField='set_type.name'
+              showRadio
+              componentId='set-search'
+              title='Set'
+              placeholder='Search Sets'
+            />
             <DataSearch
               componentId='description-search'
               dataField='description'
               placeholder='Search Descriptions'
               title='Description'
+            />
+            <ToggleButton
+              componentId='rookie-toggle'
+              dataField='rookie'
+              data={ [{ label: 'Rookie / 1st Year Only', value: true }] }
             />
           </Grid>
           <Grid item md={ 10 } xs={ 12 }>
@@ -81,6 +101,9 @@ const Home = ({ category }: Props): JSX.Element => {
                   'name-list',
                   'category-search',
                   'product-type-list',
+                  'manufacturer-search',
+                  'set-search',
+                  'rookie-toggle',
                 ],
               } }
             >
