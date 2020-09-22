@@ -182,6 +182,14 @@ const NavBar = ({ data }: Props): JSX.Element => {
             Krispy Kards
           </Typography>
           <div className={ classes.grow } />
+          <Button
+            variant='outlined'
+            color='secondary'
+            component={ Link }
+            to='/listings/new'
+          >
+            Sell Something
+          </Button>
           <CategoryLink category='Basketball' />
           <CategoryLink category='Baseball' />
           <CategoryLink category='Football' />
