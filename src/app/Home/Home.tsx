@@ -5,6 +5,8 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
+  ToggleButton,
+  DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -38,6 +40,16 @@ const Home = ({ category }: Props): JSX.Element => {
               fuzziness='AUTO'
             />
             <br />
+            <DynamicRangeSlider
+              componentId='price-slider'
+              dataField='price'
+              title='Price Range'
+              rangeLabels={ (min, max) => ({
+                start: '$' + min / 100,
+                end: '$' + max / 100,
+              }) }
+            />
+            <br />
             <MultiList
               componentId='name-list'
               dataField='player.name_as_keyword'
@@ -62,11 +74,37 @@ const Home = ({ category }: Props): JSX.Element => {
               value={ category }
               placeholder='Search Categories'
             />
+            <SingleList
+              dataField='manufacturer.name'
+              showRadio
+              componentId='manufacturer-search'
+              title='Manufacturer'
+              placeholder='Search Manufacturers'
+            />
+            <SingleList
+              dataField='set_type.name'
+              showRadio
+              componentId='set-search'
+              title='Set'
+              placeholder='Search Sets'
+            />
+            <SingleList
+              dataField='grader.name'
+              showRadio
+              componentId='grader-search'
+              title='Graded By'
+              placeholder='Search Graders'
+            />
             <DataSearch
               componentId='description-search'
               dataField='description'
               placeholder='Search Descriptions'
               title='Description'
+            />
+            <ToggleButton
+              componentId='rookie-toggle'
+              dataField='rookie'
+              data={ [{ label: 'Rookie / 1st Year Only', value: true }] }
             />
           </Grid>
           <Grid item md={ 10 } xs={ 12 }>
@@ -77,10 +115,15 @@ const Home = ({ category }: Props): JSX.Element => {
               react={ {
                 and: [
                   'all-search',
+                  'price-slider',
                   'description-search',
                   'name-list',
                   'category-search',
                   'product-type-list',
+                  'manufacturer-search',
+                  'set-search',
+                  'grader.name',
+                  'rookie-toggle',
                 ],
               } }
             >

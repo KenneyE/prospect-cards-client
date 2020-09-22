@@ -12,7 +12,6 @@ import {
   Button,
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import MailIcon from '@material-ui/icons/Mail'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
@@ -182,14 +181,16 @@ const NavBar = ({ data }: Props): JSX.Element => {
             Krispy Kards
           </Typography>
           <div className={ classes.grow } />
-          <Button
-            variant='outlined'
-            color='secondary'
-            component={ Link }
-            to='/listings/new'
-          >
-            Sell Something
-          </Button>
+          {isSeller && (
+            <Button
+              variant='outlined'
+              color='secondary'
+              component={ Link }
+              to='/listings/new'
+            >
+              Sell Something
+            </Button>
+          )}
           <CategoryLink category='Basketball' />
           <CategoryLink category='Baseball' />
           <CategoryLink category='Football' />
@@ -220,11 +221,6 @@ const NavBar = ({ data }: Props): JSX.Element => {
             <IconButton aria-label='show 17 new notifications' color='inherit'>
               <Badge badgeContent={ 17 } color='secondary'>
                 <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label='show 17 new notifications' color='inherit'>
-              <Badge badgeContent={ 1 } color='secondary'>
-                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton
