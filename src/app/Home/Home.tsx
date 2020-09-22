@@ -5,8 +5,8 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
-  ToggleButton,
-  DynamicRangeSlider,
+  // ToggleButton,
+  // DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -85,21 +85,21 @@ const Home = ({ category }: Props): JSX.Element => {
               placeholder='Search Manufacturers'
             />
             <br />
-            <SingleList
-              dataField='set_type.name'
-              showRadio
-              componentId='set-search'
-              title='Set'
-              placeholder='Search Sets'
-            />
+            {/*<SingleList*/}
+            {/*  dataField='set_type.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='set-search'*/}
+            {/*  title='Set'*/}
+            {/*  placeholder='Search Sets'*/}
+            {/*/>*/}
             <br />
-            <SingleList
-              dataField='grader.name'
-              showRadio
-              componentId='grader-search'
-              title='Graded By'
-              placeholder='Search Graders'
-            />
+            {/*<SingleList*/}
+            {/*  dataField='grader.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='grader-search'*/}
+            {/*  title='Graded By'*/}
+            {/*  placeholder='Search Graders'*/}
+            {/*/>*/}
             <DataSearch
               componentId='description-search'
               dataField='description'
