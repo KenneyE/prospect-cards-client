@@ -8,10 +8,13 @@
   "possibleTypes": {
     "ActiveRecordInterface": [
       "Category",
+      "Grader",
       "Listing",
+      "Manufacturer",
       "Membership",
       "Player",
       "Product",
+      "Set",
       "StripeAccount",
       "User"
     ]

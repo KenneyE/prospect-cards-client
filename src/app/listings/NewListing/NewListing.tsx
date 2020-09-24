@@ -57,6 +57,9 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
       images: [],
       categoryId: data.categories[0].id,
       productTypeId: data.productTypes[0].id,
+      manufacturerId: data.manufacturers[0].id,
+      setTypeId: data.setTypes[0].id,
+      graderId: data.graders[0].id,
     },
     player: {
       name: '',
@@ -142,6 +145,10 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
               <PlayerInputField
                 onChange={ (name: string) => setFieldValue('player.name', name) }
               />
+              {errors.player?.name && touched.player?.name ? (
+                <div>{errors.player.name}</div>
+              ) : null}
+
               <Select
                 style={ { width: 300 } }
                 name='listing.categoryId'
@@ -168,9 +175,48 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                   </MenuItem>
                 ))}
               </Select>
-              {errors.player?.name && touched.player?.name ? (
-                <div>{errors.player.name}</div>
-              ) : null}
+
+              <Select
+                style={ { width: 300 } }
+                name='listing.manufacturerId'
+                value={ values.listing.manufacturerId }
+                onChange={ handleChange }
+                variant='outlined'
+              >
+                {(data?.manufacturers || []).map((type) => (
+                  <MenuItem key={ type.id } value={ type.id }>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Select
+                style={ { width: 300 } }
+                name='listing.setTypeId'
+                value={ values.listing.setTypeId }
+                onChange={ handleChange }
+                variant='outlined'
+              >
+                {(data?.setTypes || []).map((type) => (
+                  <MenuItem key={ type.id } value={ type.id }>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Select
+                style={ { width: 300 } }
+                name='listing.graderId'
+                value={ values.listing.graderId }
+                onChange={ handleChange }
+                variant='outlined'
+              >
+                {(data?.graders || []).map((type) => (
+                  <MenuItem key={ type.id } value={ type.id }>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
               <Dropzone
                 onDrop={ (images): void => {
                   if (images.length === 0) {
