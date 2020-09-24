@@ -5,8 +5,8 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
-  ToggleButton,
-  DynamicRangeSlider,
+  // ToggleButton,
+  // DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
 import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -27,7 +27,9 @@ const Home = ({ category }: Props): JSX.Element => {
     <>
       <ReactiveBase
         app={ `listings${
-          process.env.NODE_ENV === 'development' ? '_development' : ''
+          process.env.NODE_ENV === 'development' ?
+            '_development' :
+            '_production'
         }` }
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
@@ -39,16 +41,16 @@ const Home = ({ category }: Props): JSX.Element => {
               title='Search'
               fuzziness='AUTO'
             />
-            <br />
-            <DynamicRangeSlider
-              componentId='price-slider'
-              dataField='price'
-              title='Price Range'
-              rangeLabels={ (min, max) => ({
-                start: '$' + min / 100,
-                end: '$' + max / 100,
-              }) }
-            />
+            {/*<br />*/}
+            {/*<DynamicRangeSlider*/}
+            {/*  componentId='price-slider'*/}
+            {/*  dataField='price'*/}
+            {/*  title='Price Range'*/}
+            {/*  rangeLabels={ (min, max) => ({*/}
+            {/*    start: '$' + min / 100,*/}
+            {/*    end: '$' + max / 100,*/}
+            {/*  }) }*/}
+            {/*/>*/}
             <br />
             <MultiList
               componentId='name-list'
@@ -58,6 +60,7 @@ const Home = ({ category }: Props): JSX.Element => {
               size={ 8 }
               showCheckbox
             />
+            <br />
             <MultiList
               componentId='product-type-list'
               dataField='product_type.name'
@@ -66,6 +69,7 @@ const Home = ({ category }: Props): JSX.Element => {
               size={ 8 }
               showCheckbox
             />
+            <br />
             <SingleList
               dataField='category.name'
               showRadio
@@ -74,6 +78,7 @@ const Home = ({ category }: Props): JSX.Element => {
               value={ category }
               placeholder='Search Categories'
             />
+            <br />
             <SingleList
               dataField='manufacturer.name'
               showRadio
@@ -81,31 +86,34 @@ const Home = ({ category }: Props): JSX.Element => {
               title='Manufacturer'
               placeholder='Search Manufacturers'
             />
-            <SingleList
-              dataField='set_type.name'
-              showRadio
-              componentId='set-search'
-              title='Set'
-              placeholder='Search Sets'
-            />
-            <SingleList
-              dataField='grader.name'
-              showRadio
-              componentId='grader-search'
-              title='Graded By'
-              placeholder='Search Graders'
-            />
+            <br />
+            {/*<SingleList*/}
+            {/*  dataField='set_type.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='set-search'*/}
+            {/*  title='Set'*/}
+            {/*  placeholder='Search Sets'*/}
+            {/*/>*/}
+            <br />
+            {/*<SingleList*/}
+            {/*  dataField='grader.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='grader-search'*/}
+            {/*  title='Graded By'*/}
+            {/*  placeholder='Search Graders'*/}
+            {/*/>*/}
             <DataSearch
               componentId='description-search'
               dataField='description'
               placeholder='Search Descriptions'
               title='Description'
             />
-            <ToggleButton
-              componentId='rookie-toggle'
-              dataField='rookie'
-              data={ [{ label: 'Rookie / 1st Year Only', value: true }] }
-            />
+            {/*<br/>*/}
+            {/*<ToggleButton*/}
+            {/*  componentId='rookie-toggle'*/}
+            {/*  dataField='rookie'*/}
+            {/*  data={ [{ label: 'Rookie / 1st Year Only', value: true }] }*/}
+            {/*/>*/}
           </Grid>
           <Grid item md={ 10 } xs={ 12 }>
             <ReactiveList

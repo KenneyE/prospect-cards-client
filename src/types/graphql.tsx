@@ -31,6 +31,15 @@ export type Category = ActiveRecordInterface & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+export type Grader = ActiveRecordInterface & {
+  __typename?: 'Grader';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 
 export type Listing = ActiveRecordInterface & {
   __typename?: 'Listing';
@@ -50,6 +59,18 @@ export type ListingInput = {
   images: Array<Scalars['Upload']>;
   categoryId: Scalars['Int'];
   productTypeId: Scalars['Int'];
+  manufacturerId: Scalars['Int'];
+  setTypeId: Scalars['Int'];
+  graderId: Scalars['Int'];
+};
+
+export type Manufacturer = ActiveRecordInterface & {
+  __typename?: 'Manufacturer';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type Membership = ActiveRecordInterface & {
@@ -117,8 +138,11 @@ export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
   categories: Array<Category>;
+  graders: Array<Grader>;
   listing: Listing;
+  manufacturers: Array<Manufacturer>;
   productTypes: Array<Product>;
+  setTypes: Array<Set>;
   stripeCheckoutSessionId: Scalars['String'];
   viewer: User;
 };
@@ -145,6 +169,15 @@ export type SaveOfferPayload = {
   __typename?: 'SaveOfferPayload';
   message: Scalars['String'];
   viewer: User;
+};
+
+export type Set = ActiveRecordInterface & {
+  __typename?: 'Set';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type StripeAccount = ActiveRecordInterface & {
@@ -347,6 +380,15 @@ export type NewListingFieldsQuery = (
   )>, productTypes: Array<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'name'>
+  )>, manufacturers: Array<(
+    { __typename?: 'Manufacturer' }
+    & Pick<Manufacturer, 'id' | 'name'>
+  )>, setTypes: Array<(
+    { __typename?: 'Set' }
+    & Pick<Set, 'id' | 'name'>
+  )>, graders: Array<(
+    { __typename?: 'Grader' }
+    & Pick<Grader, 'id' | 'name'>
   )> }
 );
 
@@ -712,6 +754,18 @@ export const NewListingFieldsDocument = gql`
     name
   }
   productTypes {
+    id
+    name
+  }
+  manufacturers {
+    id
+    name
+  }
+  setTypes {
+    id
+    name
+  }
+  graders {
     id
     name
   }

@@ -21,5 +21,17 @@ gql`
       id
       name
     }
+    manufacturers {
+      id
+      name
+    }
+    setTypes {
+      id
+      name
+    }
+    graders {
+      id
+      name
+    }
   }
 `
