@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
@@ -88,20 +89,21 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
           errors,
           touched,
         }): JSX.Element => {
-          // const handleDelete = (
-          //   documentName: string,
-          // ): (() => void) => (): void => {
-          //   const newAtts = values.listing.images.filter(
-          //     (img): boolean => img.document.name !== documentName,
-          //   )
-          //   setFieldValue('listing.attachments', newAtts)
-          // }
+          const handleDelete = (
+            documentName: string,
+          ): (() => void) => (): void => {
+            const newAtts = values.listing.images.filter(
+              (img): boolean => img.document.name !== documentName,
+            )
+            setFieldValue('listing.images', newAtts)
+          }
 
           const thumbs = values.listing.images.map(
             ({ document, preview }: Scalars['Upload']) => {
               return (
                 <div className={ classes.thumb } key={ document.name }>
                   <div className={ classes.thumbInner }>
+                    <CloseIcon onClick={ handleDelete(document.name) } />
                     <img
                       alt={ document.name }
                       src={ preview }
