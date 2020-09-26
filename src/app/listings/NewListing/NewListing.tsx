@@ -24,6 +24,7 @@ import LoadingButton from 'app/common/LoadingButton'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
 import PlayerInputField from 'app/PlayerInputField'
+import { toast } from 'react-toastify'
 
 const ListingSchema = Yup.object().shape({
   listing: Yup.object().shape({
@@ -31,8 +32,10 @@ const ListingSchema = Yup.object().shape({
       .min(5, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Required'),
-    description: Yup.string().min(25, 'Too Short!').required('Required'),
-    images: Yup.array().min(1, 'Must include at least 1 image.'),
+    description: Yup.string().min(15, 'Too Short!').required('Required'),
+    images: Yup.array()
+      .min(1, 'Must include at least 1 image.')
+      .max(8, 'Maximum of 8 images'),
     categoryId: Yup.number().required('Required'),
     productTypeId: Yup.number().required('Required'),
   }),
@@ -89,6 +92,8 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
           errors,
           touched,
         }): JSX.Element => {
+          const dropzoneDisabled = values.listing.images.length >= 8
+
           const handleDelete = (
             documentName: string,
           ): (() => void) => (): void => {
@@ -220,8 +225,16 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                 ))}
               </Select>
               <Dropzone
+                maxSize={ 5000000 }
+                disabled={ dropzoneDisabled }
+                accept='image/*'
                 onDrop={ (images): void => {
                   if (images.length === 0) {
+                    return
+                  }
+
+                  if (images.length + values.listing.images.length > 8) {
+                    toast.error('Sorry. Maximum of 8 images...')
                     return
                   }
 
@@ -244,7 +257,14 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                   <Card className={ classes.dropzone }>
                     <CardContent { ...getRootProps() }>
                       <input { ...getInputProps() } />
-                      {isDragActive ? (
+                      {dropzoneDisabled ? (
+                        <Typography
+                          variant='body2'
+                          className={ classes.disabled }
+                        >
+                          Maximum number of images reached...
+                        </Typography>
+                      ) : isDragActive ? (
                         <Typography variant='body2' color='primary'>
                           Drop your document here!
                         </Typography>

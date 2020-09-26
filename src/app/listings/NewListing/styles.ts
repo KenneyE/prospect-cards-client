@@ -33,5 +33,8 @@ export default makeStyles(
       marginTop: theme.spacing(),
       marginBottom: theme.spacing(),
     },
+    disabled: {
+      color: 'gray',
+    },
   }),
 )
