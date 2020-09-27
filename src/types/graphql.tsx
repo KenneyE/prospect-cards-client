@@ -215,6 +215,7 @@ export type User = ActiveRecordInterface & {
   __typename?: 'User';
   availableMemberships: Array<Membership>;
   createdAt: Scalars['ISO8601DateTime'];
+  email: Scalars['String'];
   errors: Array<Scalars['String']>;
   hasActiveSubscription: Scalars['Boolean'];
   id: Scalars['Int'];
@@ -311,7 +312,7 @@ export type ProfileQuery = (
   { __typename?: 'Query' }
   & { viewer: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'profilePictureUrl'>
+    & Pick<User, 'id' | 'email' | 'profilePictureUrl'>
   ) }
 );
 
@@ -581,6 +582,7 @@ export const ProfileDocument = gql`
     query profile {
   viewer {
     id
+    email
     profilePictureUrl
   }
 }

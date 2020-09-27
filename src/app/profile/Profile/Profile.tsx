@@ -1,14 +1,22 @@
 import React from 'react'
 import { ProfileQuery } from 'types/graphql'
 import ProfilePicture from 'app/profile/ProfilePicture'
+import { Typography } from '@material-ui/core'
 
 interface Props {
   data: ProfileQuery;
 }
 
-const Profile = (props: Props): JSX.Element => {
+const Profile = ({
+  data: {
+    viewer: { profilePictureUrl, email },
+  },
+}: Props): JSX.Element => {
   return (
-    <ProfilePicture profilePictureUrl={ props.data.viewer.profilePictureUrl } />
+    <>
+      <Typography>{email}</Typography>
+      <ProfilePicture profilePictureUrl={ profilePictureUrl } />
+    </>
   )
 }
 

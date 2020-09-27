@@ -4,6 +4,7 @@ gql`
   query profile {
     viewer {
       id
+      email
       profilePictureUrl
     }
   }
