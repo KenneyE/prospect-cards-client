@@ -1,6 +1,15 @@
 import gql from 'graphql-tag'
 
 gql`
+  query profile {
+    viewer {
+      id
+      profilePictureUrl
+    }
+  }
+`
+
+gql`
   query account {
     viewer {
       id

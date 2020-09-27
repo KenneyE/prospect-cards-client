@@ -7,7 +7,7 @@ interface Props {
 const ErrorMessage = ({
   message = 'Woops! Something went wrong...',
 }: Props): JSX.Element => {
-  return <span>{message} </span>
+  return <span>{message}</span>
 }
 
 export default ErrorMessage

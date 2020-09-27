@@ -67,7 +67,11 @@ const NavBar = ({ data }: Props): JSX.Element => {
       open={ isMenuOpen }
       onClose={ handleMenuClose }
     >
-      <MenuItem onClick={ handleMenuClose }>Profile</MenuItem>
+      <PrivateComponent>
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='/profile'>
+          Profile
+        </MenuItem>
+      </PrivateComponent>
       <MenuItem onClick={ handleMenuClose }>My account</MenuItem>
       <Divider />
       <PrivateComponent>
