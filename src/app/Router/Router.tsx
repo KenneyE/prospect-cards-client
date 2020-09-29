@@ -14,6 +14,7 @@ import PaymentAdded from 'app/account/PaymentAdded'
 import NewMembership from 'app/memberships/NewMembership'
 import Register from 'app/Register'
 import Profile from 'app/profile/Profile'
+import MyListings from 'app/listings/MyListings'
 
 const Router = (): JSX.Element => {
   return (
@@ -21,6 +22,7 @@ const Router = (): JSX.Element => {
       <Route exact path='/' component={ Home } />
       <Route exact path='/c/:category' component={ Home } />
       <PrivateRoute exact path='/listings/new' component={ NewListing } />
+      <PrivateRoute exact path='/listings' component={ MyListings } />
       <Route exact path='/listings/:id' component={ Listing } />
 
       <PrivateRoute exact path='/account/sell' component={ SellerSetup } />

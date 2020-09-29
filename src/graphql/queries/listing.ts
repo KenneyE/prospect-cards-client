@@ -35,3 +35,14 @@ gql`
     }
   }
 `
+
+gql`
+  query listings {
+    viewer {
+      id
+      listings {
+        ...listing
+      }
+    }
+  }
+`
