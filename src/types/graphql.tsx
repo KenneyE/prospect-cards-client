@@ -48,6 +48,7 @@ export type Listing = ActiveRecordInterface & {
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
   imageUrls: Array<Scalars['String']>;
+  player: Player;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
@@ -239,6 +240,15 @@ export type UserStripeAccountArgs = {
 export type PlayerFragment = (
   { __typename?: 'Player' }
   & Pick<Player, 'id' | 'name'>
+);
+
+export type ListingFragment = (
+  { __typename?: 'Listing' }
+  & Pick<Listing, 'id' | 'title' | 'description' | 'imageUrls'>
+  & { player: (
+    { __typename?: 'Player' }
+    & Pick<Player, 'id' | 'name'>
+  ) }
 );
 
 export type TrackInterestMutationVariables = Exact<{
@@ -434,10 +444,37 @@ export type NewListingFieldsQuery = (
   )> }
 );
 
+export type ListingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListingsQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { listings: Array<(
+      { __typename?: 'Listing' }
+      & ListingFragment
+    )> }
+  ) }
+);
+
 export const PlayerFragmentDoc = gql`
     fragment player on Player {
   id
   name
+}
+    `;
+export const ListingFragmentDoc = gql`
+    fragment listing on Listing {
+  id
+  title
+  description
+  imageUrls
+  player {
+    id
+    name
+  }
 }
     `;
 export const TrackInterestDocument = gql`
@@ -907,3 +944,38 @@ export function useNewListingFieldsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type NewListingFieldsQueryHookResult = ReturnType<typeof useNewListingFieldsQuery>;
 export type NewListingFieldsLazyQueryHookResult = ReturnType<typeof useNewListingFieldsLazyQuery>;
 export type NewListingFieldsQueryResult = ApolloReactCommon.QueryResult<NewListingFieldsQuery, NewListingFieldsQueryVariables>;
+export const ListingsDocument = gql`
+    query listings {
+  viewer {
+    id
+    listings {
+      ...listing
+    }
+  }
+}
+    ${ListingFragmentDoc}`;
+
+/**
+ * __useListingsQuery__
+ *
+ * To run a query within a React component, call `useListingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListingsQuery, ListingsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ListingsQuery, ListingsQueryVariables>(ListingsDocument, baseOptions);
+      }
+export function useListingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListingsQuery, ListingsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ListingsQuery, ListingsQueryVariables>(ListingsDocument, baseOptions);
+        }
+export type ListingsQueryHookResult = ReturnType<typeof useListingsQuery>;
+export type ListingsLazyQueryHookResult = ReturnType<typeof useListingsLazyQuery>;
+export type ListingsQueryResult = ApolloReactCommon.QueryResult<ListingsQuery, ListingsQueryVariables>;

@@ -13,6 +13,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './carousel.css'
 import useStyles from './styles'
 import SearchResult from 'app/listings/SearchResult'
+import { ElasticListing } from 'types'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -63,7 +64,7 @@ const Home = ({ category }: Props): JSX.Element => {
             <br />
             <MultiList
               componentId='product-type-list'
-              dataField='product_type.name'
+              dataField='productType.name'
               title='Type'
               placeholder='Search Types'
               size={ 8 }
@@ -88,7 +89,7 @@ const Home = ({ category }: Props): JSX.Element => {
             />
             <br />
             {/*<SingleList*/}
-            {/*  dataField='set_type.name'*/}
+            {/*  dataField='setType.name'*/}
             {/*  showRadio*/}
             {/*  componentId='set-search'*/}
             {/*  title='Set'*/}
@@ -135,11 +136,17 @@ const Home = ({ category }: Props): JSX.Element => {
                 ],
               } }
             >
-              {({ data, loading }) => (
+              {({
+                data,
+                loading,
+              }: {
+                data: ElasticListing[];
+                loading: boolean;
+              }) => (
                 <ResultCardsWrapper className={ classes.resultsWrapper }>
                   {loading && <LinearProgress />}
 
-                  {data.map((item: any) => (
+                  {data.map((item: ElasticListing) => (
                     <SearchResult key={ item.id } item={ item } />
                   ))}
                 </ResultCardsWrapper>

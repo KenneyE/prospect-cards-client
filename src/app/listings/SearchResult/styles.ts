@@ -10,7 +10,6 @@ export default makeStyles(
       flexDirection: 'column',
       display: 'flex',
     },
-    img: { height: 170, width: 'auto !important' },
     grow: { flexGrow: 1 },
   }),
 )
