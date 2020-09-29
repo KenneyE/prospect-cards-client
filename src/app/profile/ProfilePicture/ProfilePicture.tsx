@@ -17,22 +17,26 @@ const ProfilePicture = ({
 }: Props): JSX.Element => {
   const classes = useStyles()
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length === 0) {
-      return
-    }
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length === 0) {
+        return
+      }
 
-    const img = acceptedFiles[0]
+      const img = acceptedFiles[0]
 
-    savePhoto({
-      variables: {
-        picture: {
-          document: img,
-          preview: URL.createObjectURL(img),
+      savePhoto({
+        variables: {
+          picture: {
+            document: img,
+            preview: URL.createObjectURL(img),
+          },
         },
-      },
-    })
-  }, [])
+      })
+    },
+    [savePhoto],
+  )
+
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
