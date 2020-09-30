@@ -7,15 +7,6 @@ gql`
 `
 
 gql`
-  query fakeCharge {
-    viewer {
-      id
-      paymentIntent
-    }
-  }
-`
-
-gql`
   query players($name: String) {
     viewer {
       id
@@ -26,12 +17,11 @@ gql`
   }
 `
 
-
 gql`
   query products {
     viewer {
       id
-      availableProducts {
+      availableMemberships {
         token
         price
         term

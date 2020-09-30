@@ -12,6 +12,10 @@ gql`
     id
     title
     description
+    imageUrls
+    player {
+      id
+      name
+    }
   }
 `
-

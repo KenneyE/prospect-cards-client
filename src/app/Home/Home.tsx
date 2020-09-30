@@ -1,68 +1,155 @@
 import React from 'react'
-import LogoutButton from 'app/common/LogoutButton'
 import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
-  ResultCard,
   MultiList,
+  SingleList,
+  // ToggleButton,
+  // DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
-import { Button, Grid, LinearProgress } from '@material-ui/core'
-import PrivateComponent from 'app/PrivateComponent'
-import { Link } from 'react-router-dom'
 import { Experiment, Variant } from '@marvelapp/react-ab-test'
 import emitter from 'lib/abEmitter'
+import { Button, Grid, LinearProgress } from '@material-ui/core'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import './carousel.css'
+import useStyles from './styles'
+import SearchResult from 'app/listings/SearchResult'
+import { ElasticListing } from 'types'
 
 const { ResultCardsWrapper } = ReactiveList
 
-const Home = (): JSX.Element => {
+interface Props {
+  category?: string;
+}
+
+const Home = ({ category }: Props): JSX.Element => {
+  const classes = useStyles()
+
   return (
     <>
       <ReactiveBase
-        app='listings'
+        app={ `listings${
+          process.env.NODE_ENV === 'development' ?
+            '_development' :
+            '_production'
+        }` }
         url={ process.env.REACT_APP_ELASTICSEARCH_URI }
       >
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 2 }>
+          <Grid item md={ 2 } xs={ 12 }>
+            <DataSearch
+              componentId='all-search'
+              dataField={ ['*'] }
+              title='Search'
+              fuzziness='AUTO'
+            />
+            {/*<br />*/}
+            {/*<DynamicRangeSlider*/}
+            {/*  componentId='price-slider'*/}
+            {/*  dataField='price'*/}
+            {/*  title='Price Range'*/}
+            {/*  rangeLabels={ (min, max) => ({*/}
+            {/*    start: '$' + min / 100,*/}
+            {/*    end: '$' + max / 100,*/}
+            {/*  }) }*/}
+            {/*/>*/}
+            <br />
             <MultiList
               componentId='name-list'
-              dataField='player.name'
+              dataField='player.name_as_keyword'
               title='Player'
-              size={ 100 }
+              placeholder='Player Name'
+              size={ 8 }
               showCheckbox
-              showCount
-              showSearch
             />
+            <br />
+            <MultiList
+              componentId='product-type-list'
+              dataField='productType.name'
+              title='Type'
+              placeholder='Search Types'
+              size={ 8 }
+              showCheckbox
+            />
+            <br />
+            <SingleList
+              dataField='category.name'
+              showRadio
+              componentId='category-search'
+              title='Category'
+              value={ category }
+              placeholder='Search Categories'
+            />
+            <br />
+            <SingleList
+              dataField='manufacturer.name'
+              showRadio
+              componentId='manufacturer-search'
+              title='Manufacturer'
+              placeholder='Search Manufacturers'
+            />
+            <br />
+            {/*<SingleList*/}
+            {/*  dataField='setType.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='set-search'*/}
+            {/*  title='Set'*/}
+            {/*  placeholder='Search Sets'*/}
+            {/*/>*/}
+            <br />
+            {/*<SingleList*/}
+            {/*  dataField='grader.name'*/}
+            {/*  showRadio*/}
+            {/*  componentId='grader-search'*/}
+            {/*  title='Graded By'*/}
+            {/*  placeholder='Search Graders'*/}
+            {/*/>*/}
             <DataSearch
               componentId='description-search'
               dataField='description'
+              placeholder='Search Descriptions'
               title='Description'
             />
+            {/*<br/>*/}
+            {/*<ToggleButton*/}
+            {/*  componentId='rookie-toggle'*/}
+            {/*  dataField='rookie'*/}
+            {/*  data={ [{ label: 'Rookie / 1st Year Only', value: true }] }*/}
+            {/*/>*/}
           </Grid>
-          <Grid item xs={ 10 }>
+          <Grid item md={ 10 } xs={ 12 }>
             <ReactiveList
+              infiniteScroll
               dataField='player.name'
               componentId='SearchResult'
               react={ {
-                and: ['description-search', 'name-list'],
+                and: [
+                  'all-search',
+                  'price-slider',
+                  'description-search',
+                  'name-list',
+                  'category-search',
+                  'product-type-list',
+                  'manufacturer-search',
+                  'set-search',
+                  'grader.name',
+                  'rookie-toggle',
+                ],
               } }
             >
-              {({ data, loading }) => (
-                <ResultCardsWrapper>
+              {({
+                data,
+                loading,
+              }: {
+                data: ElasticListing[];
+                loading: boolean;
+              }) => (
+                <ResultCardsWrapper className={ classes.resultsWrapper }>
                   {loading && <LinearProgress />}
 
-                  {data.map((item: any) => (
-                    <ResultCard key={ item._id }>
-                      <ResultCard.Image src={ item.image } />
-                      <ResultCard.Title
-                        dangerouslySetInnerHTML={ {
-                          __html: item.title,
-                        } }
-                      />
-                      <ResultCard.Description>
-                        <span>{item.description}</span>
-                      </ResultCard.Description>
-                    </ResultCard>
+                  {data.map((item: ElasticListing) => (
+                    <SearchResult key={ item.id } item={ item } />
                   ))}
                 </ResultCardsWrapper>
               )}
@@ -70,45 +157,21 @@ const Home = (): JSX.Element => {
           </Grid>
         </Grid>
       </ReactiveBase>
-      <PrivateComponent>
-        <Button component={ Link } to='listings/new' variant='contained'>
-          Create a Listing
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/sell' variant='contained'>
-          Start Selling
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='account/add_payment' variant='contained'>
-          Add Payment Method
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent>
-        <Button component={ Link } to='membership/new' variant='contained'>
-          Become a Member
-        </Button>
-      </PrivateComponent>
-      <PrivateComponent
-        loggedOut={
-          <Button component={ Link } to='/login' variant='contained'>
-            Log in
-          </Button>
-        }
+      <Experiment name='My Example'>
+        <Variant name='A'>
+          <div>Section A</div>
+        </Variant>
+        <Variant name='B'>
+          <div>Section B</div>
+        </Variant>
+      </Experiment>
+      <Button
+        onClick={ () => {
+          emitter.emitWin('My Example')
+        } }
       >
-        <LogoutButton />
-      </PrivateComponent>
-      {/*<Experiment name='My Example'>*/}
-      {/*  <Variant name='A'>*/}
-      {/*    <div>Section A</div>*/}
-      {/*  </Variant>*/}
-      {/*  <Variant name='B'>*/}
-      {/*    <div>Section B</div>*/}
-      {/*  </Variant>*/}
-      {/*</Experiment>*/}
-      {/*<Button onClick={ () => { console.log('win'); emitter.emitWin('My Example') }}>Succeed</Button>*/}
-
+        Succeed
+      </Button>
     </>
   )
 }

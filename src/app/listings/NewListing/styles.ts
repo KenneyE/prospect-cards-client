@@ -24,11 +24,17 @@ export default makeStyles(
       width: 'auto',
       height: '100%',
     },
+    formControl: {
+      width: 300,
+    },
     dropzone: {
       border: 1,
       borderRadius: 3,
       marginTop: theme.spacing(),
       marginBottom: theme.spacing(),
+    },
+    disabled: {
+      color: 'gray',
     },
   }),
 )

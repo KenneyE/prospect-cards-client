@@ -11,7 +11,7 @@ interface Props {
 const NewMembership = ({ data }: Props): JSX.Element => {
   return (
     <>
-      {data.viewer.availableProducts.map(
+      {data.viewer.availableMemberships.map(
         (prod): JSX.Element => {
           return (
             <Button
