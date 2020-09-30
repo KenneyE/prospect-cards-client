@@ -5,6 +5,7 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
+  RangeInput,
   // ToggleButton,
   // DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
@@ -21,9 +22,10 @@ const { ResultCardsWrapper } = ReactiveList
 
 interface Props {
   category?: string;
+  viewerId: number;
 }
 
-const Home = ({ category }: Props): JSX.Element => {
+const Home = ({ category, viewerId }: Props): JSX.Element => {
   const classes = useStyles()
 
   return (
@@ -44,6 +46,13 @@ const Home = ({ category }: Props): JSX.Element => {
               title='Search'
               fuzziness='AUTO'
             />
+            {/* Below is used to exclude listings created by current user */}
+            <RangeInput
+              componentId='exclude-user-search'
+              dataField='user.id'
+              range={ { start: viewerId, end: viewerId } }
+              style={ { display: 'none' } }
+            />
             {/*<br />*/}
             {/*<DynamicRangeSlider*/}
             {/*  componentId='price-slider'*/}
@@ -57,7 +66,7 @@ const Home = ({ category }: Props): JSX.Element => {
             <br />
             <MultiList
               componentId='name-list'
-              dataField='player.name_as_keyword'
+              dataField='player.name'
               title='Player'
               placeholder='Player Name'
               size={ 8 }
@@ -136,6 +145,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   'grader.name',
                   'rookie-toggle',
                 ],
+                not: ['exclude-user-search'],
               } }
             >
               {({

@@ -271,7 +271,10 @@ export type ListingFragment = (
   & { player: (
     { __typename?: 'Player' }
     & Pick<Player, 'id' | 'name'>
-  ) }
+  ), offers: Array<(
+    { __typename?: 'Offer' }
+    & Pick<Offer, 'id' | 'price'>
+  )> }
 );
 
 export type TrackInterestMutationVariables = Exact<{
@@ -315,6 +318,23 @@ export type SaveOfferMutation = (
   & { saveOffer: Maybe<(
     { __typename?: 'SaveOfferPayload' }
     & Pick<SaveOfferPayload, 'message'>
+    & { viewer: (
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    ) }
+  )> }
+);
+
+export type AcceptOfferMutationVariables = Exact<{
+  offerId: Scalars['Int'];
+}>;
+
+
+export type AcceptOfferMutation = (
+  { __typename?: 'Mutation' }
+  & { acceptOffer: Maybe<(
+    { __typename?: 'AcceptOfferPayload' }
+    & Pick<AcceptOfferPayload, 'message'>
     & { viewer: (
       { __typename?: 'User' }
       & Pick<User, 'id'>
@@ -397,6 +417,17 @@ export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
 export type AuthQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'auth'>
+);
+
+export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ViewerQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
 );
 
 export type PlayersQueryVariables = Exact<{
@@ -497,6 +528,10 @@ export const ListingFragmentDoc = gql`
   player {
     id
     name
+  }
+  offers {
+    id
+    price
   }
 }
     `;
@@ -603,6 +638,41 @@ export function useSaveOfferMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type SaveOfferMutationHookResult = ReturnType<typeof useSaveOfferMutation>;
 export type SaveOfferMutationResult = ApolloReactCommon.MutationResult<SaveOfferMutation>;
 export type SaveOfferMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveOfferMutation, SaveOfferMutationVariables>;
+export const AcceptOfferDocument = gql`
+    mutation acceptOffer($offerId: Int!) {
+  acceptOffer(offerId: $offerId) {
+    viewer {
+      id
+    }
+    message
+  }
+}
+    `;
+export type AcceptOfferMutationFn = ApolloReactCommon.MutationFunction<AcceptOfferMutation, AcceptOfferMutationVariables>;
+
+/**
+ * __useAcceptOfferMutation__
+ *
+ * To run a mutation, you first call `useAcceptOfferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAcceptOfferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [acceptOfferMutation, { data, loading, error }] = useAcceptOfferMutation({
+ *   variables: {
+ *      offerId: // value for 'offerId'
+ *   },
+ * });
+ */
+export function useAcceptOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AcceptOfferMutation, AcceptOfferMutationVariables>) {
+        return ApolloReactHooks.useMutation<AcceptOfferMutation, AcceptOfferMutationVariables>(AcceptOfferDocument, baseOptions);
+      }
+export type AcceptOfferMutationHookResult = ReturnType<typeof useAcceptOfferMutation>;
+export type AcceptOfferMutationResult = ApolloReactCommon.MutationResult<AcceptOfferMutation>;
+export type AcceptOfferMutationOptions = ApolloReactCommon.BaseMutationOptions<AcceptOfferMutation, AcceptOfferMutationVariables>;
 export const SaveProfilePictureDocument = gql`
     mutation saveProfilePicture($picture: Upload!) {
   saveProfilePicture(picture: $picture) {
@@ -809,6 +879,38 @@ export function useAuthLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type AuthQueryHookResult = ReturnType<typeof useAuthQuery>;
 export type AuthLazyQueryHookResult = ReturnType<typeof useAuthLazyQuery>;
 export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQueryVariables>;
+export const ViewerDocument = gql`
+    query viewer {
+  viewer {
+    id
+  }
+}
+    `;
+
+/**
+ * __useViewerQuery__
+ *
+ * To run a query within a React component, call `useViewerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useViewerQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useViewerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
+        return ApolloReactHooks.useQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+      }
+export function useViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+        }
+export type ViewerQueryHookResult = ReturnType<typeof useViewerQuery>;
+export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>;
+export type ViewerQueryResult = ApolloReactCommon.QueryResult<ViewerQuery, ViewerQueryVariables>;
 export const PlayersDocument = gql`
     query players($name: String) {
   viewer {
