@@ -10,3 +10,14 @@ gql`
     }
   }
 `
+
+gql`
+  mutation acceptOffer($offerId: Int!) {
+    acceptOffer(offerId: $offerId) {
+      viewer {
+        id
+      }
+      message
+    }
+  }
+`

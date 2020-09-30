@@ -18,6 +18,7 @@ import {
 import useStyles from './styles'
 import Carousel from 'app/common/Carousel/Carousel'
 import { centsToDollars } from 'lib'
+import AcceptOfferButton from 'app/AcceptOfferButton'
 
 interface Props {
   data: ListingsQuery;
@@ -62,7 +63,7 @@ const MyListings = ({
                         {centsToDollars(offer.price)}
                       </TableCell>
                       <TableCell align='right'>
-                        <Button>Accept</Button>
+                        <AcceptOfferButton offerId={ offer.id } />
                       </TableCell>
                     </TableRow>
                   ))}
