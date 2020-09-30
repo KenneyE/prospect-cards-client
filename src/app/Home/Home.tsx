@@ -8,9 +8,9 @@ import {
   // ToggleButton,
   // DynamicRangeSlider,
 } from '@appbaseio/reactivesearch'
-import { Experiment, Variant } from '@marvelapp/react-ab-test'
-import emitter from 'lib/abEmitter'
-import { Button, Grid, LinearProgress } from '@material-ui/core'
+// import { Experiment, Variant } from '@marvelapp/react-ab-test'
+// import emitter from 'lib/abEmitter'
+import { Grid, LinearProgress } from '@material-ui/core'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './carousel.css'
 import useStyles from './styles'
@@ -157,21 +157,21 @@ const Home = ({ category }: Props): JSX.Element => {
           </Grid>
         </Grid>
       </ReactiveBase>
-      <Experiment name='My Example'>
-        <Variant name='A'>
-          <div>Section A</div>
-        </Variant>
-        <Variant name='B'>
-          <div>Section B</div>
-        </Variant>
-      </Experiment>
-      <Button
-        onClick={ () => {
-          emitter.emitWin('My Example')
-        } }
-      >
-        Succeed
-      </Button>
+      {/*<Experiment name='My Example'>*/}
+      {/*  <Variant name='A'>*/}
+      {/*    <div>Section A</div>*/}
+      {/*  </Variant>*/}
+      {/*  <Variant name='B'>*/}
+      {/*    <div>Section B</div>*/}
+      {/*  </Variant>*/}
+      {/*</Experiment>*/}
+      {/*<Button*/}
+      {/*  onClick={ () => {*/}
+      {/*    emitter.emitWin('My Example')*/}
+      {/*  } }*/}
+      {/*>*/}
+      {/*  Succeed*/}
+      {/*</Button>*/}
     </>
   )
 }
