@@ -48,6 +48,7 @@ export type Listing = ActiveRecordInterface & {
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
   imageUrls: Array<Scalars['String']>;
+  offers: Array<Offer>;
   player: Player;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
@@ -112,6 +113,15 @@ export type MutationSaveProfilePictureArgs = {
 
 export type MutationTrackInterestArgs = {
   listingId: Scalars['Int'];
+};
+
+export type Offer = ActiveRecordInterface & {
+  __typename?: 'Offer';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  price: Scalars['Int'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type OfferInput = {
@@ -248,7 +258,10 @@ export type ListingFragment = (
   & { player: (
     { __typename?: 'Player' }
     & Pick<Player, 'id' | 'name'>
-  ) }
+  ), offers: Array<(
+    { __typename?: 'Offer' }
+    & Pick<Offer, 'id' | 'price'>
+  )> }
 );
 
 export type TrackInterestMutationVariables = Exact<{
@@ -376,6 +389,17 @@ export type AuthQuery = (
   & Pick<Query, 'auth'>
 );
 
+export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ViewerQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
 export type PlayersQueryVariables = Exact<{
   name?: Maybe<Scalars['String']>;
 }>;
@@ -474,6 +498,10 @@ export const ListingFragmentDoc = gql`
   player {
     id
     name
+  }
+  offers {
+    id
+    price
   }
 }
     `;
@@ -786,6 +814,38 @@ export function useAuthLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type AuthQueryHookResult = ReturnType<typeof useAuthQuery>;
 export type AuthLazyQueryHookResult = ReturnType<typeof useAuthLazyQuery>;
 export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQueryVariables>;
+export const ViewerDocument = gql`
+    query viewer {
+  viewer {
+    id
+  }
+}
+    `;
+
+/**
+ * __useViewerQuery__
+ *
+ * To run a query within a React component, call `useViewerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useViewerQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useViewerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
+        return ApolloReactHooks.useQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+      }
+export function useViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+        }
+export type ViewerQueryHookResult = ReturnType<typeof useViewerQuery>;
+export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>;
+export type ViewerQueryResult = ApolloReactCommon.QueryResult<ViewerQuery, ViewerQueryVariables>;
 export const PlayersDocument = gql`
     query players($name: String) {
   viewer {

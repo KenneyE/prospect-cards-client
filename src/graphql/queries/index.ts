@@ -7,6 +7,14 @@ gql`
 `
 
 gql`
+  query viewer {
+    viewer {
+      id
+    }
+  }
+`
+
+gql`
   query players($name: String) {
     viewer {
       id

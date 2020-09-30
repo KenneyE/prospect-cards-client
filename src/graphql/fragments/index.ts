@@ -17,5 +17,9 @@ gql`
       id
       name
     }
+    offers {
+      id
+      price
+    }
   }
 `
