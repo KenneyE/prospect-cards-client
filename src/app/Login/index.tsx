@@ -13,7 +13,7 @@ const Login = (props: RouteComponentProps): Maybe<JSX.Element> => {
     await refetch()
   }
 
-  return <LoginComponent { ...props } refresh={ refresh }/>
+  return <LoginComponent { ...props } refresh={ refresh } />
 }
 
 export default withRouter(Login)
