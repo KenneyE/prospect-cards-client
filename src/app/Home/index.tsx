@@ -7,7 +7,7 @@ import ErrorMessage from 'app/common/ErrorMessage'
 
 const Home = (): JSX.Element => {
   const { data, loading, error } = useViewerQuery()
-  const { category } = useParams()
+  const { category } = useParams<{ category?: string }>()
 
   if (loading) return <Spinner />
   if (!data || error) return <ErrorMessage />

@@ -6,7 +6,8 @@ import { useAddPaymentQuery } from 'types/graphql'
 import { useParams } from 'react-router-dom'
 
 const AddPayment = (): JSX.Element => {
-  const { price } = useParams()
+  const { price } = useParams<{ price?: string }>()
+
   const { data, loading, error } = useAddPaymentQuery({ variables: { price } })
 
   if (loading) return <Spinner />

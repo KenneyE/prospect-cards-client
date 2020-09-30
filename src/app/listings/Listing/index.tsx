@@ -6,10 +6,11 @@ import ErrorMessage from 'app/common/ErrorMessage'
 import { useParams } from 'react-router-dom'
 
 const Listing = (): JSX.Element => {
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const [trackInterest] = useTrackInterestMutation({
     variables: { listingId: +id },
   })
+
   const { data, loading, error } = useListingQuery({
     variables: { id: +id },
   })

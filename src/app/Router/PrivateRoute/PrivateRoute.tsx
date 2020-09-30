@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { createElement } from 'react'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
 
 export interface Props extends RouteProps {
   isAuthenticated: boolean;
 }
 
-const PrivateRoute = ({
+const PrivateRoute = function({
   component,
   isAuthenticated,
   ...rest
-}: Props): JSX.Element => {
+}: Props): JSX.Element {
   return (
     <Route
       { ...rest }
       render={ (props): JSX.Element =>
         isAuthenticated && component ? (
-          React.createElement(component, props)
+          createElement(component, props)
         ) : (
           <Redirect
             to={ {
