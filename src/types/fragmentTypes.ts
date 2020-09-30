@@ -12,6 +12,7 @@
       "Listing",
       "Manufacturer",
       "Membership",
+      "Offer",
       "Player",
       "Product",
       "Set",

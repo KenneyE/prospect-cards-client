@@ -7,7 +7,7 @@ const LogoutButton = (): JSX.Element => {
     window.location.reload()
   }
 
-  return <Dumb onClick={ handleClick }/>
+  return <Dumb onClick={ handleClick } />
 }
 
 export default LogoutButton
