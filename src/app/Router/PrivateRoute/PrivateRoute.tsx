@@ -5,11 +5,11 @@ export interface Props extends RouteProps {
   isAuthenticated: boolean;
 }
 
-const PrivateRoute = function({
+const PrivateRoute = ({
   component,
   isAuthenticated,
   ...rest
-}: Props): JSX.Element {
+}: Props): JSX.Element => {
   return (
     <Route
       { ...rest }
