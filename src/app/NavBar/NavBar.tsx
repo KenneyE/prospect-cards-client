@@ -190,7 +190,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
             variant='h6'
             noWrap
           >
-            Krispy Kards
+            Prospect Cards
           </Typography>
           <div className={ classes.grow } />
           {isSeller && (

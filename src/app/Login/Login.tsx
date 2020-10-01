@@ -9,6 +9,7 @@ import { StyleRules } from '@material-ui/core/styles/withStyles'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { toast } from 'react-toastify'
 import { makeStyles } from '@material-ui/core/styles'
+import LoadingButton from 'app/common/LoadingButton'
 
 const useStyles = makeStyles(
   (theme: Theme): StyleRules => ({
@@ -93,7 +94,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
       <CardMedia
         className={ classes.media }
         image={ `${process.env.PUBLIC_URL}/logos/CanyonCompliance-orange.png` }
-        title='Krispy Kards'
+        title='Prospect Cards'
       />
       <CardContent>
         <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
@@ -117,7 +118,8 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
             fullWidth
           />
           <br />
-          <Button
+          <LoadingButton
+            loading={ loading }
             fullWidth
             variant='contained'
             color='primary'
@@ -125,7 +127,7 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
             className={ classes.button }
           >
             Sign In
-          </Button>
+          </LoadingButton>
         </form>
       </CardContent>
     </Card>

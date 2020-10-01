@@ -8,7 +8,6 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-  Typography,
 } from '@material-ui/core'
 import NumberFormat from 'react-number-format'
 import { SaveOfferMutationVariables } from 'types/graphql'
