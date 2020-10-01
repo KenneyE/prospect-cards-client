@@ -37,10 +37,10 @@ gql`
 `
 
 gql`
-  query listings {
+  query listings($status: ListingStatusEnum) {
     viewer {
       id
-      listings {
+      listings(status: $status) {
         ...listing
       }
     }

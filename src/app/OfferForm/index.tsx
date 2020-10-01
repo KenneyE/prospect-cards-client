@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dumb from './OfferForm'
-import { useSaveOfferMutation } from 'types/graphql'
+import {
+  SaveOfferMutationVariables,
+  useSaveOfferMutation,
+} from 'types/graphql'
 
 interface Props {
   listingId: number;
@@ -8,8 +11,31 @@ interface Props {
 
 const OfferForm = (props: Props): JSX.Element => {
   const [saveOffer] = useSaveOfferMutation()
+  const [open, setOpen] = useState(false)
+  const [clientSecret, setClientSecret] = useState<string>()
 
-  return <Dumb saveOffer={ saveOffer } { ...props } />
+  const handleClose = () => setOpen(false)
+
+  const onSubmit = (variables: SaveOfferMutationVariables) => {
+    saveOffer({ variables }).then(({ data, errors }) => {
+      if (errors?.length) {
+        return
+      }
+
+      setClientSecret(data?.saveOffer?.paymentIntentId)
+      setOpen(true)
+    })
+  }
+
+  return (
+    <Dumb
+      onSubmit={ onSubmit }
+      open={ open }
+      handleClose={ handleClose }
+      clientSecret={ clientSecret }
+      { ...props }
+    />
+  )
 }
 
 export default OfferForm

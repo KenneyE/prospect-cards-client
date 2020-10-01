@@ -758,6 +758,35 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "ListingStatusEnum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "available",
+            "description": "available",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pending_sale",
+            "description": "pending_sale",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sold",
+            "description": "sold",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Manufacturer",
         "description": null,
@@ -1834,15 +1863,15 @@
             "deprecationReason": null
           },
           {
-            "name": "viewer",
+            "name": "paymentIntentId",
             "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "User",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -2279,6 +2308,22 @@
             "deprecationReason": null
           },
           {
+            "name": "hasPaymentMethod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "args": [],
@@ -2297,7 +2342,18 @@
           {
             "name": "listings",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "status",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ListingStatusEnum",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,

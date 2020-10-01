@@ -32,55 +32,59 @@ const MyListings = ({
   const classes = useStyles()
   return (
     <>
-      {listings.map((listing) => (
-        <Card key={ listing.id } className={ classes.root }>
-          <CardActionArea>
-            <CardMedia title={ listing.player.name }>
-              <Carousel listing={ listing } />
-            </CardMedia>
-          </CardActionArea>
+      {listings.length ? (
+        listings.map((listing) => (
+          <Card key={ listing.id } className={ classes.root }>
+            <CardActionArea>
+              <CardMedia title={ listing.player.name }>
+                <Carousel listing={ listing } />
+              </CardMedia>
+            </CardActionArea>
 
-          <CardContent>
-            <Typography gutterBottom variant='h5' component='h2'>
-              {listing.player.name}
-            </Typography>
-            <Typography variant='body2' color='textSecondary' component='p'>
-              {listing.description}
-            </Typography>
+            <CardContent>
+              <Typography gutterBottom variant='h5' component='h2'>
+                {listing.player.name}
+              </Typography>
+              <Typography variant='body2' color='textSecondary' component='p'>
+                {listing.description}
+              </Typography>
 
-            <TableContainer>
-              <Table className={ classes.table } aria-label='Offers table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Amount</TableCell>
-                    <TableCell align='right'>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {listing.offers.map((offer) => (
-                    <TableRow key={ offer.id }>
-                      <TableCell component='th' scope='row'>
-                        {centsToDollars(offer.price)}
-                      </TableCell>
-                      <TableCell align='right'>
-                        <AcceptOfferButton offerId={ offer.id } />
-                      </TableCell>
+              <TableContainer>
+                <Table className={ classes.table } aria-label='Offers table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Amount</TableCell>
+                      <TableCell align='right'>Actions</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </CardContent>
-          <CardActions>
-            <Button size='small' color='primary'>
-              I'm a button
-            </Button>
-            <Button size='small' color='primary'>
-              Button me up
-            </Button>
-          </CardActions>
-        </Card>
-      ))}
+                  </TableHead>
+                  <TableBody>
+                    {listing.offers.map((offer) => (
+                      <TableRow key={ offer.id }>
+                        <TableCell component='th' scope='row'>
+                          {centsToDollars(offer.price)}
+                        </TableCell>
+                        <TableCell align='right'>
+                          <AcceptOfferButton offerId={ offer.id } />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+            <CardActions>
+              <Button size='small' color='primary'>
+                I'm a button
+              </Button>
+              <Button size='small' color='primary'>
+                Button me up
+              </Button>
+            </CardActions>
+          </Card>
+        ))
+      ) : (
+        <Typography>You have no active listings</Typography>
+      )}
     </>
   )
 }

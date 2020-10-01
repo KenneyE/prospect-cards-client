@@ -35,6 +35,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
 
   const isSeller = data?.viewer.stripeAccount.chargesEnabled
   const hasSubscription = data?.viewer.hasActiveSubscription
+  const hasPaymentMethod = data?.viewer.hasPaymentMethod
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -78,15 +79,18 @@ const NavBar = ({ data }: Props): JSX.Element => {
         </MenuItem>
       </PrivateComponent>
       <Divider />
-      <PrivateComponent>
-        <MenuItem
-          onClick={ handleMenuClose }
-          component={ Link }
-          to='account/add_payment'
-        >
-          Add Payment Method
-        </MenuItem>
-      </PrivateComponent>
+      {!hasPaymentMethod && (
+        <PrivateComponent>
+          <MenuItem
+            onClick={ handleMenuClose }
+            component={ Link }
+            to='account/add_payment'
+          >
+            Add Payment Method
+          </MenuItem>
+        </PrivateComponent>
+      )}
+
       <PrivateComponent>
         {isSeller ? (
           <MenuItem

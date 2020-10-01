@@ -53,6 +53,12 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               range={ { start: viewerId, end: viewerId } }
               style={ { display: 'none' } }
             />
+            <DataSearch
+              componentId='only-available-search'
+              dataField='status'
+              value='available'
+              style={ { display: 'none' } }
+            />
             {/*<br />*/}
             {/*<DynamicRangeSlider*/}
             {/*  componentId='price-slider'*/}
@@ -71,6 +77,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               placeholder='Player Name'
               size={ 8 }
               showCheckbox
+              showCount={ false }
             />
             <br />
             <MultiList
@@ -80,6 +87,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               placeholder='Search Types'
               size={ 8 }
               showCheckbox
+              showCount={ false }
             />
             <br />
             <SingleList
@@ -89,6 +97,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               title='Category'
               value={ category }
               placeholder='Search Categories'
+              showCount={ false }
             />
             <br />
             <SingleList
@@ -97,6 +106,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               componentId='manufacturer-search'
               title='Manufacturer'
               placeholder='Search Manufacturers'
+              showCount={ false }
             />
             <br />
             {/*<SingleList*/}
@@ -135,6 +145,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               react={ {
                 and: [
                   'all-search',
+                  'only-available-search',
                   'price-slider',
                   'description-search',
                   'name-list',
