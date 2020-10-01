@@ -15,6 +15,7 @@ gql`
     viewer {
       id
       hasActiveSubscription
+      hasPaymentMethod
       stripeAccount {
         id
         chargesEnabled

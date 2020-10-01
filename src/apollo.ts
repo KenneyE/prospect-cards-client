@@ -66,10 +66,10 @@ const handleError = onError(({ graphQLErrors, networkError, response }) => {
   } else if (
     serverError &&
     serverError.statusCode === 401 &&
-    window.location.pathname !== '/login'
+    !['/login', '/register'].includes(window.location.pathname)
   ) {
     // This also causes a browser refresh, which clears the cache.
-    // window.location.pathname = '/login'
+    window.location.pathname = '/login'
   }
 })
 
