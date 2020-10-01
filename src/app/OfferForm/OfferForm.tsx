@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
 import { Form, Formik } from 'formik'
-import { Button, Dialog, TextField, Typography } from '@material-ui/core'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@material-ui/core'
 import NumberFormat from 'react-number-format'
 import { SaveOfferMutationVariables } from 'types/graphql'
 import { useStripe } from '@stripe/react-stripe-js'
@@ -50,6 +59,22 @@ const OfferForm = ({
   const stripe = useStripe()
   const [loading, setLoading] = useState(false)
 
+  const onAgree = () => {
+    if (!clientSecret || !stripe) {
+      return
+    }
+
+    setLoading(true)
+    stripe.confirmCardPayment(clientSecret).then(({ error }) => {
+      setLoading(false)
+      if (error) {
+        toast.error(error.message)
+      } else {
+        handleClose()
+      }
+    })
+  }
+
   return (
     <>
       <Formik
@@ -78,30 +103,27 @@ const OfferForm = ({
         aria-labelledby='simple-dialog-title'
         open={ open }
       >
-        <Typography>
-          Do you accept this payment? You will be charged later
-        </Typography>
-        <LoadingButton
-          loading={ loading }
-          disabled={ !stripe || !clientSecret }
-          onClick={ () => {
-            if (!clientSecret || !stripe) {
-              return
-            }
-
-            setLoading(true)
-            stripe.confirmCardPayment(clientSecret).then(({ error }) => {
-              setLoading(false)
-              if (error) {
-                toast.error(error.message)
-              } else {
-                handleClose()
-              }
-            })
-          } }
-        >
-          I Accept
-        </LoadingButton>
+        <DialogTitle id='alert-dialog-title'>
+          Do you accept this payment?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            Be agreeing, you authorize us to charge you at a later date upon the
+            seller accepting your offer.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ handleClose } color='primary'>
+            Disagree
+          </Button>
+          <LoadingButton
+            loading={ loading }
+            disabled={ !stripe || !clientSecret }
+            onClick={ onAgree }
+          >
+            I Accept
+          </LoadingButton>
+        </DialogActions>
       </Dialog>
     </>
   )
