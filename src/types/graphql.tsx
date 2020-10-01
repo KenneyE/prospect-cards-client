@@ -73,6 +73,15 @@ export type ListingInput = {
   graderId: Scalars['Int'];
 };
 
+export enum ListingStatusEnum {
+  /** available */
+  Available = 'available',
+  /** pending_sale */
+  PendingSale = 'pending_sale',
+  /** sold */
+  Sold = 'sold'
+}
+
 export type Manufacturer = ActiveRecordInterface & {
   __typename?: 'Manufacturer';
   createdAt: Scalars['ISO8601DateTime'];
@@ -173,7 +182,6 @@ export type Query = {
   manufacturers: Array<Manufacturer>;
   productTypes: Array<Product>;
   setTypes: Array<Set>;
-  setupIntentId: Scalars['String'];
   stripeCheckoutSessionId: Scalars['String'];
   viewer: User;
 };
@@ -250,6 +258,11 @@ export type User = ActiveRecordInterface & {
   profilePictureUrl: Scalars['String'];
   stripeAccount: StripeAccount;
   updatedAt: Scalars['ISO8601DateTime'];
+};
+
+
+export type UserListingsArgs = {
+  status?: Maybe<ListingStatusEnum>;
 };
 
 
@@ -409,14 +422,6 @@ export type AddPaymentQuery = (
   & Pick<Query, 'stripeCheckoutSessionId'>
 );
 
-export type AddPaymentMethodQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AddPaymentMethodQuery = (
-  { __typename?: 'Query' }
-  & Pick<Query, 'setupIntentId'>
-);
-
 export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -504,7 +509,9 @@ export type NewListingFieldsQuery = (
   )> }
 );
 
-export type ListingsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListingsQueryVariables = Exact<{
+  status?: Maybe<ListingStatusEnum>;
+}>;
 
 
 export type ListingsQuery = (
@@ -853,36 +860,6 @@ export function useAddPaymentLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type AddPaymentQueryHookResult = ReturnType<typeof useAddPaymentQuery>;
 export type AddPaymentLazyQueryHookResult = ReturnType<typeof useAddPaymentLazyQuery>;
 export type AddPaymentQueryResult = ApolloReactCommon.QueryResult<AddPaymentQuery, AddPaymentQueryVariables>;
-export const AddPaymentMethodDocument = gql`
-    query addPaymentMethod {
-  setupIntentId
-}
-    `;
-
-/**
- * __useAddPaymentMethodQuery__
- *
- * To run a query within a React component, call `useAddPaymentMethodQuery` and pass it any options that fit your needs.
- * When your component renders, `useAddPaymentMethodQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAddPaymentMethodQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAddPaymentMethodQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AddPaymentMethodQuery, AddPaymentMethodQueryVariables>) {
-        return ApolloReactHooks.useQuery<AddPaymentMethodQuery, AddPaymentMethodQueryVariables>(AddPaymentMethodDocument, baseOptions);
-      }
-export function useAddPaymentMethodLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AddPaymentMethodQuery, AddPaymentMethodQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<AddPaymentMethodQuery, AddPaymentMethodQueryVariables>(AddPaymentMethodDocument, baseOptions);
-        }
-export type AddPaymentMethodQueryHookResult = ReturnType<typeof useAddPaymentMethodQuery>;
-export type AddPaymentMethodLazyQueryHookResult = ReturnType<typeof useAddPaymentMethodLazyQuery>;
-export type AddPaymentMethodQueryResult = ApolloReactCommon.QueryResult<AddPaymentMethodQuery, AddPaymentMethodQueryVariables>;
 export const AuthDocument = gql`
     query auth {
   auth
@@ -1104,10 +1081,10 @@ export type NewListingFieldsQueryHookResult = ReturnType<typeof useNewListingFie
 export type NewListingFieldsLazyQueryHookResult = ReturnType<typeof useNewListingFieldsLazyQuery>;
 export type NewListingFieldsQueryResult = ApolloReactCommon.QueryResult<NewListingFieldsQuery, NewListingFieldsQueryVariables>;
 export const ListingsDocument = gql`
-    query listings {
+    query listings($status: ListingStatusEnum) {
   viewer {
     id
-    listings {
+    listings(status: $status) {
       ...listing
     }
   }
@@ -1126,6 +1103,7 @@ export const ListingsDocument = gql`
  * @example
  * const { data, loading, error } = useListingsQuery({
  *   variables: {
+ *      status: // value for 'status'
  *   },
  * });
  */

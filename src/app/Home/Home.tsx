@@ -53,6 +53,12 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               range={ { start: viewerId, end: viewerId } }
               style={ { display: 'none' } }
             />
+            <DataSearch
+              componentId='only-available-search'
+              dataField='status'
+              value='available'
+              style={ { display: 'none' } }
+            />
             {/*<br />*/}
             {/*<DynamicRangeSlider*/}
             {/*  componentId='price-slider'*/}
@@ -139,6 +145,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               react={ {
                 and: [
                   'all-search',
+                  'only-available-search',
                   'price-slider',
                   'description-search',
                   'name-list',

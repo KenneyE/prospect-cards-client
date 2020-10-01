@@ -61,7 +61,7 @@ const OfferForm = ({
             <Form>
               <TextField
                 value={ values.offer.price }
-                onChange={ (price) => setFieldValue('offer.price', price) }
+                onChange={ (price) => setFieldValue('offer.price', +price) }
                 variant='outlined'
                 InputProps={ {
                   inputComponent: NumberFormatCustom as any,
