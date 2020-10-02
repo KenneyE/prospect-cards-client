@@ -7,6 +7,7 @@ import OfferForm from 'app/OfferForm'
 import { Link } from 'react-router-dom'
 import Carousel from 'app/common/Carousel'
 import { ElasticListing } from 'types'
+import { centsToDollars } from 'lib'
 
 interface Props {
   item: ElasticListing;
@@ -25,6 +26,7 @@ const SearchResult = ({ item }: Props): JSX.Element => {
       />
       <Typography>Player: {item.player.name}</Typography>
       <Typography>Description: {item.description}</Typography>
+      <Typography>Price: {centsToDollars(item.price)}</Typography>
       <div className={ classes.grow } />
       <PrivateComponent>
         <OfferForm listingId={ item.id } />

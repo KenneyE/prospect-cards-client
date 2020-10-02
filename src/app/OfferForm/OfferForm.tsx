@@ -9,11 +9,11 @@ import {
   DialogTitle,
   TextField,
 } from '@material-ui/core'
-import NumberFormat from 'react-number-format'
 import { SaveOfferMutationVariables } from 'types/graphql'
 import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
+import DollarField from 'app/common/DollarField'
 
 interface Props {
   listingId: number;
@@ -21,31 +21,6 @@ interface Props {
   open: boolean;
   handleClose: VoidFunction;
   clientSecret?: string;
-}
-
-interface NumberFormatCustomProps {
-  inputRef: (instance: NumberFormat | null) => void;
-  onChange: (value: string) => void;
-  name: string;
-}
-
-function NumberFormatCustom(props: NumberFormatCustomProps) {
-  const { inputRef, onChange, ...other } = props
-
-  return (
-    <NumberFormat
-      { ...other }
-      getInputRef={ inputRef }
-      onValueChange={ (values) => {
-        onChange(values.value)
-      } }
-      thousandSeparator
-      isNumericString
-      decimalScale={ 2 }
-      allowNegative={ false }
-      prefix='$'
-    />
-  )
 }
 
 const OfferForm = ({
@@ -88,7 +63,7 @@ const OfferForm = ({
                 onChange={ (price) => setFieldValue('offer.price', +price) }
                 variant='outlined'
                 InputProps={ {
-                  inputComponent: NumberFormatCustom as any,
+                  inputComponent: DollarField as any,
                   name: 'offer.price',
                 } }
               />

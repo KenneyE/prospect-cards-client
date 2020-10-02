@@ -12,6 +12,7 @@ gql`
     id
     title
     description
+    price
     imageUrls
     player {
       id

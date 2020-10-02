@@ -57,6 +57,7 @@ export type Listing = ActiveRecordInterface & {
   imageUrls: Array<Scalars['String']>;
   offers: Array<Offer>;
   player: Player;
+  price: Scalars['Int'];
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
@@ -65,6 +66,7 @@ export type ListingInput = {
   id?: Maybe<Scalars['Int']>;
   title: Scalars['String'];
   description: Scalars['String'];
+  price: Scalars['Float'];
   images: Array<Scalars['Upload']>;
   categoryId: Scalars['Int'];
   productTypeId: Scalars['Int'];
@@ -147,7 +149,7 @@ export type Offer = ActiveRecordInterface & {
 };
 
 export type OfferInput = {
-  price: Scalars['Int'];
+  price: Scalars['Float'];
   listingId: Scalars['Int'];
 };
 
@@ -282,7 +284,7 @@ export type PlayerFragment = (
 
 export type ListingFragment = (
   { __typename?: 'Listing' }
-  & Pick<Listing, 'id' | 'title' | 'description' | 'imageUrls'>
+  & Pick<Listing, 'id' | 'title' | 'description' | 'price' | 'imageUrls'>
   & { player: (
     { __typename?: 'Player' }
     & Pick<Player, 'id' | 'name'>
@@ -537,6 +539,7 @@ export const ListingFragmentDoc = gql`
   id
   title
   description
+  price
   imageUrls
   player {
     id

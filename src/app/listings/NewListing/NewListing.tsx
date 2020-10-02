@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
 import PlayerInputField from 'app/PlayerInputField'
 import { toast } from 'react-toastify'
+import DollarField from 'app/common/DollarField'
 
 const ListingSchema = Yup.object().shape({
   listing: Yup.object().shape({
@@ -58,6 +59,7 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
     listing: {
       title: '',
       description: '',
+      price: 10,
       images: [],
       categoryId: data.categories[0].id,
       productTypeId: data.productTypes[0].id,
@@ -224,6 +226,17 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                   </MenuItem>
                 ))}
               </Select>
+
+              <TextField
+                value={ values.listing.price }
+                onChange={ (price) => setFieldValue('listing.price', +price) }
+                variant='outlined'
+                InputProps={ {
+                  inputComponent: DollarField as any,
+                  name: 'listing.price',
+                } }
+              />
+
               <Dropzone
                 maxSize={ 5000000 }
                 disabled={ dropzoneDisabled }

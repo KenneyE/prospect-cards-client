@@ -158,6 +158,20 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 ],
                 not: ['exclude-user-search'],
               } }
+              sortOptions={ [
+                { label: 'Newest', dataField: 'createdAt', sortBy: 'desc' },
+                {
+                  label: 'Price - Highest to Lowest',
+                  dataField: 'price',
+                  sortBy: 'desc',
+                },
+                {
+                  label: 'Price - Lowest to Highest',
+                  dataField: 'price',
+                  sortBy: 'asc',
+                },
+              ] }
+              defaultSortOption='Newest'
             >
               {({
                 data,
