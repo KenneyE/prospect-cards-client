@@ -44,6 +44,7 @@ const OfferForm = ({
       if (error) {
         toast.error(error.message)
       } else {
+        toast.success('Offer submitted. Good luck!')
         handleClose()
       }
     })

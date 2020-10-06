@@ -2577,6 +2577,13 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/react-confirm@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@types/react-confirm/-/react-confirm-0.1.4.tgz#e618562febf8f6e87a878aa9cec1378ac0d94ccc"
+  integrity sha512-WL24KCSFgH0IkJVUmJuHfogflQpY9TUxS1Tso1AtkP0BgmDrFMZcRvAJ+JHj0BcMBwordyiKhj4f+2OJHDwq+Q==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^16.9.0":
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
@@ -11225,6 +11232,11 @@ react-app-polyfill@^1.0.6:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
+
+react-confirm@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/react-confirm/-/react-confirm-0.1.20.tgz#fad38ae75bf02d612566eeba3f6a4f9aa1042d7a"
+  integrity sha512-DNd3TixaLq9r/wm3tL9rcGnAafVtlWxWGqLPI5ipXzrSDk3d7pjlvZl4WwGr4gmVGT1h8q2xwtXE+9LIo0YlzQ==
 
 react-day-picker@^7.0.5:
   version "7.4.8"

@@ -73,11 +73,14 @@ const NavBar = ({ data }: Props): JSX.Element => {
           Profile
         </MenuItem>
       </PrivateComponent>
-      <PrivateComponent>
-        <MenuItem onClick={ handleMenuClose } component={ Link } to='/listings'>
-          My Listings
-        </MenuItem>
-      </PrivateComponent>
+      {isSeller && (
+        <PrivateComponent>
+          <MenuItem onClick={ handleMenuClose } component={ Link } to='/listings'>
+            My Listings
+          </MenuItem>
+        </PrivateComponent>
+      )}
+
       <Divider />
       {!hasPaymentMethod && (
         <PrivateComponent>

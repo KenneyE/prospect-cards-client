@@ -1,20 +1,22 @@
 import React from 'react'
-import { AcceptOfferMutationFn } from 'types/graphql'
-import { Button } from '@material-ui/core'
+import LoadingButton from 'app/common/LoadingButton'
 
 interface Props {
-  acceptOffer: AcceptOfferMutationFn;
+  onClick: () => Promise<void>;
+  loading: boolean;
 }
 
-const AcceptOfferButton = ({ acceptOffer }: Props): JSX.Element => {
+const AcceptOfferButton = ({ onClick, loading }: Props): JSX.Element => {
   return (
-    <Button
+    <LoadingButton
+      variant='outlined'
+      loading={ loading }
       onClick={ () => {
-        acceptOffer()
+        onClick()
       } }
     >
       Accept
-    </Button>
+    </LoadingButton>
   )
 }
 
