@@ -81,7 +81,7 @@ const OfferForm = ({
         <DialogTitle id='alert-dialog-title'>Make an offer?</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Be agreeing, you authorize us to charge you at a later date upon the
+            By agreeing, you authorize us to charge you at a later time upon the
             seller accepting your offer.
             <br />
             Your offer is valid for 24 hours. The seller can reject your offer,
