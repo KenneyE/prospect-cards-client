@@ -50,6 +50,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
             <RangeInput
               componentId='exclude-user-search'
               dataField='user.id'
+              stepValue={ 1 }
               range={ { start: viewerId, end: viewerId } }
               style={ { display: 'none' } }
             />

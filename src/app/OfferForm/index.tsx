@@ -4,6 +4,7 @@ import {
   SaveOfferMutationVariables,
   useSaveOfferMutation,
 } from 'types/graphql'
+import { toast } from 'react-toastify'
 
 interface Props {
   listingId: number;
@@ -18,12 +19,16 @@ const OfferForm = (props: Props): JSX.Element => {
 
   const onSubmit = (variables: SaveOfferMutationVariables) => {
     saveOffer({ variables }).then(({ data, errors }) => {
-      if (errors?.length) {
+      if (errors?.length || !data?.saveOffer) {
         return
       }
 
-      setClientSecret(data?.saveOffer?.paymentIntentId)
-      setOpen(true)
+      if (data.saveOffer.paymentIntentId) {
+        setClientSecret(data.saveOffer.paymentIntentId)
+        setOpen(true)
+      } else {
+        toast.error('Please add a payment method first...')
+      }
     })
   }
 
