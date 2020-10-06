@@ -78,25 +78,30 @@ const OfferForm = ({
         aria-labelledby='simple-dialog-title'
         open={ open }
       >
-        <DialogTitle id='alert-dialog-title'>
-          Do you accept this payment?
-        </DialogTitle>
+        <DialogTitle id='alert-dialog-title'>Make an offer?</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
             Be agreeing, you authorize us to charge you at a later date upon the
             seller accepting your offer.
+            <br />
+            Your offer is valid for 24 hours. The seller can reject your offer,
+            make a counter-offer, or accept it as is.
+            <br />
+            You can make 5 offers on this listing in total.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ handleClose } color='primary'>
-            Disagree
+          <Button onClick={ handleClose } color='secondary'>
+            Nevermind
           </Button>
           <LoadingButton
+            variant='outlined'
+            color='primary'
             loading={ loading }
             disabled={ !stripe || !clientSecret }
             onClick={ onAgree }
           >
-            I Accept
+            Make Offer
           </LoadingButton>
         </DialogActions>
       </Dialog>

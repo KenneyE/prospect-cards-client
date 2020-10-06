@@ -7,9 +7,8 @@ import { responsiveFontSizes } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
   typography: {
-    fontSize: 12,
     h1: {
-      fontSize: '4.3rem',
+      fontSize: '4rem',
     },
   },
 })

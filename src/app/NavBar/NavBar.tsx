@@ -34,7 +34,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
   ] = React.useState<null | HTMLElement>(null)
 
   const isSeller = data?.viewer.stripeAccount.chargesEnabled
-  const hasSubscription = data?.viewer.hasActiveSubscription
+  // const hasSubscription = data?.viewer.hasActiveSubscription
   const hasPaymentMethod = data?.viewer.hasPaymentMethod
 
   const isMenuOpen = Boolean(anchorEl)
@@ -113,17 +113,17 @@ const NavBar = ({ data }: Props): JSX.Element => {
           </MenuItem>
         )}
       </PrivateComponent>
-      {!hasSubscription && (
-        <PrivateComponent>
-          <MenuItem
-            onClick={ handleMenuClose }
-            component={ Link }
-            to='membership/new'
-          >
-            Become a Member
-          </MenuItem>
-        </PrivateComponent>
-      )}
+      {/*{!hasSubscription && (*/}
+      {/*  <PrivateComponent>*/}
+      {/*    <MenuItem*/}
+      {/*      onClick={ handleMenuClose }*/}
+      {/*      component={ Link }*/}
+      {/*      to='membership/new'*/}
+      {/*    >*/}
+      {/*      Become a Member*/}
+      {/*    </MenuItem>*/}
+      {/*  </PrivateComponent>*/}
+      {/*)}*/}
 
       <Divider />
 
