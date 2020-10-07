@@ -3,6 +3,7 @@ import Dumb from './OfferForm'
 import {
   SaveOfferMutationVariables,
   useSaveOfferMutation,
+  useTempConfirmOfferMutation,
 } from 'types/graphql'
 import { toast } from 'react-toastify'
 
@@ -11,9 +12,11 @@ interface Props {
 }
 
 const OfferForm = (props: Props): JSX.Element => {
-  const [saveOffer] = useSaveOfferMutation()
+  const [saveOffer, { loading }] = useSaveOfferMutation()
+  const [confirmOffer] = useTempConfirmOfferMutation()
   const [open, setOpen] = useState(false)
   const [clientSecret, setClientSecret] = useState<string>()
+  const [offerId, setOfferId] = useState<number>()
 
   const handleClose = () => setOpen(false)
 
@@ -23,8 +26,9 @@ const OfferForm = (props: Props): JSX.Element => {
         return
       }
 
-      if (data.saveOffer.paymentIntentId) {
+      if (data.saveOffer.paymentIntentId && data.saveOffer.offerId) {
         setClientSecret(data.saveOffer.paymentIntentId)
+        setOfferId(data.saveOffer.offerId)
         setOpen(true)
       } else {
         toast.error('Please add a payment method first...')
@@ -35,9 +39,12 @@ const OfferForm = (props: Props): JSX.Element => {
   return (
     <Dumb
       onSubmit={ onSubmit }
+      loading={ loading }
       open={ open }
       handleClose={ handleClose }
+      confirmOffer={ confirmOffer }
       clientSecret={ clientSecret }
+      offerId={ offerId }
       { ...props }
     />
   )
