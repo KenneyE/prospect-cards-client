@@ -9,7 +9,10 @@ import {
   DialogTitle,
   TextField,
 } from '@material-ui/core'
-import { SaveOfferMutationVariables } from 'types/graphql'
+import {
+  SaveOfferMutationVariables,
+  TempConfirmOfferMutationFn,
+} from 'types/graphql'
 import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
@@ -18,36 +21,45 @@ import DollarField from 'app/common/DollarField'
 interface Props {
   listingId: number;
   onSubmit: (variables: SaveOfferMutationVariables) => void;
+  loading: boolean;
   open: boolean;
   handleClose: VoidFunction;
+  confirmOffer: TempConfirmOfferMutationFn;
   clientSecret?: string;
+  offerId?: number;
 }
 
 const OfferForm = ({
   listingId,
   onSubmit,
+  loading,
   open,
   handleClose,
+  confirmOffer,
   clientSecret,
+  offerId,
 }: Props): JSX.Element => {
   const stripe = useStripe()
-  const [loading, setLoading] = useState(false)
+  const [loadingAgreed, setLoadingAgreed] = useState(false)
 
   const onAgree = () => {
-    if (!clientSecret || !stripe) {
+    if (!clientSecret || !offerId || !stripe) {
       return
     }
 
-    setLoading(true)
-    stripe.confirmCardPayment(clientSecret).then(({ error }) => {
-      setLoading(false)
-      if (error) {
-        toast.error(error.message)
-      } else {
-        toast.success('Offer submitted. Good luck!')
-        handleClose()
-      }
-    })
+    setLoadingAgreed(true)
+    stripe.confirmCardPayment(clientSecret).then(
+      async({ error }): Promise<void> => {
+        if (error) {
+          toast.error(error.message)
+        } else {
+          toast.success('Offer submitted. Good luck!')
+          await confirmOffer({ variables: { offerId } })
+          handleClose()
+        }
+        setLoadingAgreed(false)
+      },
+    )
   }
 
   return (
@@ -68,7 +80,9 @@ const OfferForm = ({
                   name: 'offer.price',
                 } }
               />
-              <Button type='submit'>Make Offer</Button>
+              <LoadingButton loading={ loading } type='submit'>
+                Make Offer
+              </LoadingButton>
             </Form>
           )
         }}
@@ -97,7 +111,7 @@ const OfferForm = ({
           <LoadingButton
             variant='outlined'
             color='primary'
-            loading={ loading }
+            loading={ loadingAgreed }
             disabled={ !stripe || !clientSecret }
             onClick={ onAgree }
           >

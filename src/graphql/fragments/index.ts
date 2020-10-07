@@ -24,3 +24,15 @@ gql`
     }
   }
 `
+
+gql`
+  fragment offer on Offer {
+    id
+    price
+    listing {
+      id
+      title
+      imageUrls
+    }
+  }
+`
