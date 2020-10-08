@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Divider,
   Grid,
   Table,
   TableBody,
@@ -46,38 +47,48 @@ const ListingsGrid = ({ listings }: Props): JSX.Element => {
                 {listing.description}
               </Typography>
 
-              <TableContainer>
-                <Table className={ classes.table } aria-label='Offers table'>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Amount</TableCell>
-                      <TableCell align='right'>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {listing.offers.map((offer) => (
-                      <TableRow key={ offer.id }>
-                        <TableCell component='th' scope='row'>
-                          {centsToDollars(offer.price)}
-                        </TableCell>
-                        <TableCell align='right'>
-                          <AcceptOfferButton
-                            offerId={ offer.id }
-                            price={ centsToDollars(offer.price) }
-                          />
-                        </TableCell>
+              <Divider />
+
+              <Typography
+                variant='h6'
+                component='div'
+                className={ classes.offersTitle }
+              >
+                Offers
+              </Typography>
+              {listing.offers.length ? (
+                <TableContainer>
+                  <Table aria-label='Offers table'>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Amount</TableCell>
+                        <TableCell align='right'>Actions</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                      {listing.offers.map((offer) => (
+                        <TableRow key={ offer.id }>
+                          <TableCell component='th' scope='row'>
+                            {centsToDollars(offer.price)}
+                          </TableCell>
+                          <TableCell align='right'>
+                            <AcceptOfferButton
+                              offerId={ offer.id }
+                              price={ centsToDollars(offer.price) }
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <Typography>No offers...</Typography>
+              )}
             </CardContent>
             <CardActions>
               <Button size='small' color='primary'>
-                I'm a button
-              </Button>
-              <Button size='small' color='primary'>
-                Button me up
+                Unlist
               </Button>
             </CardActions>
           </Card>
