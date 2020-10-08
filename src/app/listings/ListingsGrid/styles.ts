@@ -1,12 +1,12 @@
-import { makeStyles, StyleRules } from '@material-ui/core/styles'
+import { makeStyles, StyleRules, Theme } from '@material-ui/core/styles'
 
 export default makeStyles(
-  (): StyleRules => ({
+  ({ spacing }: Theme): StyleRules => ({
     root: {
       maxWidth: 445,
     },
-    media: {
-      height: 140,
+    offersTitle: {
+      marginTop: spacing(),
     },
   }),
 )

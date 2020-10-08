@@ -3,6 +3,7 @@ import useStyles from './styles'
 import { ListingQuery } from 'types/graphql'
 import { Grid, Typography } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
+import ReportListingButton from 'app/listings/ReportListingButton'
 
 interface Props {
   data: ListingQuery;
@@ -10,7 +11,7 @@ interface Props {
 
 const Listing = ({
   data: {
-    listing: { title, description, imageUrls },
+    listing: { id, title, description, imageUrls },
   },
 }: Props): JSX.Element => {
   const classes = useStyles()
@@ -38,6 +39,7 @@ const Listing = ({
       </Carousel>
       <Typography>{title}</Typography>
       <Typography>{description}</Typography>
+      <ReportListingButton listingId={ id } />
     </Grid>
   )
 }
