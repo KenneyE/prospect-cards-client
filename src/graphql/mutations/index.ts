@@ -7,3 +7,11 @@ gql`
     }
   }
 `
+
+gql`
+  mutation confirmEmail($token: String!) {
+    confirmEmail(token: $token) {
+      message
+    }
+  }
+`

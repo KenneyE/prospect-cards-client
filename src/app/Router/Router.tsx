@@ -15,6 +15,7 @@ import NewMembership from 'app/memberships/NewMembership'
 import Register from 'app/Register'
 import Profile from 'app/profile/Profile'
 import MyListings from 'app/listings/MyListings'
+import ConfirmEmail from 'app/ConfirmEmail'
 
 const Router = (): JSX.Element => {
   return (
@@ -45,6 +46,8 @@ const Router = (): JSX.Element => {
 
       <Route exact path='/login' component={ Login } />
       <Route exact path='/register' component={ Register } />
+      <Route exact path='/confirm/:token' component={ ConfirmEmail } />
+
       <Redirect to='/' />
     </Switch>
   )

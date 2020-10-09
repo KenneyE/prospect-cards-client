@@ -18,12 +18,13 @@ import useStyles from './styles'
 import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
 import MyOffers from 'app/MyOffers'
+import PrivateComponent from 'app/PrivateComponent'
 
 const { ResultCardsWrapper } = ReactiveList
 
 interface Props {
   category?: string;
-  viewerId: number;
+  viewerId?: number;
 }
 
 const Home = ({ category, viewerId }: Props): JSX.Element => {
@@ -49,13 +50,15 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 fuzziness='AUTO'
               />
               {/* Below is used to exclude listings created by current user */}
-              <RangeInput
-                componentId='exclude-user-search'
-                dataField='user.id'
-                stepValue={ 25 }
-                range={ { start: viewerId, end: viewerId } }
-                style={ { display: 'none' } }
-              />
+              {viewerId && (
+                <RangeInput
+                  componentId='exclude-user-search'
+                  dataField='user.id'
+                  stepValue={ 25 }
+                  range={ { start: viewerId, end: viewerId } }
+                  style={ { display: 'none' } }
+                />
+              )}
               <DataSearch
                 componentId='only-available-search'
                 dataField='status'
@@ -197,7 +200,9 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
         </ReactiveBase>
       </Grid>
       <Grid item md={ 2 } xs={ 12 }>
-        <MyOffers />
+        <PrivateComponent>
+          <MyOffers />
+        </PrivateComponent>
       </Grid>
       {/*<Experiment name='My Example'>*/}
       {/*  <Variant name='A'>*/}

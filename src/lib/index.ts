@@ -5,3 +5,7 @@ export const centsToDollars = (cents: number) => {
     currency: 'USD',
   })
 }
+
+export const noopFn = (): void => {
+  /* Intentionally do nothing */
+}

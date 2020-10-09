@@ -1,9 +1,11 @@
 import React from 'react'
 import Dumb from './NavBar'
-import { useAccountQuery } from 'types/graphql'
+import { useAccountLazyQuery } from 'types/graphql'
+import useAuthOnlyQuery from 'hooks/useAuthOnlyQuery'
 
 const NavBar = (): JSX.Element => {
-  const { data } = useAccountQuery()
+  const [getAccount, { data }] = useAccountLazyQuery()
+  useAuthOnlyQuery(getAccount)
 
   return <Dumb data={ data } />
 }
