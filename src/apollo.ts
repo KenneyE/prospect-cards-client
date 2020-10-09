@@ -56,6 +56,15 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+const shouldRedirectToLogin = (serverError: ServerErrorOrUndef) => {
+  const path = window.location.pathname
+
+  return (
+    serverError &&
+    serverError.statusCode === 401 &&
+    !['/login', '/register'].includes(path)
+  )
+}
 const handleError = onError(({ graphQLErrors, networkError, response }) => {
   const serverError: ServerErrorOrUndef = networkError as ServerErrorOrUndef
 
@@ -63,12 +72,8 @@ const handleError = onError(({ graphQLErrors, networkError, response }) => {
     const errors = graphQLErrors.map((e): string => e.message)
     errors.forEach((error): number | string => toast.error(error))
     response.errors = undefined
-  } else if (
-    serverError &&
-    serverError.statusCode === 401 &&
-    !['/login', '/register'].includes(window.location.pathname)
-  ) {
-    // This also causes a browser refresh, which clears the cache.
+  } else if (shouldRedirectToLogin(serverError)) {
+    client.clearStore()
     window.location.pathname = '/login'
   }
 })
