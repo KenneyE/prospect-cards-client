@@ -62,8 +62,7 @@ const shouldRedirectToLogin = (serverError: ServerErrorOrUndef) => {
   return (
     serverError &&
     serverError.statusCode === 401 &&
-    !['/login', '/register'].includes(path) &&
-    !path.match(/\/confirm\//)
+    !['/login', '/register'].includes(path)
   )
 }
 const handleError = onError(({ graphQLErrors, networkError, response }) => {
