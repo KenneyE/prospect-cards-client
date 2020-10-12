@@ -44,7 +44,7 @@ const ConfirmEmail = (): Maybe<JSX.Element> => {
       .finally(() => {
         setLoading(false)
       })
-  }, [token])
+  }, [token, client])
 
   if (loading) return <Spinner />
 

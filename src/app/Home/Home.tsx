@@ -104,8 +104,9 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 value={ category }
                 placeholder='Search Categories'
                 showCount={ false }
+                style={ category ? { display: 'none' } : undefined }
               />
-              <br />
+              {category ? null : <br />}
               <SingleList
                 dataField='manufacturer.name'
                 showRadio
