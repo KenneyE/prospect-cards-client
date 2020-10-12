@@ -21,7 +21,7 @@ const PlayerInputField = ({
   handleChange,
   value,
 }: Props): JSX.Element => {
-  const options = data?.viewer.players || []
+  const options = data?.players || []
 
   return (
     <Autocomplete<PlayerFragment, false, false, true>

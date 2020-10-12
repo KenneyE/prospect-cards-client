@@ -16,11 +16,8 @@ gql`
 
 gql`
   query players($name: String) {
-    viewer {
-      id
-      players(name: $name) {
-        ...player
-      }
+    players(name: $name) {
+      ...player
     }
   }
 `

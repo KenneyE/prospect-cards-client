@@ -195,6 +195,7 @@ export type Query = {
   graders: Array<Grader>;
   listing: Listing;
   manufacturers: Array<Manufacturer>;
+  players: Array<Player>;
   productTypes: Array<Product>;
   setTypes: Array<Set>;
   stripeCheckoutSessionId: Scalars['String'];
@@ -204,6 +205,11 @@ export type Query = {
 
 export type QueryListingArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryPlayersArgs = {
+  name?: Maybe<Scalars['String']>;
 };
 
 
@@ -284,7 +290,6 @@ export type User = ActiveRecordInterface & {
   id: Scalars['Int'];
   listings: Array<Listing>;
   offers: Array<Offer>;
-  players: Array<Player>;
   profilePictureUrl: Scalars['String'];
   stripeAccount: StripeAccount;
   updatedAt: Scalars['ISO8601DateTime'];
@@ -298,11 +303,6 @@ export type UserListingsArgs = {
 
 export type UserOffersArgs = {
   status?: Maybe<ListingStatusEnum>;
-};
-
-
-export type UserPlayersArgs = {
-  name?: Maybe<Scalars['String']>;
 };
 
 
@@ -526,14 +526,10 @@ export type PlayersQueryVariables = Exact<{
 
 export type PlayersQuery = (
   { __typename?: 'Query' }
-  & { viewer: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-    & { players: Array<(
-      { __typename?: 'Player' }
-      & PlayerFragment
-    )> }
-  ) }
+  & { players: Array<(
+    { __typename?: 'Player' }
+    & PlayerFragment
+  )> }
 );
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -1101,11 +1097,8 @@ export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>;
 export type ViewerQueryResult = ApolloReactCommon.QueryResult<ViewerQuery, ViewerQueryVariables>;
 export const PlayersDocument = gql`
     query players($name: String) {
-  viewer {
-    id
-    players(name: $name) {
-      ...player
-    }
+  players(name: $name) {
+    ...player
   }
 }
     ${PlayerFragmentDoc}`;
