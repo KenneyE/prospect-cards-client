@@ -74,7 +74,7 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
 
         const token = response.headers.get('Authorization')
         if (response.status === 201 && token) {
-          localStorage.setItem('fund-reporter-token', token)
+          localStorage.setItem('prospect-cards-token', token)
           await refresh()
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

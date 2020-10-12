@@ -6,7 +6,7 @@ const LogoutButton = (): JSX.Element => {
   const client = useApolloClient()
 
   const handleClick = (): void => {
-    localStorage.removeItem('fund-reporter-token')
+    localStorage.removeItem('prospect-cards-token')
     client.clearStore()
     window.location.href = '/login'
   }

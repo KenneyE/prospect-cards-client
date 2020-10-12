@@ -32,7 +32,9 @@ const AddPayment = ({
       <Button variant='outlined' component={ Link } to='/'>
         Home
       </Button>
-      <Button  variant='contained' onClick={ handleClick }>Add Payment Method</Button>
+      <Button variant='contained' onClick={ handleClick }>
+        Add Payment Method
+      </Button>
     </>
   )
 }

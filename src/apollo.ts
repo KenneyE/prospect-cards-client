@@ -46,7 +46,7 @@ const showFeedback = new ApolloLink((operation, forward) => {
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('fund-reporter-token')
+  const token = localStorage.getItem('prospect-cards-token')
   // return the headers to the context so httpLink can read them
   return {
     headers: {

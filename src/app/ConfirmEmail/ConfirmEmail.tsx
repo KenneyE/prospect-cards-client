@@ -1,11 +1,20 @@
 import React from 'react'
+import { Button, Typography } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 interface Props {
-  loading: boolean;
+  message?: string;
 }
 
-const ConfirmEmail = ({ loading }: Props): JSX.Element => {
-  return <div>Hello World</div>
+const ConfirmEmail = ({ message }: Props): JSX.Element => {
+  return (
+    <>
+      <Typography>{message}</Typography>
+      <Button component={ Link } to='/'>
+        Home
+      </Button>
+    </>
+  )
 }
 
 export default ConfirmEmail

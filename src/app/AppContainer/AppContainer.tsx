@@ -13,11 +13,7 @@ import stripe from 'lib/stripe'
 import useStyles from './styles'
 import NavBar from 'app/NavBar'
 
-export interface Props {
-  loggedIn: boolean;
-}
-
-const AppContainer = ({ loggedIn }: Props): JSX.Element => {
+const AppContainer = (): JSX.Element => {
   const classes = useStyles()
 
   return (

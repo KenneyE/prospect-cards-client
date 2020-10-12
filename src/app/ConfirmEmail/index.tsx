@@ -3,11 +3,13 @@ import { Maybe } from 'types/graphql'
 import Dumb from './ConfirmEmail'
 import { useParams } from 'react-router-dom'
 import Spinner from 'app/common/Spinner'
-import { toast } from 'react-toastify'
+import { useApolloClient } from '@apollo/client'
 
 const ConfirmEmail = (): Maybe<JSX.Element> => {
   const { token } = useParams<{ token: string }>()
   const [loading, setLoading] = useState(true)
+  const [message, setMessage] = useState<string>()
+  const client = useApolloClient()
 
   useEffect(() => {
     fetch(
@@ -21,24 +23,32 @@ const ConfirmEmail = (): Maybe<JSX.Element> => {
     )
       .then(
         async(response): Promise<void> => {
-          setLoading(false)
-
+          // Log the user in automatically after email confirmation
           const token = response.headers.get('Authorization')
-          if (response.status === 201 && token) {
-            localStorage.setItem('fund-reporter-token', token)
+          if (response.status === 200 && token) {
+            localStorage.setItem('prospect-cards-token', token)
+            client.resetStore()
+            setMessage('Email confirmed! Welcome to Prospect Cards!')
           } else {
-            toast.error(response.statusText)
+            setMessage(
+              'Unable to confirm your email. You may have already confirmed it.',
+            )
           }
         },
       )
-      .catch((response) => {
-        toast.error(response.statusText)
+      .catch(() => {
+        setMessage(
+          'Looks like we ran into an error. Please contact support if you continue to have issues.',
+        )
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [token])
 
   if (loading) return <Spinner />
 
-  return <Dumb loading={ loading } />
+  return <Dumb message={ message } />
 }
 
 export default ConfirmEmail
