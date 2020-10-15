@@ -1,14 +1,8 @@
 import gql from 'graphql-tag'
 
 gql`
-  query auth {
-    auth
-  }
-`
-
-gql`
-  query viewer {
-    viewer {
+  query maybeViewer {
+    maybeViewer {
       id
     }
   }

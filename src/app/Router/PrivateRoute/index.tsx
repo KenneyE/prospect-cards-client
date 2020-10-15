@@ -1,10 +1,10 @@
 import React from 'react'
 import { RouteProps } from 'react-router-dom'
-import { useAuthQuery, Maybe } from 'types/graphql'
+import { useMaybeViewerQuery, Maybe } from 'types/graphql'
 import PrivateRouteComponent from './PrivateRoute'
 
 const PrivateRoute = (props: RouteProps): Maybe<JSX.Element> => {
-  const { data, loading, client, error } = useAuthQuery()
+  const { data, loading, client, error } = useMaybeViewerQuery()
 
   if (loading) return null
 
@@ -16,7 +16,10 @@ const PrivateRoute = (props: RouteProps): Maybe<JSX.Element> => {
   }
 
   return (
-    <PrivateRouteComponent { ...props } isAuthenticated={ !!(data && data.auth) } />
+    <PrivateRouteComponent
+      { ...props }
+      isAuthenticated={ !!(data && data.maybeViewer) }
+    />
   )
 }
 

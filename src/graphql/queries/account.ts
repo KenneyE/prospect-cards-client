@@ -12,7 +12,7 @@ gql`
 
 gql`
   query account {
-    viewer {
+    maybeViewer {
       id
       hasActiveSubscription
       hasPaymentMethod

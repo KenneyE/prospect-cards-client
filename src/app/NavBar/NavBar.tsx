@@ -33,9 +33,9 @@ const NavBar = ({ data }: Props): JSX.Element => {
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null)
 
-  const isSeller = data?.viewer.stripeAccount.chargesEnabled
-  // const hasSubscription = data?.viewer.hasActiveSubscription
-  const hasPaymentMethod = data?.viewer.hasPaymentMethod
+  const isSeller = data?.maybeViewer?.stripeAccount.chargesEnabled
+  // const hasSubscription = data?.maybeViewer.hasActiveSubscription
+  const hasPaymentMethod = data?.maybeViewer?.hasPaymentMethod
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)

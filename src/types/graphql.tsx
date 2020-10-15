@@ -195,6 +195,7 @@ export type Query = {
   graders: Array<Grader>;
   listing: Listing;
   manufacturers: Array<Manufacturer>;
+  maybeViewer: Maybe<User>;
   players: Array<Player>;
   productTypes: Array<Product>;
   setTypes: Array<Set>;
@@ -463,14 +464,14 @@ export type AccountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountQuery = (
   { __typename?: 'Query' }
-  & { viewer: (
+  & { maybeViewer: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'hasActiveSubscription' | 'hasPaymentMethod'>
     & { stripeAccount: (
       { __typename?: 'StripeAccount' }
       & Pick<StripeAccount, 'id' | 'chargesEnabled' | 'onboardingLink'>
     ) }
-  ) }
+  )> }
 );
 
 export type StripeAccountQueryVariables = Exact<{
@@ -500,23 +501,15 @@ export type AddPaymentQuery = (
   & Pick<Query, 'stripeCheckoutSessionId'>
 );
 
-export type AuthQueryVariables = Exact<{ [key: string]: never; }>;
+export type MaybeViewerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AuthQuery = (
+export type MaybeViewerQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'auth'>
-);
-
-export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ViewerQuery = (
-  { __typename?: 'Query' }
-  & { viewer: (
+  & { maybeViewer: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id'>
-  ) }
+  )> }
 );
 
 export type PlayersQueryVariables = Exact<{
@@ -927,7 +920,7 @@ export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = ApolloReactCommon.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const AccountDocument = gql`
     query account {
-  viewer {
+  maybeViewer {
     id
     hasActiveSubscription
     hasPaymentMethod
@@ -1033,68 +1026,38 @@ export function useAddPaymentLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type AddPaymentQueryHookResult = ReturnType<typeof useAddPaymentQuery>;
 export type AddPaymentLazyQueryHookResult = ReturnType<typeof useAddPaymentLazyQuery>;
 export type AddPaymentQueryResult = ApolloReactCommon.QueryResult<AddPaymentQuery, AddPaymentQueryVariables>;
-export const AuthDocument = gql`
-    query auth {
-  auth
-}
-    `;
-
-/**
- * __useAuthQuery__
- *
- * To run a query within a React component, call `useAuthQuery` and pass it any options that fit your needs.
- * When your component renders, `useAuthQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAuthQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAuthQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AuthQuery, AuthQueryVariables>) {
-        return ApolloReactHooks.useQuery<AuthQuery, AuthQueryVariables>(AuthDocument, baseOptions);
-      }
-export function useAuthLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AuthQuery, AuthQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<AuthQuery, AuthQueryVariables>(AuthDocument, baseOptions);
-        }
-export type AuthQueryHookResult = ReturnType<typeof useAuthQuery>;
-export type AuthLazyQueryHookResult = ReturnType<typeof useAuthLazyQuery>;
-export type AuthQueryResult = ApolloReactCommon.QueryResult<AuthQuery, AuthQueryVariables>;
-export const ViewerDocument = gql`
-    query viewer {
-  viewer {
+export const MaybeViewerDocument = gql`
+    query maybeViewer {
+  maybeViewer {
     id
   }
 }
     `;
 
 /**
- * __useViewerQuery__
+ * __useMaybeViewerQuery__
  *
- * To run a query within a React component, call `useViewerQuery` and pass it any options that fit your needs.
- * When your component renders, `useViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMaybeViewerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMaybeViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useViewerQuery({
+ * const { data, loading, error } = useMaybeViewerQuery({
  *   variables: {
  *   },
  * });
  */
-export function useViewerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
-        return ApolloReactHooks.useQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+export function useMaybeViewerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MaybeViewerQuery, MaybeViewerQueryVariables>) {
+        return ApolloReactHooks.useQuery<MaybeViewerQuery, MaybeViewerQueryVariables>(MaybeViewerDocument, baseOptions);
       }
-export function useViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, baseOptions);
+export function useMaybeViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MaybeViewerQuery, MaybeViewerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MaybeViewerQuery, MaybeViewerQueryVariables>(MaybeViewerDocument, baseOptions);
         }
-export type ViewerQueryHookResult = ReturnType<typeof useViewerQuery>;
-export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>;
-export type ViewerQueryResult = ApolloReactCommon.QueryResult<ViewerQuery, ViewerQueryVariables>;
+export type MaybeViewerQueryHookResult = ReturnType<typeof useMaybeViewerQuery>;
+export type MaybeViewerLazyQueryHookResult = ReturnType<typeof useMaybeViewerLazyQuery>;
+export type MaybeViewerQueryResult = ApolloReactCommon.QueryResult<MaybeViewerQuery, MaybeViewerQueryVariables>;
 export const PlayersDocument = gql`
     query players($name: String) {
   players(name: $name) {

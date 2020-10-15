@@ -1,13 +1,13 @@
 import React from 'react'
 import LoginComponent from './Login'
 import { Redirect, withRouter, RouteComponentProps } from 'react-router'
-import { Maybe, useAuthQuery } from 'types/graphql'
+import { Maybe, useMaybeViewerQuery } from 'types/graphql'
 
 const Login = (props: RouteComponentProps): Maybe<JSX.Element> => {
-  const { data, loading, refetch } = useAuthQuery()
+  const { data, loading, refetch } = useMaybeViewerQuery()
 
   if (loading) return null
-  if (data && data.auth) return <Redirect to='/' />
+  if (data && data.maybeViewer) return <Redirect to='/' />
 
   const refresh = async(): Promise<void> => {
     await refetch()

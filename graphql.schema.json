@@ -1800,6 +1800,18 @@
             "deprecationReason": null
           },
           {
+            "name": "maybeViewer",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "players",
             "description": null,
             "args": [
