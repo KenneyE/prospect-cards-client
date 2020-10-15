@@ -278,8 +278,8 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                           Maximum number of images reached...
                         </Typography>
                       ) : isDragActive ? (
-                        <Typography variant='body2' color='primary'>
-                          Drop your document here!
+                        <Typography variant='body2'>
+                          Drop your images here!
                         </Typography>
                       ) : (
                         <Typography variant='body2'>
