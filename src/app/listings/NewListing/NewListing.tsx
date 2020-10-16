@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
@@ -20,12 +19,15 @@ import {
   Scalars,
 } from 'types/graphql'
 import useStyles from './styles'
-import LoadingButton from 'app/common/LoadingButton'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
-import PlayerInputField from 'app/PlayerInputField'
 import { toast } from 'react-toastify'
+import arrayMove from 'array-move'
+import PlayerInputField from 'app/PlayerInputField'
+import LoadingButton from 'app/common/LoadingButton'
 import DollarField from 'app/common/DollarField'
+import NewListingThumbs from 'app/listings/NewListingThumbs'
+import * as Sortable from 'react-sortable-hoc'
 
 const ListingSchema = Yup.object().shape({
   listing: Yup.object().shape({
@@ -105,22 +107,15 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
             setFieldValue('listing.images', newAtts)
           }
 
-          const thumbs = values.listing.images.map(
-            ({ document, preview }: Scalars['Upload']) => {
-              return (
-                <div className={ classes.thumb } key={ document.name }>
-                  <div className={ classes.thumbInner }>
-                    <CloseIcon onClick={ handleDelete(document.name) } />
-                    <img
-                      alt={ document.name }
-                      src={ preview }
-                      className={ classes.thumbImg }
-                    />
-                  </div>
-                </div>
-              )
-            },
-          )
+          const onSortEnd: Sortable.SortEndHandler = ({
+            oldIndex,
+            newIndex,
+          }) => {
+            setFieldValue(
+              'listing.images',
+              arrayMove(values.listing.images, oldIndex, newIndex),
+            )
+          }
 
           return (
             <Form>
@@ -291,10 +286,21 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                   </Card>
                 )}
               </Dropzone>
-              {thumbs}
+              <NewListingThumbs
+                images={ values.listing.images }
+                handleDelete={ handleDelete }
+                onSortEnd={ onSortEnd }
+                axis='x'
+                lockAxis='x'
+              />
+              {values.listing.images.length ? (
+                <Typography variant='caption'>Drag to sort</Typography>
+              ) : null}
+
               {errors.listing?.images && touched.listing?.images ? (
                 <div>{errors.listing.images}</div>
               ) : null}
+              <br />
               <LoadingButton
                 loading={ loading }
                 type='submit'
