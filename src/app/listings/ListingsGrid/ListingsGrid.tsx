@@ -41,6 +41,9 @@ const ListingsGrid = ({ listings }: Props): JSX.Element => {
 
             <CardContent>
               <Typography gutterBottom variant='h5' component='h2'>
+                {listing.title}
+              </Typography>
+              <Typography variant='body2' color='textSecondary' component='p'>
                 {listing.player.name}
               </Typography>
               <Typography variant='body2' color='textSecondary' component='p'>

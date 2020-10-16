@@ -2,6 +2,7 @@ import React from 'react'
 import { Scalars } from 'types/graphql'
 import NewListingThumb from 'app/listings/NewListingThumb'
 import * as Sortable from 'react-sortable-hoc'
+import { Typography } from '@material-ui/core'
 
 interface Props {
   images: Scalars['Upload'][];
@@ -17,10 +18,18 @@ const NewListingThumbs = ({ images, handleDelete }: Props): JSX.Element => {
         image={ image }
         handleDelete={ handleDelete }
         index={ index }
+        thumbIndex={ index }
       />
     )
   })
-  return <div>{thumbs}</div>
+  return (
+    <div>
+      {thumbs}
+      {images.length ? (
+        <Typography variant='caption'>Drag to sort</Typography>
+      ) : null}
+    </div>
+  )
 }
 
 export default Sortable.SortableContainer(NewListingThumbs)

@@ -2,7 +2,7 @@ import { makeStyles, Theme, StyleRules } from '@material-ui/core/styles'
 
 // Style the child elements with active color
 export default makeStyles(
-  ({ spacing }: Theme): StyleRules => ({
+  ({ spacing, palette }: Theme): StyleRules => ({
     thumb: {
       display: 'inline-flex',
       borderRadius: 2,
@@ -13,6 +13,10 @@ export default makeStyles(
       height: 100,
       padding: spacing(),
       boxSizing: 'border-box',
+    },
+    primaryThumb: {
+      borderColor: palette.primary.main,
+      borderWidth: 3,
     },
     thumbInner: {
       display: 'flex',

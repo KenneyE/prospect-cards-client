@@ -293,10 +293,6 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                 axis='x'
                 lockAxis='x'
               />
-              {values.listing.images.length ? (
-                <Typography variant='caption'>Drag to sort</Typography>
-              ) : null}
-
               {errors.listing?.images && touched.listing?.images ? (
                 <div>{errors.listing.images}</div>
               ) : null}
