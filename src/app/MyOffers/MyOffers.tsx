@@ -35,7 +35,7 @@ const MyOffers = ({
                 className={ classes.img }
                 component='img'
                 alt={ offer.listing.title }
-                image={ offer.listing.imageUrls[0] }
+                image={ offer.listing.images[0].url }
                 title={ offer.listing.title }
               />
             </div>

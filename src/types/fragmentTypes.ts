@@ -10,6 +10,7 @@
       "Category",
       "Grader",
       "Listing",
+      "ListingImage",
       "Manufacturer",
       "Membership",
       "Offer",

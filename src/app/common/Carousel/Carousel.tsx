@@ -15,14 +15,14 @@ const Carousel = ({ listing }: Props): JSX.Element => {
       showThumbs={ false }
       showStatus={ false }
       infiniteLoop
-      centerMode={ listing.imageUrls.length > 1 }
-      showIndicators={ listing.imageUrls.length > 1 }
+      centerMode={ listing.images.length > 1 }
+      showIndicators={ listing.images.length > 1 }
     >
-      {listing.imageUrls.map((image: string, ind: number) => {
+      {listing.images.map((image, ind: number) => {
         return (
           <img
-            key={ image }
-            src={ image }
+            key={ image.id }
+            src={ image.url }
             alt={ `${listing.player.name} No. ${ind}` }
             className={ classes.img }
           />
