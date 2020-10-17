@@ -37,6 +37,16 @@ export type Category = ActiveRecordInterface & {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+export type EmailPreference = ActiveRecordInterface & {
+  __typename?: 'EmailPreference';
+  canceled: Scalars['Boolean'];
+  category: Scalars['String'];
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 export type Grader = ActiveRecordInterface & {
   __typename?: 'Grader';
   createdAt: Scalars['ISO8601DateTime'];
@@ -295,6 +305,7 @@ export type User = ActiveRecordInterface & {
   availableMemberships: Array<Membership>;
   createdAt: Scalars['ISO8601DateTime'];
   email: Scalars['String'];
+  emailPreferences: Array<EmailPreference>;
   errors: Array<Scalars['String']>;
   hasActiveSubscription: Scalars['Boolean'];
   hasPaymentMethod: Scalars['Boolean'];
@@ -352,6 +363,11 @@ export type OfferFragment = (
       & Pick<ListingImage, 'id' | 'url'>
     )> }
   ) }
+);
+
+export type EmailPreferenceFragment = (
+  { __typename?: 'EmailPreference' }
+  & Pick<EmailPreference, 'id' | 'category' | 'canceled'>
 );
 
 export type TrackInterestMutationVariables = Exact<{
@@ -518,6 +534,21 @@ export type AddPaymentQuery = (
   & Pick<Query, 'stripeCheckoutSessionId'>
 );
 
+export type EmailPreferencesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmailPreferencesQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { emailPreferences: Array<(
+      { __typename?: 'EmailPreference' }
+      & EmailPreferenceFragment
+    )> }
+  ) }
+);
+
 export type MaybeViewerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -668,6 +699,13 @@ export const OfferFragmentDoc = gql`
       url
     }
   }
+}
+    `;
+export const EmailPreferenceFragmentDoc = gql`
+    fragment emailPreference on EmailPreference {
+  id
+  category
+  canceled
 }
     `;
 export const TrackInterestDocument = gql`
@@ -1053,6 +1091,41 @@ export function useAddPaymentLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type AddPaymentQueryHookResult = ReturnType<typeof useAddPaymentQuery>;
 export type AddPaymentLazyQueryHookResult = ReturnType<typeof useAddPaymentLazyQuery>;
 export type AddPaymentQueryResult = ApolloReactCommon.QueryResult<AddPaymentQuery, AddPaymentQueryVariables>;
+export const EmailPreferencesDocument = gql`
+    query emailPreferences {
+  viewer {
+    id
+    emailPreferences {
+      ...emailPreference
+    }
+  }
+}
+    ${EmailPreferenceFragmentDoc}`;
+
+/**
+ * __useEmailPreferencesQuery__
+ *
+ * To run a query within a React component, call `useEmailPreferencesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEmailPreferencesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEmailPreferencesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEmailPreferencesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<EmailPreferencesQuery, EmailPreferencesQueryVariables>) {
+        return ApolloReactHooks.useQuery<EmailPreferencesQuery, EmailPreferencesQueryVariables>(EmailPreferencesDocument, baseOptions);
+      }
+export function useEmailPreferencesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<EmailPreferencesQuery, EmailPreferencesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<EmailPreferencesQuery, EmailPreferencesQueryVariables>(EmailPreferencesDocument, baseOptions);
+        }
+export type EmailPreferencesQueryHookResult = ReturnType<typeof useEmailPreferencesQuery>;
+export type EmailPreferencesLazyQueryHookResult = ReturnType<typeof useEmailPreferencesLazyQuery>;
+export type EmailPreferencesQueryResult = ApolloReactCommon.QueryResult<EmailPreferencesQuery, EmailPreferencesQueryVariables>;
 export const MaybeViewerDocument = gql`
     query maybeViewer {
   maybeViewer {
