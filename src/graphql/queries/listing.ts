@@ -6,7 +6,10 @@ gql`
       id
       title
       description
-      imageUrls
+      images {
+        id
+        url
+      }
     }
   }
 `

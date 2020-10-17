@@ -11,7 +11,7 @@ interface Props {
 
 const Listing = ({
   data: {
-    listing: { id, title, description, imageUrls },
+    listing: { id, title, description, images },
   },
 }: Props): JSX.Element => {
   const classes = useStyles()
@@ -22,15 +22,15 @@ const Listing = ({
         showThumbs={ false }
         showStatus={ false }
         infiniteLoop
-        centerMode={ imageUrls.length > 1 }
-        showIndicators={ imageUrls.length > 1 }
+        centerMode={ images.length > 1 }
+        showIndicators={ images.length > 1 }
         width={ 400 }
       >
-        {imageUrls.map((image: string, ind: number) => {
+        {images.map((image, ind) => {
           return (
             <img
-              key={ image }
-              src={ image }
+              key={ image.id }
+              src={ image.url }
               alt={ `${title} No. ${ind}` }
               className={ classes.img }
             />

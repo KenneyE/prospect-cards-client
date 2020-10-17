@@ -53,12 +53,22 @@ export type Listing = ActiveRecordInterface & {
   description: Scalars['String'];
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
-  imageUrls: Array<Scalars['String']>;
+  images: Array<ListingImage>;
   offers: Array<Offer>;
   player: Player;
   price: Scalars['Int'];
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
+};
+
+export type ListingImage = ActiveRecordInterface & {
+  __typename?: 'ListingImage';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  position: Scalars['Int'];
+  updatedAt: Scalars['ISO8601DateTime'];
+  url: Scalars['String'];
 };
 
 export type ListingInput = {
@@ -318,8 +328,11 @@ export type PlayerFragment = (
 
 export type ListingFragment = (
   { __typename?: 'Listing' }
-  & Pick<Listing, 'id' | 'title' | 'description' | 'price' | 'imageUrls'>
-  & { player: (
+  & Pick<Listing, 'id' | 'title' | 'description' | 'price'>
+  & { images: Array<(
+    { __typename?: 'ListingImage' }
+    & Pick<ListingImage, 'id' | 'url'>
+  )>, player: (
     { __typename?: 'Player' }
     & Pick<Player, 'id' | 'name'>
   ), offers: Array<(
@@ -333,7 +346,11 @@ export type OfferFragment = (
   & Pick<Offer, 'id' | 'price'>
   & { listing: (
     { __typename?: 'Listing' }
-    & Pick<Listing, 'id' | 'title' | 'imageUrls'>
+    & Pick<Listing, 'id' | 'title'>
+    & { images: Array<(
+      { __typename?: 'ListingImage' }
+      & Pick<ListingImage, 'id' | 'url'>
+    )> }
   ) }
 );
 
@@ -549,7 +566,11 @@ export type ListingQuery = (
   { __typename?: 'Query' }
   & { listing: (
     { __typename?: 'Listing' }
-    & Pick<Listing, 'id' | 'title' | 'description' | 'imageUrls'>
+    & Pick<Listing, 'id' | 'title' | 'description'>
+    & { images: Array<(
+      { __typename?: 'ListingImage' }
+      & Pick<ListingImage, 'id' | 'url'>
+    )> }
   ) }
 );
 
@@ -621,7 +642,10 @@ export const ListingFragmentDoc = gql`
   title
   description
   price
-  imageUrls
+  images {
+    id
+    url
+  }
   player {
     id
     name
@@ -639,7 +663,10 @@ export const OfferFragmentDoc = gql`
   listing {
     id
     title
-    imageUrls
+    images {
+      id
+      url
+    }
   }
 }
     `;
@@ -1134,7 +1161,10 @@ export const ListingDocument = gql`
     id
     title
     description
-    imageUrls
+    images {
+      id
+      url
+    }
   }
 }
     `;

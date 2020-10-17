@@ -13,7 +13,10 @@ gql`
     title
     description
     price
-    imageUrls
+    images {
+      id
+      url
+    }
     player {
       id
       name
@@ -32,7 +35,10 @@ gql`
     listing {
       id
       title
-      imageUrls
+      images {
+        id
+        url
+      }
     }
   }
 `
