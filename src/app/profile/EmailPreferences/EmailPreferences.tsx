@@ -53,7 +53,9 @@ const EmailPreferences = ({
               />
             )
           })}
-          <LoadingButton loading={ loading }>Save Preferences</LoadingButton>
+          <LoadingButton type='submit' loading={ loading }>
+            Save Preferences
+          </LoadingButton>
         </Form>
       )}
     </Formik>
