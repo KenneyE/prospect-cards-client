@@ -492,6 +492,7 @@ export type SaveProfilePictureMutation = (
   { __typename?: 'Mutation' }
   & { saveProfilePicture: Maybe<(
     { __typename?: 'SaveProfilePicturePayload' }
+    & Pick<SaveProfilePicturePayload, 'message'>
     & { viewer: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'profilePictureUrl'>
@@ -508,6 +509,7 @@ export type SaveEmailPreferencesMutation = (
   { __typename?: 'Mutation' }
   & { saveEmailPreferences: Maybe<(
     { __typename?: 'SaveEmailPreferencesPayload' }
+    & Pick<SaveEmailPreferencesPayload, 'message'>
     & { viewer: (
       { __typename?: 'User' }
       & Pick<User, 'id'>
@@ -959,6 +961,7 @@ export const SaveProfilePictureDocument = gql`
       id
       profilePictureUrl
     }
+    message
   }
 }
     `;
@@ -996,6 +999,7 @@ export const SaveEmailPreferencesDocument = gql`
         ...emailPreference
       }
     }
+    message
   }
 }
     ${EmailPreferenceFragmentDoc}`;

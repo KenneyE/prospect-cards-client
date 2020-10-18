@@ -7,6 +7,7 @@ gql`
         id
         profilePictureUrl
       }
+      message
     }
   }
 `
@@ -20,6 +21,7 @@ gql`
           ...emailPreference
         }
       }
+      message
     }
   }
 `
