@@ -10,3 +10,16 @@ gql`
     }
   }
 `
+
+gql`
+  mutation saveEmailPreferences($emailPreferences: [EmailPreferenceInput!]!) {
+    saveEmailPreferences(emailPreferences: $emailPreferences) {
+      viewer {
+        id
+        emailPreferences {
+          ...emailPreference
+        }
+      }
+    }
+  }
+`

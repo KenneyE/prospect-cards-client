@@ -47,6 +47,6 @@ gql`
   fragment emailPreference on EmailPreference {
     id
     category
-    canceled
+    subscribed
   }
 `
