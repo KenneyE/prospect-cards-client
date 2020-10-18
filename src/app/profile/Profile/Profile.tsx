@@ -34,8 +34,8 @@ const Profile = ({
       <div
         role='tabpanel'
         hidden={ value !== index }
-        id={ `vertical-tabpanel-${index}` }
-        aria-labelledby={ `vertical-tab-${index}` }
+        id={ `profile-tabpanel-${index}` }
+        aria-labelledby={ `profile-tab-${index}` }
         { ...other }
       >
         {value === index && <Box p={ 3 }>{children}</Box>}
@@ -50,7 +50,7 @@ const Profile = ({
         variant='scrollable'
         value={ value }
         onChange={ handleChange }
-        aria-label='Vertical tabs example'
+        aria-label='Profile tabs'
         className={ classes.tabs }
       >
         <Tab label='Account' />
