@@ -43,3 +43,14 @@ gql`
     stripeCheckoutSessionId(price: $price)
   }
 `
+
+gql`
+  query emailPreferences {
+    viewer {
+      id
+      emailPreferences {
+        ...emailPreference
+      }
+    }
+  }
+`

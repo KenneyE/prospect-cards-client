@@ -8,6 +8,7 @@
   "possibleTypes": {
     "ActiveRecordInterface": [
       "Category",
+      "EmailPreference",
       "Grader",
       "Listing",
       "ListingImage",

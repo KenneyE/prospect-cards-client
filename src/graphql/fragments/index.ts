@@ -42,3 +42,11 @@ gql`
     }
   }
 `
+
+gql`
+  fragment emailPreference on EmailPreference {
+    id
+    category
+    subscribed
+  }
+`
