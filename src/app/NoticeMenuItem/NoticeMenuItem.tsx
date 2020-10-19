@@ -1,28 +1,31 @@
 import React from 'react'
 import { NoticeFragment } from 'types/graphql'
 import { MenuItem, Typography } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   notice: NoticeFragment;
-  handleClose: VoidFunction;
+  onClose: VoidFunction;
 }
 
-const NoticeMenuItem = ({ notice, handleClose }: Props): JSX.Element => {
+const NoticeMenuItem = ({
+  notice: { title, text, path },
+  onClose,
+}: Props): JSX.Element => {
+  const history = useHistory()
+
   const noticeBody = (
     <div style={ { display: 'block' } }>
-      <Typography variant='body1'>{notice.title}</Typography>
-      <Typography variant='caption'>{notice.text}</Typography>
+      <Typography variant='body1'>{title}</Typography>
+      <Typography variant='caption'>{text}</Typography>
     </div>
   )
+  const handleClose = () => {
+    onClose()
+    path && history.push(path)
+  }
 
-  return notice.path ? (
-    <Link component={ MenuItem } to={ notice.path }>
-      {noticeBody}
-    </Link>
-  ) : (
-    <MenuItem onClick={ handleClose }>{noticeBody}</MenuItem>
-  )
+  return <MenuItem onClick={ handleClose }>{noticeBody}</MenuItem>
 }
 
 export default NoticeMenuItem

@@ -44,7 +44,7 @@ const NoticesMenu = ({ notices = [] }: Props): JSX.Element => {
             <NoticeMenuItem
               key={ notice.id }
               notice={ notice }
-              handleClose={ handleClose }
+              onClose={ handleClose }
             />
           ))}
         </Menu>
