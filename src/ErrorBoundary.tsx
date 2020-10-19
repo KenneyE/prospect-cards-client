@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
   componentDidCatch(error: Error, info: ErrorInfo): void {
     // Display fallback UI
     this.setState({ hasError: true })
-    if (false && process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
       console.error('ERROR:', error, info)
     } else {
       // Send error to Airbrake
