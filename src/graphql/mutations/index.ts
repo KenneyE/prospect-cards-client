@@ -7,3 +7,11 @@ gql`
     }
   }
 `
+
+gql`
+  mutation markNoticesRead {
+    markNoticesRead {
+      success
+    }
+  }
+`

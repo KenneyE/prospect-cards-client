@@ -1,23 +1,26 @@
 import React from 'react'
-import { NoticeFragment } from 'types/graphql'
+import { MarkNoticesReadMutationFn, NoticeFragment } from 'types/graphql'
 import { Badge, IconButton, Menu } from '@material-ui/core'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import PrivateComponent from 'app/PrivateComponent'
-import {
-  usePopupState,
-  bindTrigger,
-  bindMenu,
-} from 'material-ui-popup-state/hooks'
 import NoticeMenuItem from 'app/NoticeMenuItem'
 
 interface Props {
   notices?: NoticeFragment[];
+  markRead: MarkNoticesReadMutationFn;
 }
 
-const NoticesMenu = ({ notices = [] }: Props): JSX.Element => {
-  const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })
+const NoticesMenu = ({ markRead, notices = [] }: Props): JSX.Element => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-  const handleClose = popupState.close
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    markRead()
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <PrivateComponent>
@@ -26,7 +29,7 @@ const NoticesMenu = ({ notices = [] }: Props): JSX.Element => {
           aria-label={ `show ${notices.length} new notifications` }
           color='inherit'
           disabled={ !notices.length }
-          { ...bindTrigger(popupState) }
+          onClick={ handleClick }
         >
           <Badge badgeContent={ notices.length } color='secondary'>
             <NotificationsIcon />
@@ -37,8 +40,14 @@ const NoticesMenu = ({ notices = [] }: Props): JSX.Element => {
             vertical: 'bottom',
             horizontal: 'center',
           } }
+          transformOrigin={ {
+            vertical: 'top',
+            horizontal: 'center',
+          } }
           getContentAnchorEl={ null }
-          { ...bindMenu(popupState) }
+          anchorEl={ anchorEl }
+          open={ Boolean(anchorEl) }
+          onClose={ handleClose }
         >
           {notices.map((notice) => (
             <NoticeMenuItem
