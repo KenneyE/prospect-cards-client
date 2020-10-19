@@ -1,6 +1,6 @@
 import React from 'react'
 import { NoticeFragment } from 'types/graphql'
-import { MenuItem } from '@material-ui/core'
+import { MenuItem, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -9,9 +9,20 @@ interface Props {
 }
 
 const NoticeMenuItem = ({ notice, handleClose }: Props): JSX.Element => {
-  const menuItem = <MenuItem onClick={ handleClose }>{notice.title}</MenuItem>
+  const noticeBody = (
+    <div style={ { display: 'block' } }>
+      <Typography variant='body1'>{notice.title}</Typography>
+      <Typography variant='caption'>{notice.text}</Typography>
+    </div>
+  )
 
-  return notice.path ? <Link to={ notice.path }>{menuItem}</Link> : menuItem
+  return notice.path ? (
+    <Link component={ MenuItem } to={ notice.path }>
+      {noticeBody}
+    </Link>
+  ) : (
+    <MenuItem onClick={ handleClose }>{noticeBody}</MenuItem>
+  )
 }
 
 export default NoticeMenuItem

@@ -32,7 +32,14 @@ const NoticesMenu = ({ notices = [] }: Props): JSX.Element => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <Menu { ...bindMenu(popupState) }>
+        <Menu
+          anchorOrigin={ {
+            vertical: 'bottom',
+            horizontal: 'center',
+          } }
+          getContentAnchorEl={ null }
+          { ...bindMenu(popupState) }
+        >
           {notices.map((notice) => (
             <NoticeMenuItem
               key={ notice.id }
