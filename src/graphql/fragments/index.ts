@@ -50,3 +50,12 @@ gql`
     subscribed
   }
 `
+
+gql`
+  fragment notice on Notice {
+    id
+    title
+    text
+    path
+  }
+`

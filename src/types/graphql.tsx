@@ -96,7 +96,7 @@ export type ListingInput = {
   productTypeId: Scalars['Int'];
   manufacturerId: Scalars['Int'];
   setTypeId: Scalars['Int'];
-  graderId: Scalars['Int'];
+  graderId?: Maybe<Scalars['Int']>;
 };
 
 export enum ListingStatusEnum {
@@ -180,6 +180,17 @@ export type MutationTempConfirmOfferArgs = {
 
 export type MutationTrackInterestArgs = {
   listingId: Scalars['Int'];
+};
+
+export type Notice = ActiveRecordInterface & {
+  __typename?: 'Notice';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  path: Maybe<Scalars['String']>;
+  text: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['ISO8601DateTime'];
 };
 
 export type Offer = ActiveRecordInterface & {
@@ -332,6 +343,7 @@ export type User = ActiveRecordInterface & {
   offers: Array<Offer>;
   profilePictureUrl: Scalars['String'];
   stripeAccount: StripeAccount;
+  unreadNotices: Array<Notice>;
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
@@ -386,6 +398,11 @@ export type OfferFragment = (
 export type EmailPreferenceFragment = (
   { __typename?: 'EmailPreference' }
   & Pick<EmailPreference, 'id' | 'category' | 'subscribed'>
+);
+
+export type NoticeFragment = (
+  { __typename?: 'Notice' }
+  & Pick<Notice, 'id' | 'title' | 'text' | 'path'>
 );
 
 export type TrackInterestMutationVariables = Exact<{
@@ -540,7 +557,10 @@ export type AccountQuery = (
   & { maybeViewer: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'hasActiveSubscription' | 'hasPaymentMethod'>
-    & { stripeAccount: (
+    & { unreadNotices: Array<(
+      { __typename?: 'Notice' }
+      & NoticeFragment
+    )>, stripeAccount: (
       { __typename?: 'StripeAccount' }
       & Pick<StripeAccount, 'id' | 'chargesEnabled' | 'onboardingLink'>
     ) }
@@ -746,6 +766,14 @@ export const EmailPreferenceFragmentDoc = gql`
   id
   category
   subscribed
+}
+    `;
+export const NoticeFragmentDoc = gql`
+    fragment notice on Notice {
+  id
+  title
+  text
+  path
 }
     `;
 export const TrackInterestDocument = gql`
@@ -1066,6 +1094,9 @@ export const AccountDocument = gql`
     query account {
   maybeViewer {
     id
+    unreadNotices {
+      ...notice
+    }
     hasActiveSubscription
     hasPaymentMethod
     stripeAccount {
@@ -1075,7 +1106,7 @@ export const AccountDocument = gql`
     }
   }
 }
-    `;
+    ${NoticeFragmentDoc}`;
 
 /**
  * __useAccountQuery__

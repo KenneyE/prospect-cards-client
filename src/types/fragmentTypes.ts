@@ -14,6 +14,7 @@
       "ListingImage",
       "Manufacturer",
       "Membership",
+      "Notice",
       "Offer",
       "Player",
       "Product",
