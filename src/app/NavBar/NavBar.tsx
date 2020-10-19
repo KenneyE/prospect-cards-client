@@ -1,7 +1,6 @@
 import React from 'react'
 import useStyles from './styles'
 import {
-  Badge,
   IconButton,
   Menu,
   MenuItem,
@@ -12,14 +11,13 @@ import {
   Button,
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
-import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import LogoutButton from 'app/common/LogoutButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 import { AccountQuery } from 'types/graphql'
 import CategoryLink from 'app/common/CategoryLink'
+import NoticesMenu from 'app/NoticesMenu'
 
 interface Props {
   data?: AccountQuery;
@@ -153,19 +151,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
       onClose={ handleMobileMenuClose }
     >
       <MenuItem>
-        <IconButton aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={ 4 } color='secondary'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label='show 11 new notifications' color='inherit'>
-          <Badge badgeContent={ 11 } color='secondary'>
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={ handleProfileMenuOpen }>
@@ -228,16 +214,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
             <span />
           </PrivateComponent>
           <div className={ classes.sectionDesktop }>
-            <IconButton aria-label='show 4 new mails' color='inherit'>
-              <Badge badgeContent={ 4 } color='secondary'>
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label='show 17 new notifications' color='inherit'>
-              <Badge badgeContent={ 17 } color='secondary'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
             <IconButton
               edge='end'
               aria-label='account of current user'

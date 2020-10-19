@@ -14,6 +14,9 @@ gql`
   query account {
     maybeViewer {
       id
+      unreadNotices {
+        ...notice
+      }
       hasActiveSubscription
       hasPaymentMethod
       stripeAccount {
