@@ -318,7 +318,7 @@ export type StripeAccount = ActiveRecordInterface & {
   createdAt: Scalars['ISO8601DateTime'];
   errors: Array<Scalars['String']>;
   id: Scalars['Int'];
-  onboardingLink: Scalars['String'];
+  onboardingLink: Maybe<Scalars['String']>;
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
