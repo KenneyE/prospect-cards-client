@@ -52,3 +52,16 @@ gql`
     }
   }
 `
+
+gql`
+  query listingReports($listingId: Int!) {
+    listing(id: $listingId) {
+      reports {
+        id
+        text
+        createdAt
+        reviewedAt
+      }
+    }
+  }
+`

@@ -21,3 +21,14 @@ gql`
     }
   }
 `
+
+gql`
+  mutation acceptListingReports($listingId: Int!) {
+    acceptListingReports(listingId: $listingId) {
+      listing {
+        ...listing
+      }
+      message
+    }
+  }
+`

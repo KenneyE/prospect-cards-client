@@ -12,6 +12,7 @@
       "Grader",
       "Listing",
       "ListingImage",
+      "ListingReport",
       "Manufacturer",
       "Membership",
       "Notice",

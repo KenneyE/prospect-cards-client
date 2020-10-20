@@ -4,6 +4,8 @@ import { ListingQuery } from 'types/graphql'
 import { Grid, Typography } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import ReportListingButton from 'app/listings/ReportListingButton'
+import AdminComponent from 'app/AdminComponent'
+import AcceptListingReportsButton from 'app/admin/AcceptListingReportsButton'
 
 interface Props {
   data: ListingQuery;
@@ -40,6 +42,9 @@ const Listing = ({
       <Typography>{title}</Typography>
       <Typography>{description}</Typography>
       <ReportListingButton listingId={ id } />
+      <AdminComponent>
+        <AcceptListingReportsButton listingId={ id } />
+      </AdminComponent>
     </Grid>
   )
 }
