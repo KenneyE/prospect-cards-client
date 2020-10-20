@@ -4,6 +4,7 @@ gql`
   query maybeViewer {
     maybeViewer {
       id
+      admin
     }
   }
 `

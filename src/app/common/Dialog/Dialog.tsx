@@ -29,7 +29,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction='up' ref={ ref } { ...props } />
 })
 
-const Confirmation = ({
+const CustomDialog = ({
   open,
   loading,
   header,
@@ -71,4 +71,4 @@ const Confirmation = ({
   )
 }
 
-export default Confirmation
+export default CustomDialog
