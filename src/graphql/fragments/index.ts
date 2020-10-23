@@ -13,6 +13,7 @@ gql`
     title
     description
     price
+    status
     images {
       id
       url
