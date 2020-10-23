@@ -35,6 +35,11 @@ export type ActiveRecordInterface = {
   updatedAt: Scalars['ISO8601DateTime'];
 };
 
+export type AdminListingInput = {
+  id: Scalars['Int'];
+  status?: Maybe<ListingStatusEnum>;
+};
+
 export type Category = ActiveRecordInterface & {
   __typename?: 'Category';
   createdAt: Scalars['ISO8601DateTime'];
@@ -80,6 +85,7 @@ export type Listing = ActiveRecordInterface & {
   player: Player;
   price: Scalars['Int'];
   reports: Array<ListingReport>;
+  status: ListingStatusEnum;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
 };
@@ -123,7 +129,9 @@ export enum ListingStatusEnum {
   /** pending_sale */
   PendingSale = 'pending_sale',
   /** sold */
-  Sold = 'sold'
+  Sold = 'sold',
+  /** disabled */
+  Disabled = 'disabled'
 }
 
 export type Manufacturer = ActiveRecordInterface & {
@@ -217,8 +225,7 @@ export type MutationTrackInterestArgs = {
 
 
 export type MutationUpdateListingArgs = {
-  listingId: Scalars['Int'];
-  listing: ListingInput;
+  listing: AdminListingInput;
 };
 
 export type Notice = ActiveRecordInterface & {
@@ -416,7 +423,7 @@ export type PlayerFragment = (
 
 export type ListingFragment = (
   { __typename?: 'Listing' }
-  & Pick<Listing, 'id' | 'title' | 'description' | 'price'>
+  & Pick<Listing, 'id' | 'title' | 'description' | 'price' | 'status'>
   & { images: Array<(
     { __typename?: 'ListingImage' }
     & Pick<ListingImage, 'id' | 'url'>
@@ -470,8 +477,7 @@ export type AcceptListingReportsMutation = (
 );
 
 export type UpdateListingMutationVariables = Exact<{
-  listingId: Scalars['Int'];
-  listing: ListingInput;
+  listing: AdminListingInput;
 }>;
 
 
@@ -750,11 +756,7 @@ export type ListingQuery = (
   { __typename?: 'Query' }
   & { listing: (
     { __typename?: 'Listing' }
-    & Pick<Listing, 'id' | 'title' | 'description'>
-    & { images: Array<(
-      { __typename?: 'ListingImage' }
-      & Pick<ListingImage, 'id' | 'url'>
-    )> }
+    & ListingFragment
   ) }
 );
 
@@ -842,6 +844,7 @@ export const ListingFragmentDoc = gql`
   title
   description
   price
+  status
   images {
     id
     url
@@ -921,8 +924,8 @@ export type AcceptListingReportsMutationHookResult = ReturnType<typeof useAccept
 export type AcceptListingReportsMutationResult = ApolloReactCommon.MutationResult<AcceptListingReportsMutation>;
 export type AcceptListingReportsMutationOptions = ApolloReactCommon.BaseMutationOptions<AcceptListingReportsMutation, AcceptListingReportsMutationVariables>;
 export const UpdateListingDocument = gql`
-    mutation updateListing($listingId: Int!, $listing: ListingInput!) {
-  updateListing(listingId: $listingId, listing: $listing) {
+    mutation updateListing($listing: AdminListingInput!) {
+  updateListing(listing: $listing) {
     listing {
       ...listing
     }
@@ -945,7 +948,6 @@ export type UpdateListingMutationFn = ApolloReactCommon.MutationFunction<UpdateL
  * @example
  * const [updateListingMutation, { data, loading, error }] = useUpdateListingMutation({
  *   variables: {
- *      listingId: // value for 'listingId'
  *      listing: // value for 'listing'
  *   },
  * });
@@ -1553,16 +1555,10 @@ export type ProductsQueryResult = ApolloReactCommon.QueryResult<ProductsQuery, P
 export const ListingDocument = gql`
     query listing($id: Int!) {
   listing(id: $id) {
-    id
-    title
-    description
-    images {
-      id
-      url
-    }
+    ...listing
   }
 }
-    `;
+    ${ListingFragmentDoc}`;
 
 /**
  * __useListingQuery__

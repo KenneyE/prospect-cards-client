@@ -12,8 +12,8 @@ gql`
 `
 
 gql`
-  mutation updateListing($listingId: Int!, $listing: ListingInput!) {
-    updateListing(listingId: $listingId, listing: $listing) {
+  mutation updateListing($listing: AdminListingInput!) {
+    updateListing(listing: $listing) {
       listing {
         ...listing
       }

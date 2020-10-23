@@ -3,13 +3,7 @@ import gql from 'graphql-tag'
 gql`
   query listing($id: Int!) {
     listing(id: $id) {
-      id
-      title
-      description
-      images {
-        id
-        url
-      }
+      ...listing
     }
   }
 `

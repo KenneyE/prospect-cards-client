@@ -1,11 +1,12 @@
 import React from 'react'
 import useStyles from './styles'
-import { ListingQuery } from 'types/graphql'
+import { ListingQuery, ListingStatusEnum } from 'types/graphql'
 import { Grid, Typography } from '@material-ui/core'
 import { Carousel } from 'react-responsive-carousel'
 import ReportListingButton from 'app/listings/ReportListingButton'
 import AdminComponent from 'app/AdminComponent'
 import AcceptListingReportsButton from 'app/admin/AcceptListingReportsButton'
+import ToggleListingEnabledButton from 'app/admin/ToggleListingEnabledButton'
 
 interface Props {
   data: ListingQuery;
@@ -13,7 +14,7 @@ interface Props {
 
 const Listing = ({
   data: {
-    listing: { id, title, description, images },
+    listing: { id, title, description, images, status },
   },
 }: Props): JSX.Element => {
   const classes = useStyles()
@@ -43,7 +44,14 @@ const Listing = ({
       <Typography>{description}</Typography>
       <ReportListingButton listingId={ id } />
       <AdminComponent>
-        <AcceptListingReportsButton listingId={ id } />
+        {status !== ListingStatusEnum.Sold ? (
+          <>
+            <AcceptListingReportsButton listingId={ id } />
+            <ToggleListingEnabledButton listingId={ id } status={ status } />
+          </>
+        ) : (
+          ''
+        )}
       </AdminComponent>
     </Grid>
   )
