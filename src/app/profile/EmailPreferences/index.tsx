@@ -6,9 +6,13 @@ import {
 } from 'types/graphql'
 import Spinner from 'app/common/Spinner'
 import ErrorMessage from 'app/common/ErrorMessage'
+import { useParams } from 'react-router-dom'
 
 const EmailPreferences = (): JSX.Element => {
-  const { data, loading, error } = useEmailPreferencesQuery()
+  const { token } = useParams<{ token?: string }>()
+  const { data, loading, error } = useEmailPreferencesQuery({
+    variables: { token },
+  })
   const [
     savePreferences,
     { loading: saveLoading },
@@ -16,7 +20,14 @@ const EmailPreferences = (): JSX.Element => {
   if (loading) return <Spinner />
   if (!data || error) return <ErrorMessage />
 
-  return <Dumb data={ data } onSubmit={ savePreferences } loading={ saveLoading } />
+  return (
+    <Dumb
+      token={ token }
+      data={ data }
+      onSubmit={ savePreferences }
+      loading={ saveLoading }
+    />
+  )
 }
 
 export default EmailPreferences

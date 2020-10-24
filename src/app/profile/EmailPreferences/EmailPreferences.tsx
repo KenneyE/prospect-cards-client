@@ -14,6 +14,7 @@ interface Props {
   data: EmailPreferencesQuery;
   onSubmit: SaveEmailPreferencesMutationFn;
   loading: boolean;
+  token?: string;
 }
 
 const EmailPreferences = ({
@@ -22,12 +23,14 @@ const EmailPreferences = ({
   },
   onSubmit,
   loading,
+  token,
 }: Props): JSX.Element => {
   const initialValues: SaveEmailPreferencesMutationVariables = {
     emailPreferences: emailPreferences.map((pref) => ({
       category: pref.category,
       subscribed: pref.subscribed,
     })),
+    token,
   }
 
   return (
