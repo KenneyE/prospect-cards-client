@@ -13,8 +13,11 @@ gql`
 `
 
 gql`
-  mutation saveEmailPreferences($emailPreferences: [EmailPreferenceInput!]!) {
-    saveEmailPreferences(emailPreferences: $emailPreferences) {
+  mutation saveEmailPreferences(
+    $emailPreferences: [EmailPreferenceInput!]!
+    $token: String
+  ) {
+    saveEmailPreferences(emailPreferences: $emailPreferences, token: $token) {
       viewer {
         id
         emailPreferences {

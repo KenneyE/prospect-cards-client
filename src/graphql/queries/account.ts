@@ -48,8 +48,8 @@ gql`
 `
 
 gql`
-  query emailPreferences {
-    viewer {
+  query emailPreferences($token: String) {
+    viewer(token: $token) {
       id
       emailPreferences {
         ...emailPreference

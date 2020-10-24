@@ -27,7 +27,7 @@ const FormSchema = Yup.object().shape({
   ),
 })
 
-const Register = ({ history, location, refresh }: Props): JSX.Element => {
+const ResetPassword = ({ history, location, refresh }: Props): JSX.Element => {
   const { token } = useParams<{ token: string }>()
   const initialValues = {
     password: '',
@@ -124,4 +124,4 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
   )
 }
 
-export default Register
+export default ResetPassword

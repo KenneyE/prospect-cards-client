@@ -18,6 +18,7 @@ import MyListings from 'app/listings/MyListings'
 import ConfirmEmail from 'app/ConfirmEmail'
 import ResetPassword from 'app/ResetPassword'
 import ForgotPassword from 'app/ForgotPassword'
+import EmailPreferences from 'app/profile/EmailPreferences'
 
 const Router = (): JSX.Element => {
   return (
@@ -51,6 +52,11 @@ const Router = (): JSX.Element => {
       <Route exact path='/confirm/:token' component={ ConfirmEmail } />
       <Route exact path='/forgot-password' component={ ForgotPassword } />
       <Route exact path='/reset-password/:token' component={ ResetPassword } />
+      <Route
+        exact
+        path='/email-preferences/:token'
+        component={ EmailPreferences }
+      />
 
       <Redirect to='/' />
     </Switch>

@@ -1834,6 +1834,16 @@
                   }
                 },
                 "defaultValue": null
+              },
+              {
+                "name": "token",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
               }
             ],
             "type": {
@@ -2803,7 +2813,18 @@
           {
             "name": "viewer",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "token",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
