@@ -15,3 +15,11 @@ gql`
     }
   }
 `
+
+gql`
+  mutation forgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+      message
+    }
+  }
+`

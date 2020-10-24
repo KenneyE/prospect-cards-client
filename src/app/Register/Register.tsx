@@ -1,31 +1,9 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { RouteComponentProps } from 'react-router'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
 import TextField from '@material-ui/core/TextField'
-import { StyleRules } from '@material-ui/core/styles/withStyles'
-import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import { toast } from 'react-toastify'
-import { makeStyles } from '@material-ui/core/styles'
 import LoadingButton from 'app/common/LoadingButton'
-
-const useStyles = makeStyles(
-  (theme: Theme): StyleRules => ({
-    button: {
-      marginTop: theme.spacing(),
-    },
-    card: {
-      width: '400px',
-      margin: 'auto',
-    },
-    media: {
-      margin: 20,
-      marginBottom: 0,
-      height: 50,
-    },
-  }),
-)
+import AuthScreen from 'app/common/AuthScreen'
 
 interface SignInResp {
   success: boolean;
@@ -37,7 +15,6 @@ interface Props extends RouteComponentProps {
 }
 
 const Register = ({ history, location, refresh }: Props): JSX.Element => {
-  const classes = useStyles()
   const [fields, setFields] = useState({
     email: '',
     password: '',
@@ -90,57 +67,49 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
   const { email, password, password_confirmation } = fields
 
   return (
-    <Card className={ classes.card }>
-      <CardMedia
-        className={ classes.media }
-        image={ `${process.env.PUBLIC_URL}/logos/CanyonCompliance-orange.png` }
-        title='Prospect Cards'
-      />
-      <CardContent>
-        <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
-          <TextField
-            id='user-email'
-            label='Email'
-            value={ email }
-            onChange={ handleChange('email') }
-            margin='normal'
-            autoFocus
-            fullWidth
-          />
-          <br />
-          <TextField
-            id='user-password'
-            label='Password'
-            type='password'
-            value={ password }
-            onChange={ handleChange('password') }
-            margin='normal'
-            fullWidth
-          />
-          <br />
-          <TextField
-            id='user-password-confirmation'
-            label='Password Confirmation'
-            type='password'
-            value={ password_confirmation }
-            onChange={ handleChange('password_confirmation') }
-            margin='normal'
-            fullWidth
-          />
-          <br />
-          <LoadingButton
-            loading={ loading }
-            fullWidth
-            variant='contained'
-            color='primary'
-            type='submit'
-            className={ classes.button }
-          >
-            Join
-          </LoadingButton>
-        </form>
-      </CardContent>
-    </Card>
+    <AuthScreen>
+      <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
+        <TextField
+          id='user-email'
+          label='Email'
+          value={ email }
+          onChange={ handleChange('email') }
+          margin='normal'
+          autoFocus
+          fullWidth
+        />
+        <br />
+        <TextField
+          id='user-password'
+          label='Password'
+          type='password'
+          value={ password }
+          onChange={ handleChange('password') }
+          margin='normal'
+          fullWidth
+        />
+        <br />
+        <TextField
+          id='user-password-confirmation'
+          label='Password Confirmation'
+          type='password'
+          value={ password_confirmation }
+          onChange={ handleChange('password_confirmation') }
+          margin='normal'
+          fullWidth
+        />
+        <br />
+        <LoadingButton
+          loading={ loading }
+          fullWidth
+          variant='contained'
+          color='primary'
+          type='submit'
+        >
+          Join
+        </LoadingButton>
+      </form>
+    </AuthScreen>
   )
 }
 
