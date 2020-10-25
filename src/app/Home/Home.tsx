@@ -8,6 +8,7 @@ import {
   RangeInput,
   ToggleButton,
   DynamicRangeSlider,
+  SelectedFilters,
 } from '@appbaseio/reactivesearch'
 // import { Experiment, Variant } from '@marvelapp/react-ab-test'
 // import emitter from 'lib/abEmitter'
@@ -44,10 +45,11 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
           <Grid container spacing={ 3 }>
             <Grid item md={ 2 } xs={ 12 }>
               <DataSearch
-                componentId='all-search'
+                componentId='Search'
                 dataField={ ['*'] }
                 title='Search'
                 fuzziness='AUTO'
+                URLParams
               />
               {/* Below is used to exclude listings created by current user */}
               {viewerId && (
@@ -59,109 +61,120 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                   style={ { display: 'none' } }
                 />
               )}
-              <DataSearch
-                componentId='only-available-search'
-                dataField='status'
-                value='available'
-                style={ { display: 'none' } }
-              />
+              {/*<DataSearch*/}
+              {/*  componentId='only-available-search'*/}
+              {/*  dataField='status'*/}
+              {/*  value='available'*/}
+              {/*  style={ { display: 'none' } }*/}
+              {/*  URLParams*/}
+              {/*/>*/}
               <br />
               <DynamicRangeSlider
-                componentId='price-slider'
+                componentId='Price'
                 dataField='price'
                 title='Price Range'
                 rangeLabels={ (min, max) => ({
                   start: '$' + min / 100,
                   end: '$' + max / 100,
                 }) }
+                URLParams
               />
               <br />
               <MultiList
-                componentId='name-list'
+                componentId='Player Name'
                 dataField='player.name'
                 title='Player'
                 placeholder='Player Name'
                 size={ 8 }
                 showCheckbox
                 showCount={ false }
+                URLParams
               />
               <br />
               <MultiList
-                componentId='product-type-list'
+                componentId='Product Type'
                 dataField='productType.name'
                 title='Type'
                 placeholder='Search Types'
                 size={ 8 }
                 showCheckbox
                 showCount={ false }
+                URLParams
               />
               <br />
               <SingleList
                 dataField='category.name'
                 showRadio
-                componentId='category-search'
+                componentId='Category'
                 title='Category'
                 value={ category }
                 placeholder='Search Categories'
                 showCount={ false }
                 style={ category ? { display: 'none' } : undefined }
+                URLParams
               />
               {category ? null : <br />}
               <SingleList
                 dataField='manufacturer.name'
                 showRadio
-                componentId='manufacturer-search'
+                componentId='Manufacturer'
                 title='Manufacturer'
                 placeholder='Search Manufacturers'
                 showCount={ false }
+                URLParams
               />
               <br />
               <SingleList
                 dataField='setType.name'
                 showRadio
-                componentId='set-search'
+                componentId='Set'
                 title='Set'
                 placeholder='Search Sets'
+                URLParams
               />
               <br />
               <SingleList
                 dataField='grader.name'
                 showRadio
-                componentId='grader-search'
+                componentId='Grader'
                 title='Graded By'
                 placeholder='Search Graders'
+                URLParams
               />
               <DataSearch
-                componentId='description-search'
+                componentId='Description'
                 dataField='description'
                 placeholder='Search Descriptions'
                 title='Description'
+                URLParams
               />
               <br />
               <ToggleButton
-                componentId='rookie-toggle'
+                componentId='Rookie'
                 dataField='rookie'
                 data={ [{ label: 'Rookie / 1st Year Only', value: true }] }
+                URLParams
               />
             </Grid>
             <Grid item md={ 10 } xs={ 12 }>
+              <SelectedFilters showClearAll='default' />
               <ReactiveList
                 infiniteScroll
                 dataField='player.name'
                 componentId='SearchResult'
                 react={ {
                   and: [
-                    'all-search',
-                    'only-available-search',
-                    'price-slider',
-                    'description-search',
-                    'name-list',
-                    'category-search',
-                    'product-type-list',
-                    'manufacturer-search',
-                    'set-search',
-                    'grader.name',
-                    'rookie-toggle',
+                    'Search',
+                    // 'only-available-search',
+                    'Price',
+                    'Description',
+                    'Player Name',
+                    'Category',
+                    'Product Type',
+                    'Manufacturer',
+                    'Set',
+                    'Grader',
+                    'Rookie',
                   ],
                   not: ['exclude-user-search'],
                 } }
