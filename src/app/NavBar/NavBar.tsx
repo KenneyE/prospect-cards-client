@@ -66,51 +66,35 @@ const NavBar = ({ data }: Props): JSX.Element => {
       open={ isMenuOpen }
       onClose={ handleMenuClose }
     >
-      <PrivateComponent>
-        <MenuItem onClick={ handleMenuClose } component={ Link } to='/profile'>
-          Profile
-        </MenuItem>
-      </PrivateComponent>
+      <MenuItem onClick={ handleMenuClose } component={ Link } to='/profile'>
+        Profile
+      </MenuItem>
       {isSeller && (
-        <PrivateComponent>
-          <MenuItem onClick={ handleMenuClose } component={ Link } to='/listings'>
-            My Listings
-          </MenuItem>
-        </PrivateComponent>
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='/listings'>
+          My Listings
+        </MenuItem>
       )}
 
       <Divider />
       {!hasPaymentMethod && (
-        <PrivateComponent>
-          <MenuItem
-            onClick={ handleMenuClose }
-            component={ Link }
-            to='account/add_payment'
-          >
-            Add Payment Method
-          </MenuItem>
-        </PrivateComponent>
+        <MenuItem
+          onClick={ handleMenuClose }
+          component={ Link }
+          to='account/add_payment'
+        >
+          Add Payment Method
+        </MenuItem>
       )}
 
-      <PrivateComponent>
-        {isSeller ? (
-          <MenuItem
-            onClick={ handleMenuClose }
-            component={ Link }
-            to='listings/new'
-          >
-            Create a Listing
-          </MenuItem>
-        ) : (
-          <MenuItem
-            onClick={ handleMenuClose }
-            component={ Link }
-            to='account/sell'
-          >
-            Start Selling
-          </MenuItem>
-        )}
-      </PrivateComponent>
+      {isSeller ? (
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='listings/new'>
+          Create a Listing
+        </MenuItem>
+      ) : (
+        <MenuItem onClick={ handleMenuClose } component={ Link } to='account/sell'>
+          Start Selling
+        </MenuItem>
+      )}
       {/*{!hasSubscription && (*/}
       {/*  <PrivateComponent>*/}
       {/*    <MenuItem*/}
@@ -125,17 +109,9 @@ const NavBar = ({ data }: Props): JSX.Element => {
 
       <Divider />
 
-      <PrivateComponent
-        loggedOut={
-          <MenuItem onClick={ handleMenuClose } component={ Link } to='/login'>
-            Log in
-          </MenuItem>
-        }
-      >
-        <MenuItem>
-          <LogoutButton />
-        </MenuItem>
-      </PrivateComponent>
+      <MenuItem>
+        <LogoutButton />
+      </MenuItem>
     </Menu>
   )
 
@@ -199,44 +175,56 @@ const NavBar = ({ data }: Props): JSX.Element => {
           <CategoryLink category='Soccer' />
           <CategoryLink category='Other' />
           <div className={ classes.grow } />
+
           <PrivateComponent
             loggedOut={
-              <Button
-                component={ Link }
-                variant='outlined'
-                color='secondary'
-                to='/register'
-              >
-                Register
-              </Button>
+              <>
+                <Button
+                  component={ Link }
+                  variant='outlined'
+                  color='secondary'
+                  to='/register'
+                >
+                  Register
+                </Button>
+                <Button
+                  component={ Link }
+                  variant='contained'
+                  color='primary'
+                  to='/login'
+                >
+                  Log in
+                </Button>
+              </>
             }
           >
-            <span />
+            <>
+              <div className={ classes.sectionDesktop }>
+                <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
+                <IconButton
+                  edge='end'
+                  aria-label='account of current user'
+                  aria-controls={ menuId }
+                  aria-haspopup='true'
+                  onClick={ handleProfileMenuOpen }
+                  color='inherit'
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
+              <div className={ classes.sectionMobile }>
+                <IconButton
+                  aria-label='show more'
+                  aria-controls={ mobileMenuId }
+                  aria-haspopup='true'
+                  onClick={ handleMobileMenuOpen }
+                  color='inherit'
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </>
           </PrivateComponent>
-          <div className={ classes.sectionDesktop }>
-            <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
-            <IconButton
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={ menuId }
-              aria-haspopup='true'
-              onClick={ handleProfileMenuOpen }
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={ classes.sectionMobile }>
-            <IconButton
-              aria-label='show more'
-              aria-controls={ mobileMenuId }
-              aria-haspopup='true'
-              onClick={ handleMobileMenuOpen }
-              color='inherit'
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
