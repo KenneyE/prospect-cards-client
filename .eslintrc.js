@@ -44,7 +44,6 @@ module.exports = {
     "no-multiple-empty-lines": "error",
     "space-before-function-paren": ["error", "never"],
     "react/jsx-curly-spacing": ["error", "always"],
-    "import/prefer-default-export": "warn",
     "react/no-unused-prop-types": 0,
     "operator-linebreak": ["error", "after"],
     "import/namespace": [

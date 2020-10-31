@@ -165,15 +165,15 @@ const NavBar = ({ data }: Props): JSX.Element => {
               component={ Link }
               to='/listings/new'
             >
-              Sell Something
+              Sell
             </Button>
           )}
-          <CategoryLink category='Basketball' />
-          <CategoryLink category='Baseball' />
-          <CategoryLink category='Football' />
-          <CategoryLink category='Hockey' />
-          <CategoryLink category='Soccer' />
-          <CategoryLink category='Other' />
+          {/*<CategoryLink category='Basketball' />*/}
+          {/*<CategoryLink category='Baseball' />*/}
+          {/*<CategoryLink category='Football' />*/}
+          {/*<CategoryLink category='Hockey' />*/}
+          {/*<CategoryLink category='Soccer' />*/}
+          {/*<CategoryLink category='Other' />*/}
           <div className={ classes.grow } />
 
           <PrivateComponent

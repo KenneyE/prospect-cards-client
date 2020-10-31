@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProductsQuery } from 'types/graphql'
 import { Button } from '@material-ui/core'
-import { centsToDollars } from 'lib'
+import { centsToDollars } from 'lib/money'
 import { Link } from 'react-router-dom'
 
 interface Props {

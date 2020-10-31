@@ -2,7 +2,7 @@ import React from 'react'
 import { UserOffersQuery } from 'types/graphql'
 import { Card, CardContent, CardMedia, Typography } from '@material-ui/core'
 import useStyles from './styles'
-import { centsToDollars } from 'lib'
+import { centsToDollars } from 'lib/money'
 
 interface Props {
   data: UserOffersQuery;

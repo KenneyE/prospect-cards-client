@@ -11,6 +11,7 @@ gql`
   fragment listing on Listing {
     id
     title
+    createdAt
     description
     price
     status

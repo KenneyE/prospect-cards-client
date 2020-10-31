@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import Carousel from 'app/common/Carousel'
-import { centsToDollars } from 'lib'
+import { centsToDollars } from 'lib/money'
 import AcceptOfferButton from 'app/AcceptOfferButton'
 import { ListingFragment } from 'types/graphql'
 import useStyles from './styles'

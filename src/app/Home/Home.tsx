@@ -20,6 +20,7 @@ import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
 import MyOffers from 'app/MyOffers'
 import PrivateComponent from 'app/PrivateComponent'
+import CollapsibleSearch from 'app/search/CollapsibleSearch'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -43,14 +44,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
           url={ process.env.REACT_APP_ELASTICSEARCH_URI }
         >
           <Grid container spacing={ 3 }>
-            <Grid item md={ 2 } xs={ 12 }>
-              <DataSearch
-                componentId='Search'
-                dataField={ ['*'] }
-                title='Search'
-                fuzziness='AUTO'
-                URLParams
-              />
+            <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
               {/* Below is used to exclude listings created by current user */}
               {viewerId && (
                 <RangeInput
@@ -68,7 +62,18 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               {/*  style={ { display: 'none' } }*/}
               {/*  URLParams*/}
               {/*/>*/}
-              <br />
+
+              <CollapsibleSearch title='Sport'>
+                <SingleList
+                  dataField='category.name'
+                  showRadio
+                  componentId='Category'
+                  value={ category }
+                  placeholder='Search Categories'
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
               <DynamicRangeSlider
                 componentId='Price'
                 dataField='price'
@@ -79,76 +84,59 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 }) }
                 URLParams
               />
-              <br />
-              <MultiList
-                componentId='Player Name'
-                dataField='player.name'
-                title='Player'
-                placeholder='Player Name'
-                size={ 8 }
-                showCheckbox
-                showCount={ false }
-                URLParams
-              />
-              <br />
-              <MultiList
-                componentId='Product Type'
-                dataField='productType.name'
-                title='Type'
-                placeholder='Search Types'
-                size={ 8 }
-                showCheckbox
-                showCount={ false }
-                URLParams
-              />
-              <br />
-              <SingleList
-                dataField='category.name'
-                showRadio
-                componentId='Category'
-                title='Category'
-                value={ category }
-                placeholder='Search Categories'
-                showCount={ false }
-                style={ category ? { display: 'none' } : undefined }
-                URLParams
-              />
-              {category ? null : <br />}
-              <SingleList
-                dataField='manufacturer.name'
-                showRadio
-                componentId='Manufacturer'
-                title='Manufacturer'
-                placeholder='Search Manufacturers'
-                showCount={ false }
-                URLParams
-              />
-              <br />
-              <SingleList
-                dataField='setType.name'
-                showRadio
-                componentId='Set'
-                title='Set'
-                placeholder='Search Sets'
-                URLParams
-              />
-              <br />
-              <SingleList
-                dataField='grader.name'
-                showRadio
-                componentId='Grader'
-                title='Graded By'
-                placeholder='Search Graders'
-                URLParams
-              />
-              <DataSearch
-                componentId='Description'
-                dataField='description'
-                placeholder='Search Descriptions'
-                title='Description'
-                URLParams
-              />
-              <br />
+              <CollapsibleSearch title='Type'>
+                <MultiList
+                  componentId='Product Type'
+                  dataField='productType.name'
+                  placeholder='Search Types'
+                  size={ 8 }
+                  showCheckbox
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
+              <CollapsibleSearch title='Player'>
+                <MultiList
+                  componentId='Player Name'
+                  dataField='player.name'
+                  placeholder='Player Name'
+                  size={ 8 }
+                  showCheckbox
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
+              <CollapsibleSearch title='Manufacturer'>
+                <SingleList
+                  dataField='manufacturer.name'
+                  showRadio
+                  componentId='Manufacturer'
+                  title='Manufacturer'
+                  placeholder='Search Manufacturers'
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
+              <CollapsibleSearch title='Set'>
+                <SingleList
+                  dataField='setType.name'
+                  showRadio
+                  componentId='Set'
+                  title='Set'
+                  placeholder='Search Sets'
+                  URLParams
+                />
+              </CollapsibleSearch>
+              <CollapsibleSearch title='Grader'>
+                <SingleList
+                  dataField='grader.name'
+                  showRadio
+                  componentId='Grader'
+                  title='Graded By'
+                  placeholder='Search Graders'
+                  URLParams
+                />
+              </CollapsibleSearch>
               <ToggleButton
                 componentId='Rookie'
                 dataField='rookie'
@@ -156,10 +144,22 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 URLParams
               />
             </Grid>
-            <Grid item md={ 10 } xs={ 12 }>
+            <Grid item md={ 10 } sm={ 9 } xs={ 12 }>
+              <DataSearch
+                componentId='Search'
+                dataField={ ['*'] }
+                fuzziness='AUTO'
+                autosuggest
+                URLParams
+                showIcon={ false }
+                innerClass={ {
+                  input: classes.searchBox,
+                } }
+              />
               <SelectedFilters showClearAll='default' />
               <ReactiveList
                 infiniteScroll
+                showResultStats={ false }
                 dataField='player.name'
                 componentId='SearchResult'
                 react={ {

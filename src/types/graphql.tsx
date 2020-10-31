@@ -441,7 +441,7 @@ export type PlayerFragment = (
 
 export type ListingFragment = (
   { __typename?: 'Listing' }
-  & Pick<Listing, 'id' | 'title' | 'description' | 'price' | 'status'>
+  & Pick<Listing, 'id' | 'title' | 'createdAt' | 'description' | 'price' | 'status'>
   & { images: Array<(
     { __typename?: 'ListingImage' }
     & Pick<ListingImage, 'id' | 'url'>
@@ -876,6 +876,7 @@ export const ListingFragmentDoc = gql`
     fragment listing on Listing {
   id
   title
+  createdAt
   description
   price
   status
