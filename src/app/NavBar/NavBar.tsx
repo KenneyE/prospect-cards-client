@@ -16,7 +16,7 @@ import LogoutButton from 'app/common/LogoutButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 import { AccountQuery } from 'types/graphql'
-import CategoryLink from 'app/common/CategoryLink'
+// import CategoryLink from 'app/common/CategoryLink'
 import NoticesMenu from 'app/NoticesMenu'
 
 interface Props {
