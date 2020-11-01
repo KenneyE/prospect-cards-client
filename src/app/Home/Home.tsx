@@ -21,7 +21,7 @@ import { ElasticListing } from 'types'
 import MyOffers from 'app/MyOffers'
 import PrivateComponent from 'app/PrivateComponent'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
-import Spinner from 'app/common/Spinner'
+import ListingSkeletons from 'app/common/ListingSkeletons'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -161,7 +161,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               <ReactiveList
                 infiniteScroll
                 showResultStats={ false }
-                loader={ <Spinner /> }
+                loader={ <ListingSkeletons /> }
                 dataField='player.name'
                 componentId='SearchResult'
                 react={ {
