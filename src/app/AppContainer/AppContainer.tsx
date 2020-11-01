@@ -12,6 +12,7 @@ import theme from 'lib/theme'
 import stripe from 'lib/stripe'
 import useStyles from './styles'
 import NavBar from 'app/NavBar'
+import Footer from 'app/Footer'
 
 const AppContainer = (): JSX.Element => {
   const classes = useStyles()
@@ -29,6 +30,7 @@ const AppContainer = (): JSX.Element => {
             </Container>
           </main>
         </div>
+        <Footer />
         <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
       </Elements>
     </MuiThemeProvider>
