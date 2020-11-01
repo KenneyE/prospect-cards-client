@@ -3,7 +3,8 @@ import { makeStyles, StyleRules, Theme } from '@material-ui/core/styles'
 export default makeStyles(
   ({ spacing }: Theme): StyleRules => ({
     root: {
-      margin: '30px 112px',
+      margin: 'auto',
+      maxWidth: 1100,
     },
     img: { height: 500, width: 'auto !important' },
     divider: {
