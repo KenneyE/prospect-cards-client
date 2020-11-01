@@ -1,8 +1,8 @@
 import React from 'react'
-import LoadingIcon from 'assets/svg/LoadingIcon'
+import './spinner.css'
 
 const Spinner = (): JSX.Element => {
-  return <LoadingIcon />
+  return <div className='loader loader-1' />
 }
 
 export default Spinner
