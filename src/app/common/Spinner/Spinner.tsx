@@ -1,8 +1,8 @@
 import React from 'react'
-import {CircularProgress} from '@material-ui/core'
+import LoadingIcon from 'assets/svg/LoadingIcon'
 
 const Spinner = (): JSX.Element => {
-  return <CircularProgress color='secondary' />
+  return <LoadingIcon />
 }
 
 export default Spinner

@@ -3,7 +3,7 @@ import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import useStyles from './styles'
-import ExpandPlusIcon from 'app/search/CollapsibleSearch/ExpandPlusIcon'
+import ExpandPlusIcon from 'assets/svg/ExpandPlusIcon'
 
 interface Props {
   children: JSX.Element;
