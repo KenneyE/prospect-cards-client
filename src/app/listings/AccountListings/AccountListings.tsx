@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { UserListingsQuery } from 'types/graphql'
-import { Typography, Box, withStyles, createStyles } from '@material-ui/core'
+import { Typography, withStyles, createStyles } from '@material-ui/core'
 import ListingsGrid from 'app/listings/ListingsGrid'
-import useStyles from './styles'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import MyListings from 'app/listings/MyListings'
 
@@ -15,7 +14,6 @@ const AccountListings = ({
     viewer: { availableListings, soldListings },
   },
 }: Props): JSX.Element => {
-  const classes = useStyles()
   const [value, setValue] = useState(0)
 
   const handleChange = (event: ChangeEvent<unknown>, newValue: number) => {

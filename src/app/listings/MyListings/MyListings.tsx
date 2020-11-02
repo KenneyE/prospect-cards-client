@@ -1,8 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import useStyles from './styles'
 import { ListingFragment } from 'types/graphql'
 import {
-  Box,
   Card,
   CardContent,
   createStyles,
@@ -12,8 +11,7 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
-import ListingsGrid from 'app/listings/ListingsGrid'
+import { ToggleButton } from '@material-ui/lab'
 import Carousel from 'app/common/Carousel'
 
 interface Props {
