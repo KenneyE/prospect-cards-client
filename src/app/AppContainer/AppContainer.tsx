@@ -12,7 +12,7 @@ import theme from 'lib/theme'
 import stripe from 'lib/stripe'
 import useStyles from './styles'
 import NavBar from 'app/NavBar'
-import Footer from 'app/Footer'
+import Footer from 'app/footer/Footer'
 
 const AppContainer = (): JSX.Element => {
   const classes = useStyles()

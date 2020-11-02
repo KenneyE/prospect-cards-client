@@ -9,7 +9,7 @@ export default makeStyles(
     content: {
       paddingTop: 10,
       flexGrow: 1,
-      height: 'calc(100vh - 64px)',
+      height: '100vh',
       overflow: 'auto',
       backgroundColor: '#f6f8fa',
     },
