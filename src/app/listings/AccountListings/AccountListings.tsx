@@ -4,6 +4,7 @@ import { Typography, Box, withStyles, createStyles } from '@material-ui/core'
 import ListingsGrid from 'app/listings/ListingsGrid'
 import useStyles from './styles'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
+import MyListings from 'app/listings/MyListings'
 
 interface Props {
   data: UserListingsQuery;
@@ -38,7 +39,7 @@ const AccountListings = ({
         aria-labelledby={ `listings-tab-${index}` }
         { ...other }
       >
-        {value === index && <Box p={ 3 }>{children}</Box>}
+        {value === index && children}
       </div>
     )
   }
@@ -48,6 +49,8 @@ const AccountListings = ({
       root: {
         display: 'flex',
         maxWidth: 800,
+        marginTop: 34,
+        marginBottom: 60,
       },
     }),
   )(ToggleButtonGroup)
@@ -62,6 +65,7 @@ const AccountListings = ({
 
   return (
     <>
+      <Typography>Current Offers</Typography>
       <StyledToggleButtonGroup
         value={ value }
         exclusive
@@ -84,7 +88,7 @@ const AccountListings = ({
       </StyledToggleButtonGroup>
       <TabPanel value={ value } index={ 0 }>
         {availableListings.length ? (
-          <ListingsGrid listings={ availableListings } />
+          <MyListings listings={ availableListings } />
         ) : (
           <Typography>You have no active listings</Typography>
         )}
