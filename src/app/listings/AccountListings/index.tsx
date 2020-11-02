@@ -1,10 +1,10 @@
 import React from 'react'
-import Dumb from './MyListings'
+import Dumb from './AccountListings'
 import { useUserListingsQuery } from 'types/graphql'
 import Spinner from 'app/common/Spinner'
 import ErrorMessage from 'app/common/ErrorMessage'
 
-const MyListings = (): JSX.Element => {
+const AccountListings = (): JSX.Element => {
   const { data, loading, error } = useUserListingsQuery()
 
   if (loading) return <Spinner />
@@ -13,4 +13,4 @@ const MyListings = (): JSX.Element => {
   return <Dumb data={ data } />
 }
 
-export default MyListings
+export default AccountListings

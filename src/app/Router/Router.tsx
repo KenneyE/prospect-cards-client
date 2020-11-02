@@ -14,7 +14,7 @@ import PaymentAdded from 'app/account/PaymentAdded'
 import NewMembership from 'app/memberships/NewMembership'
 import Register from 'app/Register'
 import Profile from 'app/profile/Profile'
-import MyListings from 'app/listings/MyListings'
+import AccountListings from 'app/listings/AccountListings'
 import ConfirmEmail from 'app/ConfirmEmail'
 import ResetPassword from 'app/ResetPassword'
 import ForgotPassword from 'app/ForgotPassword'
@@ -26,7 +26,7 @@ const Router = (): JSX.Element => {
       <Route exact path='/' component={ Home } />
       <Route exact path='/c/:category' component={ Home } />
       <PrivateRoute exact path='/listings/new' component={ NewListing } />
-      <PrivateRoute exact path='/listings' component={ MyListings } />
+      <PrivateRoute exact path='/listings' component={ AccountListings } />
       <Route exact path='/listings/:id' component={ Listing } />
 
       <PrivateRoute exact path='/account/sell' component={ SellerSetup } />
