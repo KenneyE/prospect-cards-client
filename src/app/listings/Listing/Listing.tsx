@@ -34,7 +34,7 @@ const Listing = ({
     <Card className={ classes.root }>
       <CardContent>
         <Grid container spacing={ 4 }>
-          <Grid item xs={ 6 }>
+          <Grid item md={ 6 } xs={ 12 }>
             <Carousel
               showThumbs={ false }
               showStatus={ false }
@@ -54,7 +54,7 @@ const Listing = ({
               })}
             </Carousel>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item md={ 6 } xs={ 12 }>
             <div className={ classes.detailsWrapper }>
               <Typography variant='h1'>{title}</Typography>
               <Typography>{description}</Typography>

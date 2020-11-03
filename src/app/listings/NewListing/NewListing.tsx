@@ -116,7 +116,7 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
             return (
               <Form>
                 <Grid container spacing={ 3 }>
-                  <Grid item xs={ 4 }>
+                  <Grid item md={ 4 } xs={ 12 }>
                     <Dropzone
                       maxSize={ 5000000 }
                       disabled={ dropzoneDisabled }
@@ -185,7 +185,7 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                       <div>{errors.listing.images}</div>
                     ) : null}
                   </Grid>
-                  <Grid item xs={ 8 }>
+                  <Grid item md={ 8 } xs={ 12 }>
                     <TextField
                       margin='normal'
                       id='listing.title'
