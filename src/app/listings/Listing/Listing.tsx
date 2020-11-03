@@ -25,7 +25,7 @@ interface Props {
 
 const Listing = ({
   data: {
-    listing: { id, title, description, images, status },
+    listing: { id, title, description, player, images, status },
   },
 }: Props): JSX.Element => {
   const classes = useStyles()
@@ -57,6 +57,7 @@ const Listing = ({
           <Grid item md={ 6 } xs={ 12 }>
             <div className={ classes.detailsWrapper }>
               <Typography variant='h1'>{title}</Typography>
+              <Typography variant='h2'>{player.name}</Typography>
               <Typography>{description}</Typography>
               <Divider className={ classes.divider } />
               <div className={ classes.offerButtonsContainer }>
