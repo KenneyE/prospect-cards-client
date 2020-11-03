@@ -34,14 +34,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
   return (
     <Grid container spacing={ 3 }>
       <Grid item xs={ 12 }>
-        <ReactiveBase
-          app={ `listings${
-            process.env.NODE_ENV === 'development' ?
-              '_development' :
-              '_production'
-          }` }
-          url={ process.env.REACT_APP_ELASTICSEARCH_URI }
-        >
+        <ReactiveBase app='listings' url={ process.env.REACT_APP_API_URI }>
           <Grid container spacing={ 3 }>
             <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
               {/* Below is used to exclude listings created by current user */}
@@ -159,8 +152,8 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               <ReactiveList
                 infiniteScroll
                 showResultStats={ false }
-                loader={ <ListingSkeletons /> }
                 dataField='player.name'
+                showLoader={ false }
                 componentId='SearchResult'
                 react={ {
                   and: [
@@ -193,21 +186,20 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 ] }
                 defaultSortOption='Newest'
               >
-                {({
-                  data,
-                  loading,
-                }: {
-                  data: ElasticListing[];
-                  loading: boolean;
-                }) => (
-                  <ResultCardsWrapper className={ classes.resultsWrapper }>
-                    {loading && <LinearProgress />}
+                {(args): JSX.Element => {
+                  if (!args?.rawData) return <ListingSkeletons />
 
-                    {data.map((item: ElasticListing) => (
-                      <SearchResult key={ item.id } item={ item } />
-                    ))}
-                  </ResultCardsWrapper>
-                )}
+                  console.log(args.rawData)
+                  return (
+                    <ResultCardsWrapper className={ classes.resultsWrapper }>
+                      {args.rawData.responses.hits.map(
+                        (item: ElasticListing) => (
+                          <SearchResult key={ item.id } item={ item } />
+                        ),
+                      )}
+                    </ResultCardsWrapper>
+                  )
+                }}
               </ReactiveList>
             </Grid>
           </Grid>
