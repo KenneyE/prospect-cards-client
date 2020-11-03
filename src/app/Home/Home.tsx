@@ -18,8 +18,6 @@ import './carousel.css'
 import useStyles from './styles'
 import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
-import MyOffers from 'app/MyOffers'
-import PrivateComponent from 'app/PrivateComponent'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
 import ListingSkeletons from 'app/common/ListingSkeletons'
 
@@ -35,7 +33,7 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
 
   return (
     <Grid container spacing={ 3 }>
-      <Grid item md={ 10 } xs={ 12 }>
+      <Grid item xs={ 12 }>
         <ReactiveBase
           app={ `listings${
             process.env.NODE_ENV === 'development' ?
@@ -214,11 +212,6 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
             </Grid>
           </Grid>
         </ReactiveBase>
-      </Grid>
-      <Grid item md={ 2 } xs={ 12 }>
-        <PrivateComponent>
-          <MyOffers />
-        </PrivateComponent>
       </Grid>
       {/*<Experiment name='My Example'>*/}
       {/*  <Variant name='A'>*/}

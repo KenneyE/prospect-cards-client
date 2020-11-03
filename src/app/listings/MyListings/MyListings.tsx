@@ -57,31 +57,30 @@ const MyListings = ({ listings }: Props): JSX.Element => {
   )(ToggleButton)
 
   return (
-    <Grid container spacing={ 3 }>
-      <Grid item>
-        <Grid container direction='column'>
-          {listings.map((listing, index) => (
-            <StyledToggleButton
-              key={ listing.id }
-              value={ index }
-              aria-label='list'
-              selected={ value === index }
-              onClick={ handleChange(index) }
-              className={ classes.sideCardToggle }
-            >
-              <Typography noWrap>{listing.title}</Typography>
-            </StyledToggleButton>
-          ))}
-        </Grid>
-      </Grid>
-      <Grid item xs>
-        {listings.map((listing, index) => (
-          <TabPanel key={ listing.id } value={ value } index={ index }>
-            <Card>
-              <CardContent>
-                <Typography className={ classes.title }>
-                  {listing.title}
-                </Typography>
+    <Card>
+      <CardContent>
+        <Grid container spacing={ 3 }>
+          <Grid item>
+            <Typography>Card</Typography>
+            <Grid container direction='column'>
+              {listings.map((listing, index) => (
+                <StyledToggleButton
+                  key={ listing.id }
+                  value={ index }
+                  aria-label='list'
+                  selected={ value === index }
+                  onClick={ handleChange(index) }
+                  className={ classes.sideCardToggle }
+                >
+                  <Typography noWrap>{listing.title}</Typography>
+                </StyledToggleButton>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs>
+            {listings.map((listing, index) => (
+              <TabPanel key={ listing.id } value={ value } index={ index }>
+                <Typography className={ classes.title }>Details</Typography>
                 <FormControlLabel
                   labelPlacement='start'
                   className={ classes.disableSwitch }
@@ -97,17 +96,19 @@ const MyListings = ({ listings }: Props): JSX.Element => {
                 <Grid container spacing={ 1 }>
                   <Grid item md={ 3 } xs={ 12 }>
                     <Carousel listing={ listing } />
+                    <Typography>{listing.player.name}</Typography>
+                    <Typography>{listing.description}</Typography>
                   </Grid>
                   <Grid item md={ 3 } xs={ 12 }>
                     Stuff here too
                   </Grid>
                 </Grid>
-              </CardContent>
-            </Card>
-          </TabPanel>
-        ))}
-      </Grid>
-    </Grid>
+              </TabPanel>
+            ))}
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   )
 }
 
