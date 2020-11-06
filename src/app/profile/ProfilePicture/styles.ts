@@ -7,7 +7,8 @@ export default makeStyles(
       backgroundSize: 'cover',
       height: 300,
       width: 300,
-      borderRadius: 5,
+      borderRadius: '50%',
+      border: '1px solid #ccc',
       '&:hover': {
         border: '1px solid gray',
         cursor: 'pointer',

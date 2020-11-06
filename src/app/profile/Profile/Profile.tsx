@@ -1,19 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
-import { ProfileQuery } from 'types/graphql'
-import ProfilePicture from 'app/profile/ProfilePicture'
-import { Typography, Tabs, Tab, Box } from '@material-ui/core'
+import { Tabs, Tab, Box } from '@material-ui/core'
 import useStyles from './styles'
 import EmailPreferences from 'app/profile/EmailPreferences'
+import AccountDetails from '../AccountDetails'
 
-interface Props {
-  data: ProfileQuery;
-}
-
-const Profile = ({
-  data: {
-    viewer: { profilePictureUrl, email },
-  },
-}: Props): JSX.Element => {
+const Profile = (): JSX.Element => {
   const classes = useStyles()
   const [value, setValue] = useState(0)
 
@@ -53,13 +44,12 @@ const Profile = ({
         aria-label='Profile tabs'
         className={ classes.tabs }
       >
-        <Tab label='Account' />
+        <Tab label='Account Details' />
         <Tab label='Email Preferences' />
       </Tabs>
 
       <TabPanel value={ value } index={ 0 }>
-        <Typography>Email: {email}</Typography>
-        <ProfilePicture profilePictureUrl={ profilePictureUrl } />
+        <AccountDetails />
       </TabPanel>
       <TabPanel value={ value } index={ 1 }>
         <EmailPreferences />

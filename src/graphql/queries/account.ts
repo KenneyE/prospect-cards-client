@@ -3,9 +3,15 @@ import gql from 'graphql-tag'
 gql`
   query profile {
     viewer {
-      id
-      email
-      profilePictureUrl
+      ...user
+    }
+  }
+`
+
+gql`
+  query address {
+    viewer {
+      ...address
     }
   }
 `
