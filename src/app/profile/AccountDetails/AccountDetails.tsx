@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './styles'
-import { Typography } from '@material-ui/core'
+import { TextField, Typography } from '@material-ui/core'
 import ProfilePicture from 'app/profile/ProfilePicture'
 import { ProfileQuery } from 'types/graphql'
 import AddressForm from 'app/profile/AddressForm'
@@ -15,8 +15,19 @@ const AccountDetails = ({ data: { viewer } }: Props): JSX.Element => {
 
   return (
     <div className={ classes.root }>
-      <ProfilePicture profilePictureUrl={ profilePictureUrl } />
-      <Typography>Email: {email}</Typography>
+      <Typography variant='h3' component='h1'>
+        Account Details
+      </Typography>
+      <div className={ classes.profilePictureWrapper }>
+        <ProfilePicture profilePictureUrl={ profilePictureUrl } />
+      </div>
+      <TextField
+        disabled
+        fullWidth
+        label='Email'
+        variant='outlined'
+        value={ email }
+      />
       <AddressForm />
     </div>
   )

@@ -26,11 +26,11 @@ const AddressForm = ({
 
   const initialValues: SaveProfileMutationVariables = {
     profile: {
-      street1,
-      street2,
-      city,
-      state,
-      zip,
+      street1: street1 || '',
+      street2: street2 || '',
+      city: city || '',
+      state: state || '',
+      zip: zip || '',
     },
   }
 

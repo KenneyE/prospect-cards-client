@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Tabs, Tab, Box } from '@material-ui/core'
+import { Tabs, Tab } from '@material-ui/core'
 import useStyles from './styles'
 import EmailPreferences from 'app/profile/EmailPreferences'
 import AccountDetails from '../AccountDetails'
@@ -27,9 +27,10 @@ const Profile = (): JSX.Element => {
         hidden={ value !== index }
         id={ `profile-tabpanel-${index}` }
         aria-labelledby={ `profile-tab-${index}` }
+        className={ classes.panel }
         { ...other }
       >
-        {value === index && <Box p={ 3 }>{children}</Box>}
+        {value === index && children}
       </div>
     )
   }
