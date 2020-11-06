@@ -17,7 +17,7 @@ const EmailPreferences = (): JSX.Element => {
     savePreferences,
     { loading: saveLoading },
   ] = useSaveEmailPreferencesMutation()
-  if (loading) return <Spinner />
+  if (loading) return <Spinner fullHeight />
   if (!data || error) return <ErrorMessage />
 
   return (

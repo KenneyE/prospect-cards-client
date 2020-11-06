@@ -7,7 +7,7 @@ import ErrorMessage from 'app/common/ErrorMessage'
 const AccountDetails = (): JSX.Element => {
   const { data, loading, error } = useProfileQuery()
 
-  if (loading) return <Spinner />
+  if (loading) return <Spinner fullHeight />
   if (!data || error) return <ErrorMessage />
 
   return <Dumb data={ data } />

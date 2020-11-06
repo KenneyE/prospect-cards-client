@@ -10,7 +10,7 @@ const Home = (): JSX.Element => {
 
   const { category } = useParams<{ category?: string }>()
 
-  if (loading) return <Spinner />
+  if (loading) return <Spinner fullHeight />
   if (error) return <ErrorMessage />
 
   return <Dumb category={ category } viewerId={ data?.maybeViewer?.id } />
