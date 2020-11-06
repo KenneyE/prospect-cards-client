@@ -95,7 +95,7 @@ const MyListings = ({ listings }: Props): JSX.Element => {
                 />
                 <Grid container spacing={ 1 }>
                   <Grid item md={ 3 } xs={ 12 }>
-                    <Carousel listing={ listing } />
+                    <Carousel listing={ listing } height={ 240 } />
                     <Typography>{listing.player.name}</Typography>
                     <Typography>{listing.description}</Typography>
                   </Grid>

@@ -1,11 +1,12 @@
-import { makeStyles, StyleRules } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(
-  (): StyleRules => ({
-    root: {
-      borderRadius: 14,
-      overflow: 'hidden',
-    },
-    img: { height: 240, width: 'auto !important' },
+export default makeStyles({
+  root: {
+    borderRadius: 14,
+    overflow: 'hidden',
+  },
+  img: ({ height }: { height: number }) => ({
+    height,
+    width: 'auto !important',
   }),
-)
+})

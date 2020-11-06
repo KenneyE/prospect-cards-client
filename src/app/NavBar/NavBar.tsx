@@ -13,11 +13,13 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import LogoutButton from 'app/common/LogoutButton'
+import RoundButton from 'app/common/RoundButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 import { AccountQuery } from 'types/graphql'
 // import CategoryLink from 'app/common/CategoryLink'
 import NoticesMenu from 'app/NoticesMenu'
+import PlusIcon from '../../assets/svg/PlusIcon'
 
 interface Props {
   data?: AccountQuery;
@@ -158,73 +160,91 @@ const NavBar = ({ data }: Props): JSX.Element => {
             Prospect Cards
           </Typography>
           <div className={ classes.grow } />
-          {isSeller && (
-            <Button
-              variant='outlined'
-              color='secondary'
-              component={ Link }
-              to='/listings/new'
-            >
-              Sell
-            </Button>
-          )}
-          {/*<CategoryLink category='Basketball' />*/}
-          {/*<CategoryLink category='Baseball' />*/}
-          {/*<CategoryLink category='Football' />*/}
-          {/*<CategoryLink category='Hockey' />*/}
-          {/*<CategoryLink category='Soccer' />*/}
-          {/*<CategoryLink category='Other' />*/}
-          <div className={ classes.grow } />
+          <div className={ classes.rightNav }>
+            {isSeller && (
+              <RoundButton
+                variant='outlined'
+                color='secondary'
+                component={ Link }
+                to='/listings/new'
+                size='small'
+                startIcon={ <PlusIcon /> }
+              >
+                Sell Now
+              </RoundButton>
+            )}
 
-          <PrivateComponent
-            loggedOut={
+            <PrivateComponent>
+              <Button component={ Link } to='/' color='secondary'>
+                View Listings
+              </Button>
+            </PrivateComponent>
+            <PrivateComponent>
+              <Button component={ Link } to='/listings' color='secondary'>
+                My Offers
+              </Button>
+            </PrivateComponent>
+
+            {/*<CategoryLink category='Basketball' />*/}
+            {/*<CategoryLink category='Baseball' />*/}
+            {/*<CategoryLink category='Football' />*/}
+            {/*<CategoryLink category='Hockey' />*/}
+            {/*<CategoryLink category='Soccer' />*/}
+            {/*<CategoryLink category='Other' />*/}
+
+            <PrivateComponent
+              loggedOut={
+                <>
+                  <div className={ classes.grow } />
+                  <div>
+                    <Button
+                      component={ Link }
+                      variant='outlined'
+                      color='secondary'
+                      to='/register'
+                    >
+                      Register
+                    </Button>
+                    <Button
+                      component={ Link }
+                      variant='contained'
+                      color='primary'
+                      to='/login'
+                    >
+                      Log in
+                    </Button>
+                  </div>
+                </>
+              }
+            >
               <>
-                <Button
-                  component={ Link }
-                  variant='outlined'
-                  color='secondary'
-                  to='/register'
-                >
-                  Register
-                </Button>
-                <Button
-                  component={ Link }
-                  variant='contained'
-                  color='primary'
-                  to='/login'
-                >
-                  Log in
-                </Button>
+                <div className={ classes.sectionDesktop }>
+                  <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
+                  <IconButton
+                    edge='end'
+                    aria-label='account of current user'
+                    aria-controls={ menuId }
+                    aria-haspopup='true'
+                    onClick={ handleProfileMenuOpen }
+                    color='inherit'
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </div>
+                <div className={ classes.sectionMobile }>
+                  <IconButton
+                    aria-label='show more'
+                    aria-controls={ mobileMenuId }
+                    aria-haspopup='true'
+                    onClick={ handleMobileMenuOpen }
+                    color='inherit'
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </div>
               </>
-            }
-          >
-            <>
-              <div className={ classes.sectionDesktop }>
-                <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
-                <IconButton
-                  edge='end'
-                  aria-label='account of current user'
-                  aria-controls={ menuId }
-                  aria-haspopup='true'
-                  onClick={ handleProfileMenuOpen }
-                  color='inherit'
-                >
-                  <AccountCircle />
-                </IconButton>
-              </div>
-              <div className={ classes.sectionMobile }>
-                <IconButton
-                  aria-label='show more'
-                  aria-controls={ mobileMenuId }
-                  aria-haspopup='true'
-                  onClick={ handleMobileMenuOpen }
-                  color='inherit'
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div>
-            </>
-          </PrivateComponent>
+            </PrivateComponent>
+          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

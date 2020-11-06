@@ -8,5 +8,9 @@ export default makeStyles(
       height: 40,
       marginBottom: spacing(),
     },
+    filterPaper: {
+      padding: spacing(),
+      marginBottom: spacing(),
+    },
   }),
 )
