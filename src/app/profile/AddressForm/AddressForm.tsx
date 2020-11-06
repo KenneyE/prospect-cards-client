@@ -51,7 +51,6 @@ const AddressForm = ({
             value={ profile.street1 }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <TextField
@@ -61,7 +60,6 @@ const AddressForm = ({
             value={ profile.street2 }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
 
@@ -72,7 +70,6 @@ const AddressForm = ({
             value={ profile.city }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
 
@@ -83,7 +80,6 @@ const AddressForm = ({
             value={ profile.state }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <TextField
@@ -93,7 +89,6 @@ const AddressForm = ({
             value={ profile.zip }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <LoadingButton

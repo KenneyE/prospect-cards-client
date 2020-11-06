@@ -5,6 +5,8 @@ export default makeStyles(
     root: {
       width: '600px',
       margin: 'auto',
+    },
+    content: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -12,6 +14,9 @@ export default makeStyles(
     profilePictureWrapper: {
       paddingTop: 80,
       paddingBottom: 80,
+    },
+    floatRight: {
+      float: 'right',
     },
   }),
 )
