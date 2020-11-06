@@ -2,16 +2,19 @@ import React from 'react'
 import useStyles from './styles'
 import {
   AddressQuery,
-  SaveProfileMutationFn,
+  SaveProfileMutation,
   SaveProfileMutationVariables,
 } from 'types/graphql'
 import { Form, Formik } from 'formik'
 import { TextField } from '@material-ui/core'
 import LoadingButton from 'app/common/LoadingButton'
+import { MutatingComponentProps } from '../../../lib/MutationContainer'
 
-export interface Props {
-  mutate: SaveProfileMutationFn;
-  loading: boolean;
+export interface Props
+  extends MutatingComponentProps<
+  SaveProfileMutation,
+  SaveProfileMutationVariables
+  > {
   data: AddressQuery;
 }
 
