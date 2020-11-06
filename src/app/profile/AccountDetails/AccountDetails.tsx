@@ -3,7 +3,7 @@ import useStyles from './styles'
 import { TextField, Typography } from '@material-ui/core'
 import ProfilePicture from 'app/profile/ProfilePicture'
 import { ProfileQuery } from 'types/graphql'
-import AddressForm from 'app/profile/AddressForm'
+// import AddressForm from 'app/profile/AddressForm'
 
 interface Props {
   data: ProfileQuery;
@@ -28,7 +28,7 @@ const AccountDetails = ({ data: { viewer } }: Props): JSX.Element => {
         variant='outlined'
         value={ email }
       />
-      <AddressForm />
+      {/*<AddressForm />*/}
     </div>
   )
 }
