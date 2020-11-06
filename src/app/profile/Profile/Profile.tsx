@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Tabs, Tab } from '@material-ui/core'
 import useStyles from './styles'
 import EmailPreferences from 'app/profile/EmailPreferences'
-import AccountDetails from '../AccountDetails'
+// import AccountDetails from 'app/profile/AccountDetails'
 
 const Profile = (): JSX.Element => {
   const classes = useStyles()
@@ -50,7 +50,7 @@ const Profile = (): JSX.Element => {
       </Tabs>
 
       <TabPanel value={ value } index={ 0 }>
-        <AccountDetails />
+        <div>Hello account</div>
       </TabPanel>
       <TabPanel value={ value } index={ 1 }>
         <EmailPreferences />
