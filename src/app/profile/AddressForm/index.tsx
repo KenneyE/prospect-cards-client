@@ -15,17 +15,40 @@ const AddressForm = (): JSX.Element => {
 
   if (loading || !data) return <FormSkeleton />
 
-  return (
-    <MutationContainer<
-    SaveProfileMutation,
-    SaveProfileMutationVariables,
-    DumbProps
-    >
-      mutationTuple={ mutationTuple }
-      Dumb={ Dumb }
-      data={ data }
-    />
-  )
+  return <div>Ready to mutate</div>
+  {
+    /*return (*/
+  }
+  {
+    /*  <MutationContainer<*/
+  }
+  {
+    /*  SaveProfileMutation,*/
+  }
+  {
+    /*  SaveProfileMutationVariables,*/
+  }
+  {
+    /*  DumbProps*/
+  }
+  {
+    /*  >*/
+  }
+  {
+    /*    mutationTuple={ mutationTuple }*/
+  }
+  {
+    /*    Dumb={ Dumb }*/
+  }
+  {
+    /*    data={ data }*/
+  }
+  {
+    /*  />*/
+  }
+  {
+    /*)*/
+  }
 }
 
 export default AddressForm
