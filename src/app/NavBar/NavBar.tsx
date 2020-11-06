@@ -23,9 +23,10 @@ import PlusIcon from '../../assets/svg/PlusIcon'
 
 interface Props {
   data?: AccountQuery;
+  loading: boolean;
 }
 
-const NavBar = ({ data }: Props): JSX.Element => {
+const NavBar = ({ data, loading }: Props): JSX.Element => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [
@@ -192,58 +193,60 @@ const NavBar = ({ data }: Props): JSX.Element => {
             {/*<CategoryLink category='Soccer' />*/}
             {/*<CategoryLink category='Other' />*/}
 
-            <PrivateComponent
-              loggedOut={
+            {loading || (
+              <PrivateComponent
+                loggedOut={
+                  <>
+                    <div className={ classes.grow } />
+                    <div>
+                      <Button
+                        component={ Link }
+                        variant='outlined'
+                        color='secondary'
+                        to='/register'
+                      >
+                        Register
+                      </Button>
+                      <Button
+                        component={ Link }
+                        variant='contained'
+                        color='primary'
+                        to='/login'
+                      >
+                        Log in
+                      </Button>
+                    </div>
+                  </>
+                }
+              >
                 <>
-                  <div className={ classes.grow } />
-                  <div>
-                    <Button
-                      component={ Link }
-                      variant='outlined'
-                      color='secondary'
-                      to='/register'
+                  <div className={ classes.sectionDesktop }>
+                    <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
+                    <IconButton
+                      edge='end'
+                      aria-label='account of current user'
+                      aria-controls={ menuId }
+                      aria-haspopup='true'
+                      onClick={ handleProfileMenuOpen }
+                      color='inherit'
                     >
-                      Register
-                    </Button>
-                    <Button
-                      component={ Link }
-                      variant='contained'
-                      color='primary'
-                      to='/login'
+                      <AccountCircle />
+                    </IconButton>
+                  </div>
+                  <div className={ classes.sectionMobile }>
+                    <IconButton
+                      aria-label='show more'
+                      aria-controls={ mobileMenuId }
+                      aria-haspopup='true'
+                      onClick={ handleMobileMenuOpen }
+                      color='inherit'
                     >
-                      Log in
-                    </Button>
+                      <MoreIcon />
+                    </IconButton>
                   </div>
                 </>
-              }
-            >
-              <>
-                <div className={ classes.sectionDesktop }>
-                  <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
-                  <IconButton
-                    edge='end'
-                    aria-label='account of current user'
-                    aria-controls={ menuId }
-                    aria-haspopup='true'
-                    onClick={ handleProfileMenuOpen }
-                    color='inherit'
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                </div>
-                <div className={ classes.sectionMobile }>
-                  <IconButton
-                    aria-label='show more'
-                    aria-controls={ mobileMenuId }
-                    aria-haspopup='true'
-                    onClick={ handleMobileMenuOpen }
-                    color='inherit'
-                  >
-                    <MoreIcon />
-                  </IconButton>
-                </div>
-              </>
-            </PrivateComponent>
+              </PrivateComponent>
+            )}
           </div>
         </Toolbar>
       </AppBar>

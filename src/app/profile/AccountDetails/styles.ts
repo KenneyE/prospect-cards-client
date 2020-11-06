@@ -10,8 +10,8 @@ export default makeStyles(
       alignItems: 'center',
     },
     profilePictureWrapper: {
-      marginTop: 80,
-      marginBottom: 80,
+      paddingTop: 80,
+      paddingBottom: 80,
     },
   }),
 )

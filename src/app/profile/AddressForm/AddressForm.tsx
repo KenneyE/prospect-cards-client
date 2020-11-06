@@ -39,7 +39,7 @@ const AddressForm = ({
       initialValues={ initialValues }
       onSubmit={ (variables) => mutate({ variables }) }
     >
-      {({ values: { profile }, handleChange }) => (
+      {({ values: { profile }, handleChange }): JSX.Element => (
         <Form>
           <TextField
             variant='outlined'
