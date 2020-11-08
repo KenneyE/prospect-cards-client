@@ -11,7 +11,8 @@ export default makeStyles(
       borderRight: `1px solid ${palette.divider}`,
     },
     panel: {
-      width: '100%',
+      width: '600px',
+      margin: 'auto',
     },
   }),
 )

@@ -54,6 +54,14 @@ gql`
 `
 
 gql`
+  query paymentMethod {
+    viewer {
+      id
+    }
+  }
+`
+
+gql`
   query emailPreferences($token: String) {
     viewer(token: $token) {
       id

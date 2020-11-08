@@ -83,7 +83,7 @@ const NavBar = ({ data, loading }: Props): JSX.Element => {
         <MenuItem
           onClick={ handleMenuClose }
           component={ Link }
-          to='account/add_payment'
+          to='profile/payment'
         >
           Add Payment Method
         </MenuItem>
