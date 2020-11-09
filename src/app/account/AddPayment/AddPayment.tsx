@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AddPaymentQuery, SyncPaymentMutationFn } from 'types/graphql'
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
