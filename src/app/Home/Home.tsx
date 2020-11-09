@@ -103,6 +103,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   componentId='Set'
                   title='Set'
                   placeholder='Search Sets'
+                  showCount={ false }
                   URLParams
                 />
               </CollapsibleSearch>
@@ -113,6 +114,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   componentId='Grader'
                   title='Graded By'
                   placeholder='Search Graders'
+                  showCount={ false }
                   URLParams
                 />
               </CollapsibleSearch>
