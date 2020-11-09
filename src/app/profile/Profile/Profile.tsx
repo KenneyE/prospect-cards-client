@@ -2,20 +2,25 @@ import React, { ChangeEvent, useState } from 'react'
 import { Tabs, Tab } from '@material-ui/core'
 import useStyles from './styles'
 import EmailPreferences from 'app/profile/EmailPreferences'
-import AccountDetails from '../AccountDetails'
+import AccountDetails from 'app/profile/AccountDetails'
+import AddPayment from 'app/account/AddPayment'
+import { useParams } from 'react-router'
+
+type TabName = 'details' | 'payment' | 'preferences';
 
 const Profile = (): JSX.Element => {
   const classes = useStyles()
-  const [value, setValue] = useState(0)
+  const { tab } = useParams<{ tab?: TabName }>()
+  const [value, setValue] = useState<TabName>(tab || 'details')
 
-  const handleChange = (event: ChangeEvent<unknown>, newValue: number) => {
+  const handleChange = (event: ChangeEvent<unknown>, newValue: TabName) => {
     setValue(newValue)
   }
 
   interface TabPanelProps {
     children?: React.ReactNode;
-    index: number;
-    value: number;
+    index: string;
+    value: string;
   }
 
   const TabPanel = (props: TabPanelProps) => {
@@ -45,14 +50,18 @@ const Profile = (): JSX.Element => {
         aria-label='Profile tabs'
         className={ classes.tabs }
       >
-        <Tab label='Account Details' />
-        <Tab label='Email Preferences' />
+        <Tab label='Account Details' value='details' />
+        <Tab label='Payment Method' value='payment' />
+        <Tab label='Email Preferences' value='preferences' />
       </Tabs>
 
-      <TabPanel value={ value } index={ 0 }>
+      <TabPanel value={ value } index='details'>
         <AccountDetails />
       </TabPanel>
-      <TabPanel value={ value } index={ 1 }>
+      <TabPanel value={ value } index='payment'>
+        <AddPayment />
+      </TabPanel>
+      <TabPanel value={ value } index='preferences'>
         <EmailPreferences />
       </TabPanel>
     </div>

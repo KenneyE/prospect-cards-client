@@ -48,8 +48,33 @@ gql`
 `
 
 gql`
-  query addPayment($price: String) {
-    stripeCheckoutSessionId(price: $price)
+  query addPayment {
+    stripeSetupIntentId
+    viewer {
+      id
+      paymentMethod {
+        id
+        brand
+        expMonth
+        expYear
+        last4
+      }
+    }
+  }
+`
+
+gql`
+  query paymentMethod {
+    viewer {
+      id
+      paymentMethod {
+        id
+        brand
+        expMonth
+        expYear
+        last4
+      }
+    }
   }
 `
 

@@ -21,6 +21,7 @@
       "Product",
       "Set",
       "StripeAccount",
+      "StripePaymentMethod",
       "User"
     ]
   }

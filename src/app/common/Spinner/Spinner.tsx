@@ -8,7 +8,6 @@ interface Props {
 const Spinner = ({ fullHeight }: Props): JSX.Element => {
   const classes = useStyles()
 
-  console.log(fullHeight)
   return (
     <span className={ `${fullHeight && classes.container}` }>
       <div className='loader loader-1' />

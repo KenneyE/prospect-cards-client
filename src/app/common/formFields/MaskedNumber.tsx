@@ -1,13 +1,13 @@
 import React from 'react'
-import NumberFormat from 'react-number-format'
+import NumberFormat, { NumberFormatProps } from 'react-number-format'
 
-interface Props {
+export interface Props extends Omit<NumberFormatProps, 'onChange'> {
   inputRef: (instance: NumberFormat | null) => void;
   onChange: (value: string) => void;
   name: string;
 }
 
-const DollarField = (props: Props): JSX.Element => {
+const MaskedNumber = (props: Props): JSX.Element => {
   const { inputRef, onChange, ...other } = props
 
   return (
@@ -17,13 +17,8 @@ const DollarField = (props: Props): JSX.Element => {
       onValueChange={ (values) => {
         onChange(values.value)
       } }
-      thousandSeparator
-      isNumericString
-      decimalScale={ 2 }
-      allowNegative={ false }
-      prefix='$'
     />
   )
 }
 
-export default DollarField
+export default MaskedNumber

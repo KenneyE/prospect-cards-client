@@ -5,13 +5,18 @@ export default makeStyles(
     root: {
       width: '600px',
       margin: 'auto',
+    },
+    content: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     profilePictureWrapper: {
-      marginTop: 80,
-      marginBottom: 80,
+      paddingTop: 80,
+      paddingBottom: 80,
+    },
+    floatRight: {
+      float: 'right',
     },
   }),
 )

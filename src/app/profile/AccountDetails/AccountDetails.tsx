@@ -1,6 +1,11 @@
 import React from 'react'
 import useStyles from './styles'
-import { TextField, Typography } from '@material-ui/core'
+import {
+  FormControlLabel,
+  Switch,
+  TextField,
+  Typography,
+} from '@material-ui/core'
 import ProfilePicture from 'app/profile/ProfilePicture'
 import { ProfileQuery } from 'types/graphql'
 import AddressForm from 'app/profile/AddressForm'
@@ -15,20 +20,34 @@ const AccountDetails = ({ data: { viewer } }: Props): JSX.Element => {
 
   return (
     <div className={ classes.root }>
-      <Typography variant='h3' component='h1'>
+      <Typography variant='h5' component='h1' display='inline'>
         Account Details
       </Typography>
-      <div className={ classes.profilePictureWrapper }>
-        <ProfilePicture profilePictureUrl={ profilePictureUrl } />
-      </div>
-      <TextField
-        disabled
-        fullWidth
-        label='Email'
-        variant='outlined'
-        value={ email }
+      <FormControlLabel
+        labelPlacement='start'
+        className={ classes.floatRight }
+        control={
+          <Switch
+            size='small'
+            checked={ false }
+            // onChange={ toggleChecked }
+          />
+        }
+        label='Vacation Mode'
       />
-      <AddressForm />
+      <div className={ classes.content }>
+        <div className={ classes.profilePictureWrapper }>
+          <ProfilePicture profilePictureUrl={ profilePictureUrl } />
+        </div>
+        <TextField
+          disabled
+          fullWidth
+          label='Email'
+          variant='outlined'
+          value={ email }
+        />
+        <AddressForm />
+      </div>
     </div>
   )
 }

@@ -81,3 +81,13 @@ gql`
     path
   }
 `
+
+gql`
+  fragment paymentMethod on StripePaymentMethod {
+    id
+    brand
+    last4
+    expMonth
+    expYear
+  }
+`

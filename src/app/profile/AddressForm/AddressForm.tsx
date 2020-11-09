@@ -2,16 +2,19 @@ import React from 'react'
 import useStyles from './styles'
 import {
   AddressQuery,
-  SaveProfileMutationFn,
+  SaveProfileMutation,
   SaveProfileMutationVariables,
 } from 'types/graphql'
 import { Form, Formik } from 'formik'
 import { TextField } from '@material-ui/core'
 import LoadingButton from 'app/common/LoadingButton'
+import { MutatingComponentProps } from '../../../lib/MutationContainer'
 
-export interface Props {
-  mutate: SaveProfileMutationFn;
-  loading: boolean;
+export interface Props
+  extends MutatingComponentProps<
+  SaveProfileMutation,
+  SaveProfileMutationVariables
+  > {
   data: AddressQuery;
 }
 
@@ -39,7 +42,7 @@ const AddressForm = ({
       initialValues={ initialValues }
       onSubmit={ (variables) => mutate({ variables }) }
     >
-      {({ values: { profile }, handleChange }) => (
+      {({ values: { profile }, handleChange }): JSX.Element => (
         <Form>
           <TextField
             variant='outlined'
@@ -48,7 +51,6 @@ const AddressForm = ({
             value={ profile.street1 }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <TextField
@@ -58,7 +60,6 @@ const AddressForm = ({
             value={ profile.street2 }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
 
@@ -69,7 +70,6 @@ const AddressForm = ({
             value={ profile.city }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
 
@@ -80,7 +80,6 @@ const AddressForm = ({
             value={ profile.state }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <TextField
@@ -90,7 +89,6 @@ const AddressForm = ({
             value={ profile.zip }
             onChange={ handleChange }
             margin='normal'
-            autoFocus
             fullWidth
           />
           <LoadingButton
