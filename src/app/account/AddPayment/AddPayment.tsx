@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { AddPaymentQuery, SyncPaymentMutationFn } from 'types/graphql'
-import { Button, Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import ErrorMessage from 'app/common/ErrorMessage'
 import * as Stripe from '@stripe/stripe-js'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { StripeTextField } from 'app/stripe/StripeTextField'
-import LoadingButton from '../../common/LoadingButton'
+import LoadingButton from 'app/common/LoadingButton'
 
 interface Props {
   data: AddPaymentQuery;
