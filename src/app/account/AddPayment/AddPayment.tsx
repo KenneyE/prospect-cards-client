@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { AddPaymentQuery, SyncPaymentMutationFn } from 'types/graphql'
 import { Grid, TextField, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify'
+import * as Yup from 'yup'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import ErrorMessage from 'app/common/ErrorMessage'
 import * as Stripe from '@stripe/stripe-js'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { StripeTextField } from 'app/stripe/StripeTextField'
 import LoadingButton from 'app/common/LoadingButton'
+import FormTextField from '../../common/formFields/FormTextField'
 
 interface Props {
   data: AddPaymentQuery;
@@ -17,6 +19,19 @@ interface Props {
 type Values = Required<
 Pick<Stripe.PaymentMethodCreateParams.BillingDetails, 'name' | 'address'>
 >;
+
+const PaymentSchema = Yup.object()
+  .shape({
+    name: Yup.string().required('Required'),
+    address: Yup.object().shape({
+      line1: Yup.string().required('Required'),
+      line2: Yup.string(),
+      city: Yup.string().required('Required'),
+      state: Yup.string().required('Required'),
+      country: Yup.string().required('Required'),
+    }),
+  })
+  .defined()
 
 const AddPayment = ({
   data: {
@@ -82,7 +97,11 @@ const AddPayment = ({
           <Typography>xxxx-xxxx-xxxx-{paymentMethod.last4}</Typography>
         </Grid>
       )}
-      <Formik<Values> initialValues={ initialValues } onSubmit={ handleSubmit }>
+      <Formik<Values>
+        initialValues={ initialValues }
+        onSubmit={ handleSubmit }
+        validationSchema={ PaymentSchema }
+      >
         {({ handleChange, values }) => (
           <Form>
             <Grid container spacing={ 2 }>
@@ -96,64 +115,27 @@ const AddPayment = ({
 
               <Typography>Billing Address</Typography>
               <Grid item xs={ 12 }>
-                <TextField
-                  label='Name'
-                  id='name'
-                  value={ values.name }
-                  onChange={ handleChange }
-                  fullWidth
-                  variant='outlined'
-                />
+                <FormTextField label='Name' name='name' fullWidth />
               </Grid>
               <Grid item xs={ 12 }>
-                <TextField
+                <FormTextField
                   label='Address 1'
-                  id='address.line1'
-                  value={ values.address.line1 }
-                  onChange={ handleChange }
+                  name='address.line1'
                   fullWidth
-                  variant='outlined'
                 />
               </Grid>
               <Grid item xs={ 12 }>
-                <TextField
-                  label='Address 1'
-                  id='address.line1'
-                  value={ values.address.line1 }
-                  onChange={ handleChange }
-                  fullWidth
-                  variant='outlined'
-                />
-              </Grid>
-              <Grid item xs={ 12 }>
-                <TextField
+                <FormTextField
                   label='Address 2'
-                  id='address.line2'
-                  value={ values.address.line2 }
-                  onChange={ handleChange }
+                  name='address.line2'
                   fullWidth
-                  variant='outlined'
                 />
               </Grid>
               <Grid item xs={ 12 }>
-                <TextField
-                  label='City'
-                  id='address.city'
-                  value={ values.address.city }
-                  onChange={ handleChange }
-                  fullWidth
-                  variant='outlined'
-                />
+                <FormTextField label='City' name='address.city' fullWidth />
               </Grid>
               <Grid item xs={ 12 }>
-                <TextField
-                  label='State'
-                  id='address.state'
-                  value={ values.address.state }
-                  onChange={ handleChange }
-                  fullWidth
-                  variant='outlined'
-                />
+                <FormTextField label='State' name='address.state' fullWidth />
               </Grid>
 
               <Grid item xs={ 12 }>
