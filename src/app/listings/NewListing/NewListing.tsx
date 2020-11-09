@@ -26,9 +26,9 @@ import LoadingButton from 'app/common/LoadingButton'
 import DollarField from 'app/common/formFields/DollarField'
 import NewListingThumbs from 'app/listings/NewListingThumbs'
 import * as Sortable from 'react-sortable-hoc'
-import { checkFileSize } from '../../../lib'
+import { checkFileSize } from 'lib'
 import { NotRequiredArraySchema } from 'yup'
-import FormTextField from '../../common/formFields/FormTextField'
+import FormTextField from 'app/common/formFields/FormTextField'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;

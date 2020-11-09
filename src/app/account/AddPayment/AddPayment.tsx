@@ -9,7 +9,7 @@ import * as Stripe from '@stripe/stripe-js'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { StripeTextField } from 'app/stripe/StripeTextField'
 import LoadingButton from 'app/common/LoadingButton'
-import FormTextField from '../../common/formFields/FormTextField'
+import FormTextField from 'app/common/formFields/FormTextField'
 
 interface Props {
   data: AddPaymentQuery;
