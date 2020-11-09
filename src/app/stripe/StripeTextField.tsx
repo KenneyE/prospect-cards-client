@@ -2,6 +2,7 @@ import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import {
   AuBankAccountElement,
   CardCvcElement,
+  CardElement,
   CardExpiryElement,
   CardNumberElement,
   FpxBankElement,
@@ -13,6 +14,7 @@ import { StripeInput } from './StripeInput'
 
 type StripeElement =
   | typeof AuBankAccountElement
+  | typeof CardElement
   | typeof CardCvcElement
   | typeof CardExpiryElement
   | typeof CardNumberElement
