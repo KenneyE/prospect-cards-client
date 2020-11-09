@@ -30,7 +30,7 @@ const SearchResult = ({ item }: Props): JSX.Element => {
       </Typography>
 
       <div onClick={ (e) => e.stopPropagation() }>
-        <Carousel listing={ item } />
+        <Carousel listing={ item } height={ 240 } />
       </div>
       <Typography variant='body2'>{item.title}</Typography>
       <Typography variant='body2'>Player: {item.player.name}</Typography>

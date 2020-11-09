@@ -10,7 +10,7 @@ import {
   CardActions,
   Divider,
 } from '@material-ui/core'
-import { Carousel } from 'react-responsive-carousel'
+import Carousel from 'app/common/Carousel'
 import { Link } from 'react-router-dom'
 import ReportListingButton from 'app/listings/ReportListingButton'
 import AdminComponent from 'app/AdminComponent'
@@ -23,40 +23,21 @@ interface Props {
   data: ListingQuery;
 }
 
-const Listing = ({
-  data: {
-    listing: { id, title, description, images, status },
-  },
-}: Props): JSX.Element => {
+const Listing = ({ data: { listing } }: Props): JSX.Element => {
   const classes = useStyles()
+  const { id, title, description, player, status } = listing
 
   return (
     <Card className={ classes.root }>
       <CardContent>
         <Grid container spacing={ 4 }>
-          <Grid item xs={ 6 }>
-            <Carousel
-              showThumbs={ false }
-              showStatus={ false }
-              infiniteLoop
-              centerMode={ images.length > 1 }
-              showIndicators={ images.length > 1 }
-            >
-              {images.map((image, ind) => {
-                return (
-                  <img
-                    key={ image.id }
-                    src={ image.url }
-                    alt={ `${title} No. ${ind}` }
-                    className={ classes.img }
-                  />
-                )
-              })}
-            </Carousel>
+          <Grid item md={ 6 } xs={ 12 }>
+            <Carousel listing={ listing } height={ 500 } />
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item md={ 6 } xs={ 12 }>
             <div className={ classes.detailsWrapper }>
               <Typography variant='h1'>{title}</Typography>
+              <Typography variant='h2'>{player.name}</Typography>
               <Typography>{description}</Typography>
               <Divider className={ classes.divider } />
               <div className={ classes.offerButtonsContainer }>

@@ -3,9 +3,9 @@ import Dumb from './NavBar'
 import { useAccountQuery } from 'types/graphql'
 
 const NavBar = (): JSX.Element => {
-  const { data } = useAccountQuery()
+  const { data, loading } = useAccountQuery()
 
-  return <Dumb data={ data } />
+  return <Dumb data={ data } loading={ loading } />
 }
 
 export default NavBar

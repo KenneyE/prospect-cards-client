@@ -5,10 +5,11 @@ import useStyles from './styles'
 
 interface Props {
   listing: ListingFragment;
+  height: number;
 }
 
-const Carousel = ({ listing }: Props): JSX.Element => {
-  const classes = useStyles()
+const Carousel = ({ listing, height }: Props): JSX.Element => {
+  const classes = useStyles({ height })
 
   return (
     <div className={ classes.root }>

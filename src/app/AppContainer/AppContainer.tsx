@@ -22,14 +22,12 @@ const AppContainer = (): JSX.Element => {
       <CssBaseline />
       <Elements stripe={ stripe }>
         <NavBar />
-        <div className={ classes.root }>
-          <main className={ classes.content }>
-            <div className={ classes.appBarSpacer } />
-            <Container maxWidth='xl' className={ classes.container }>
-              <Router />
-            </Container>
-          </main>
-        </div>
+        <main className={ classes.content }>
+          <div className={ classes.appBarSpacer } />
+          <Container maxWidth='xl'>
+            <Router />
+          </Container>
+        </main>
         <Footer />
         <ToastContainer position={ toast.POSITION.BOTTOM_CENTER } />
       </Elements>

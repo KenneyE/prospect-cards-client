@@ -19,7 +19,7 @@ const useStyles = makeStyles(
         marginTop: -12,
         marginLeft: -12,
       },
-    })
+    }),
 )
 export interface Props extends ButtonProps {
   loading: boolean;

@@ -1,6 +1,26 @@
 import gql from 'graphql-tag'
 
 gql`
+  fragment user on User {
+    id
+    email
+    profilePictureUrl
+    ...address
+  }
+`
+
+gql`
+  fragment address on User {
+    id
+    street1
+    street2
+    city
+    state
+    zip
+  }
+`
+
+gql`
   fragment player on Player {
     id
     name
@@ -59,5 +79,15 @@ gql`
     title
     text
     path
+  }
+`
+
+gql`
+  fragment paymentMethod on StripePaymentMethod {
+    id
+    brand
+    last4
+    expMonth
+    expYear
   }
 `

@@ -1,9 +1,9 @@
 import { makeStyles, StyleRules, Theme } from '@material-ui/core/styles'
 
 export default makeStyles(
-  (theme: Theme): StyleRules => ({
+  ({ spacing }: Theme): StyleRules => ({
     root: {
-      marginBottom: theme.spacing(),
+      marginBottom: spacing(),
     },
   }),
 )

@@ -9,9 +9,9 @@ export default makeStyles(
     content: {
       paddingTop: 10,
       flexGrow: 1,
-      height: '100vh',
-      overflow: 'auto',
+      minHeight: '100vh',
       backgroundColor: '#f6f8fa',
+      paddingBottom: 100,
     },
   }),
 )

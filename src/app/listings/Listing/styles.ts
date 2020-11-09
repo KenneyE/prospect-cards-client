@@ -5,8 +5,8 @@ export default makeStyles(
     root: {
       margin: 'auto',
       maxWidth: 1100,
+      padding: '64px 56px',
     },
-    img: { height: 500, width: 'auto !important' },
     divider: {
       marginTop: spacing(2),
       marginBottom: spacing(2),

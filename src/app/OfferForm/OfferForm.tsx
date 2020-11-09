@@ -16,7 +16,7 @@ import {
 import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
-import DollarField from 'app/common/DollarField'
+import DollarField from 'app/common/formFields/DollarField'
 
 interface Props {
   listingId: number;

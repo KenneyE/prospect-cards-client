@@ -23,25 +23,42 @@ import { toast } from 'react-toastify'
 import arrayMove from 'array-move'
 import PlayerInputField from 'app/PlayerInputField'
 import LoadingButton from 'app/common/LoadingButton'
-import DollarField from 'app/common/DollarField'
+import DollarField from 'app/common/formFields/DollarField'
 import NewListingThumbs from 'app/listings/NewListingThumbs'
 import * as Sortable from 'react-sortable-hoc'
+import { checkFileSize } from '../../../lib'
+import { NotRequiredArraySchema } from 'yup'
+import FormTextField from '../../common/formFields/FormTextField'
 
-const ListingSchema = Yup.object().shape({
-  listing: Yup.object().shape({
+const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
+  document: File;
+}>()
+  .min(1, 'Must include at least 1 image.')
+  .max(8, 'Maximum of 8 images')
+  .test('is-big-file', 'VALIDATION_FIELD_FILE_SIZE', checkFileSize)
+
+const listingInputSchema = Yup.object()
+  .shape({
     title: Yup.string()
       .min(5, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Required'),
     description: Yup.string().min(10, 'Too Short!').required('Required'),
-    images: Yup.array()
-      .min(1, 'Must include at least 1 image.')
-      .max(8, 'Maximum of 8 images'),
+    images: imagesSchema,
     categoryId: Yup.number().required('Required'),
     productTypeId: Yup.number().required('Required'),
-  }),
-  player: Yup.object().shape({ name: Yup.string().required('Required') }),
-})
+    manufacturerId: Yup.number().required('Required'),
+    setTypeId: Yup.number().required('Required'),
+    price: Yup.number().required('Required'),
+  })
+  .defined()
+
+const ListingSchema = Yup.object()
+  .shape({
+    listing: listingInputSchema,
+    player: Yup.object().shape({ name: Yup.string().required('Required') }),
+  })
+  .defined()
 
 interface Props {
   loading: boolean;
@@ -116,7 +133,12 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
             return (
               <Form>
                 <Grid container spacing={ 3 }>
-                  <Grid item xs={ 4 }>
+                  <Grid
+                    item
+                    md={ 4 }
+                    xs={ 12 }
+                    className={ classes.dropzoneContainer }
+                  >
                     <Dropzone
                       maxSize={ 5000000 }
                       disabled={ dropzoneDisabled }
@@ -148,11 +170,11 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                         isDragActive,
                       }): JSX.Element => (
                         <Card className={ classes.dropzone }>
-                          <CardContent { ...getRootProps() }>
-                            <input
-                              { ...getInputProps() }
-                              className={ classes.dzInput }
-                            />
+                          <CardContent
+                            { ...getRootProps() }
+                            className={ classes.dropzoneContent }
+                          >
+                            <input { ...getInputProps() } />
                             {dropzoneDisabled ? (
                               <Typography
                                 variant='body2'
@@ -185,31 +207,21 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                       <div>{errors.listing.images}</div>
                     ) : null}
                   </Grid>
-                  <Grid item xs={ 8 }>
-                    <TextField
+                  <Grid item md={ 8 } xs={ 12 }>
+                    <FormTextField
                       margin='normal'
-                      id='listing.title'
-                      value={ values.listing.title }
+                      name='listing.title'
                       label='Title'
-                      onChange={ handleChange }
+                      variant='standard'
                     />
-                    {errors.listing?.title && touched.listing?.title ? (
-                      <div>{errors.listing.title}</div>
-                    ) : null}
-
-                    <TextField
+                    <FormTextField
                       margin='normal'
-                      id='listing.description'
-                      multiline
-                      value={ values.listing.description }
+                      name='listing.description'
                       label='Description'
+                      variant='standard'
                       fullWidth
-                      onChange={ handleChange }
+                      multiline
                     />
-                    {errors.listing?.description &&
-                    touched.listing?.description ? (
-                        <div>{errors.listing.description}</div>
-                      ) : null}
                     <PlayerInputField
                       onChange={ (name: string) =>
                         setFieldValue('player.name', name)

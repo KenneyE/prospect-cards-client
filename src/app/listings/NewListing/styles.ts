@@ -9,14 +9,18 @@ export default makeStyles(
     formControl: {
       width: 300,
     },
+    dropzoneContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
     dropzone: {
       border: 1,
       borderRadius: 3,
       marginTop: theme.spacing(),
       marginBottom: theme.spacing(),
-      height: '100%',
+      flexGrow: 1,
     },
-    dzInput: {
+    dropzoneContent: {
       height: '100%',
     },
     disabled: {

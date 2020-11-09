@@ -1,30 +1,26 @@
 import React, { ChangeEvent, useState } from 'react'
-import { ProfileQuery } from 'types/graphql'
-import ProfilePicture from 'app/profile/ProfilePicture'
-import { Typography, Tabs, Tab, Box } from '@material-ui/core'
+import { Tabs, Tab } from '@material-ui/core'
 import useStyles from './styles'
 import EmailPreferences from 'app/profile/EmailPreferences'
+import AccountDetails from 'app/profile/AccountDetails'
+import AddPayment from 'app/account/AddPayment'
+import { useParams } from 'react-router'
 
-interface Props {
-  data: ProfileQuery;
-}
+type TabName = 'details' | 'payment' | 'preferences';
 
-const Profile = ({
-  data: {
-    viewer: { profilePictureUrl, email },
-  },
-}: Props): JSX.Element => {
+const Profile = (): JSX.Element => {
   const classes = useStyles()
-  const [value, setValue] = useState(0)
+  const { tab } = useParams<{ tab?: TabName }>()
+  const [value, setValue] = useState<TabName>(tab || 'details')
 
-  const handleChange = (event: ChangeEvent<unknown>, newValue: number) => {
+  const handleChange = (event: ChangeEvent<unknown>, newValue: TabName) => {
     setValue(newValue)
   }
 
   interface TabPanelProps {
     children?: React.ReactNode;
-    index: number;
-    value: number;
+    index: string;
+    value: string;
   }
 
   const TabPanel = (props: TabPanelProps) => {
@@ -36,9 +32,10 @@ const Profile = ({
         hidden={ value !== index }
         id={ `profile-tabpanel-${index}` }
         aria-labelledby={ `profile-tab-${index}` }
+        className={ classes.panel }
         { ...other }
       >
-        {value === index && <Box p={ 3 }>{children}</Box>}
+        {value === index && children}
       </div>
     )
   }
@@ -53,15 +50,18 @@ const Profile = ({
         aria-label='Profile tabs'
         className={ classes.tabs }
       >
-        <Tab label='Account' />
-        <Tab label='Email Preferences' />
+        <Tab label='Account Details' value='details' />
+        <Tab label='Payment Method' value='payment' />
+        <Tab label='Email Preferences' value='preferences' />
       </Tabs>
 
-      <TabPanel value={ value } index={ 0 }>
-        <Typography>Email: {email}</Typography>
-        <ProfilePicture profilePictureUrl={ profilePictureUrl } />
+      <TabPanel value={ value } index='details'>
+        <AccountDetails />
       </TabPanel>
-      <TabPanel value={ value } index={ 1 }>
+      <TabPanel value={ value } index='payment'>
+        <AddPayment />
+      </TabPanel>
+      <TabPanel value={ value } index='preferences'>
         <EmailPreferences />
       </TabPanel>
     </div>

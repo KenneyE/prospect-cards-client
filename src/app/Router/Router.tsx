@@ -45,7 +45,7 @@ const Router = (): JSX.Element => {
         component={ StripeAccountVerification }
       />
       <PrivateRoute exact path='/membership/new' component={ NewMembership } />
-      <PrivateRoute exact path='/profile' component={ Profile } />
+      <PrivateRoute exact path='/profile/:tab?' component={ Profile } />
 
       <Route exact path='/login' component={ Login } />
       <Route exact path='/register' component={ Register } />

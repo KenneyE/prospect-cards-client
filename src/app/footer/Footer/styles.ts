@@ -6,6 +6,7 @@ export default makeStyles(
       width: '100%',
       borderTop: '1px solid #aaa',
       padding: '52px 60px',
+      marginTop: 50,
     },
     logo: {
       width: 100,

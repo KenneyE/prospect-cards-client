@@ -5,6 +5,12 @@ export default makeStyles(
     grow: {
       flexGrow: 1,
     },
+    rightNav: {
+      width: 'calc(50% + 64px)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignContent: 'center',
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -52,7 +58,7 @@ export default makeStyles(
     sectionDesktop: {
       display: 'none',
       [theme.breakpoints.up('md')]: {
-        display: 'flex',
+        display: 'inline-block',
       },
     },
     sectionMobile: {

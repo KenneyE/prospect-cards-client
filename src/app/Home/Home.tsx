@@ -12,14 +12,12 @@ import {
 } from '@appbaseio/reactivesearch'
 // import { Experiment, Variant } from '@marvelapp/react-ab-test'
 // import emitter from 'lib/abEmitter'
-import { Grid, LinearProgress } from '@material-ui/core'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import './carousel.css'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './styles'
 import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
-import ListingSkeletons from 'app/common/ListingSkeletons'
+import ListingSkeletons from 'app/common/ListingSkeleton'
 
 const { ResultCardsWrapper } = ReactiveList
 
@@ -66,16 +64,21 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                   URLParams
                 />
               </CollapsibleSearch>
-              <DynamicRangeSlider
-                componentId='Price'
-                dataField='price'
-                title='Price Range'
-                rangeLabels={ (min, max) => ({
-                  start: '$' + min / 100,
-                  end: '$' + max / 100,
-                }) }
-                URLParams
-              />
+              <Paper className={ classes.filterPaper }>
+                <Typography>Price Range</Typography>
+                <DynamicRangeSlider
+                  componentId='Price'
+                  dataField='price'
+                  stepValue={ 10 }
+                  rangeLabels={ (min, max) => ({
+                    start: '$' + min / 100,
+                    end: '$' + max / 100,
+                  }) }
+                  className='custom-slider'
+                  showHistogram={ false }
+                  showFilter={ false }
+                />
+              </Paper>
               <CollapsibleSearch title='Type'>
                 <MultiList
                   componentId='Product Type'
@@ -84,7 +87,6 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                   size={ 8 }
                   showCheckbox
                   showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Player'>

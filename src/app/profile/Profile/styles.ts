@@ -4,12 +4,15 @@ export default makeStyles(
   ({ palette }: Theme): StyleRules => ({
     root: {
       flexGrow: 1,
-      backgroundColor: palette.background.paper,
       display: 'flex',
-      height: 800,
+      marginTop: 75,
     },
     tabs: {
       borderRight: `1px solid ${palette.divider}`,
+    },
+    panel: {
+      width: '600px',
+      margin: 'auto',
     },
   }),
 )

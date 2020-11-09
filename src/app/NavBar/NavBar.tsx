@@ -13,17 +13,20 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import LogoutButton from 'app/common/LogoutButton'
+import RoundButton from 'app/common/RoundButton'
 import { Link } from 'react-router-dom'
 import PrivateComponent from 'app/PrivateComponent'
 import { AccountQuery } from 'types/graphql'
 // import CategoryLink from 'app/common/CategoryLink'
 import NoticesMenu from 'app/NoticesMenu'
+import PlusIcon from '../../assets/svg/PlusIcon'
 
 interface Props {
   data?: AccountQuery;
+  loading: boolean;
 }
 
-const NavBar = ({ data }: Props): JSX.Element => {
+const NavBar = ({ data, loading }: Props): JSX.Element => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [
@@ -80,7 +83,7 @@ const NavBar = ({ data }: Props): JSX.Element => {
         <MenuItem
           onClick={ handleMenuClose }
           component={ Link }
-          to='account/add_payment'
+          to='profile/payment'
         >
           Add Payment Method
         </MenuItem>
@@ -158,73 +161,93 @@ const NavBar = ({ data }: Props): JSX.Element => {
             Prospect Cards
           </Typography>
           <div className={ classes.grow } />
-          {isSeller && (
-            <Button
-              variant='outlined'
-              color='secondary'
-              component={ Link }
-              to='/listings/new'
-            >
-              Sell
-            </Button>
-          )}
-          {/*<CategoryLink category='Basketball' />*/}
-          {/*<CategoryLink category='Baseball' />*/}
-          {/*<CategoryLink category='Football' />*/}
-          {/*<CategoryLink category='Hockey' />*/}
-          {/*<CategoryLink category='Soccer' />*/}
-          {/*<CategoryLink category='Other' />*/}
-          <div className={ classes.grow } />
+          <div className={ classes.rightNav }>
+            {isSeller && (
+              <RoundButton
+                variant='outlined'
+                color='secondary'
+                component={ Link }
+                to='/listings/new'
+                size='small'
+                startIcon={ <PlusIcon /> }
+              >
+                Sell Now
+              </RoundButton>
+            )}
 
-          <PrivateComponent
-            loggedOut={
-              <>
-                <Button
-                  component={ Link }
-                  variant='outlined'
-                  color='secondary'
-                  to='/register'
-                >
-                  Register
-                </Button>
-                <Button
-                  component={ Link }
-                  variant='contained'
-                  color='primary'
-                  to='/login'
-                >
-                  Log in
-                </Button>
-              </>
-            }
-          >
-            <>
-              <div className={ classes.sectionDesktop }>
-                <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
-                <IconButton
-                  edge='end'
-                  aria-label='account of current user'
-                  aria-controls={ menuId }
-                  aria-haspopup='true'
-                  onClick={ handleProfileMenuOpen }
-                  color='inherit'
-                >
-                  <AccountCircle />
-                </IconButton>
-              </div>
-              <div className={ classes.sectionMobile }>
-                <IconButton
-                  aria-label='show more'
-                  aria-controls={ mobileMenuId }
-                  aria-haspopup='true'
-                  onClick={ handleMobileMenuOpen }
-                  color='inherit'
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div>
-            </>
-          </PrivateComponent>
+            <PrivateComponent>
+              <Button component={ Link } to='/' color='secondary'>
+                View Listings
+              </Button>
+            </PrivateComponent>
+            <PrivateComponent>
+              <Button component={ Link } to='/listings' color='secondary'>
+                My Offers
+              </Button>
+            </PrivateComponent>
+
+            {/*<CategoryLink category='Basketball' />*/}
+            {/*<CategoryLink category='Baseball' />*/}
+            {/*<CategoryLink category='Football' />*/}
+            {/*<CategoryLink category='Hockey' />*/}
+            {/*<CategoryLink category='Soccer' />*/}
+            {/*<CategoryLink category='Other' />*/}
+
+            {loading || (
+              <PrivateComponent
+                loggedOut={
+                  <>
+                    <div className={ classes.grow } />
+                    <div>
+                      <Button
+                        component={ Link }
+                        variant='outlined'
+                        color='secondary'
+                        to='/register'
+                      >
+                        Register
+                      </Button>
+                      <Button
+                        component={ Link }
+                        variant='contained'
+                        color='primary'
+                        to='/login'
+                      >
+                        Log in
+                      </Button>
+                    </div>
+                  </>
+                }
+              >
+                <>
+                  <div className={ classes.sectionDesktop }>
+                    <NoticesMenu notices={ data?.maybeViewer?.unreadNotices } />
+                    <IconButton
+                      edge='end'
+                      aria-label='account of current user'
+                      aria-controls={ menuId }
+                      aria-haspopup='true'
+                      onClick={ handleProfileMenuOpen }
+                      color='inherit'
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                  </div>
+                  <div className={ classes.sectionMobile }>
+                    <IconButton
+                      aria-label='show more'
+                      aria-controls={ mobileMenuId }
+                      aria-haspopup='true'
+                      onClick={ handleMobileMenuOpen }
+                      color='inherit'
+                    >
+                      <MoreIcon />
+                    </IconButton>
+                  </div>
+                </>
+              </PrivateComponent>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

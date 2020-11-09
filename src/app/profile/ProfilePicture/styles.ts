@@ -5,9 +5,10 @@ export default makeStyles(
     profileDropzone: {
       position: 'relative',
       backgroundSize: 'cover',
-      height: 300,
-      width: 300,
-      borderRadius: 5,
+      height: 200,
+      width: 200,
+      borderRadius: '50%',
+      border: '1px solid #ccc',
       '&:hover': {
         border: '1px solid gray',
         cursor: 'pointer',
