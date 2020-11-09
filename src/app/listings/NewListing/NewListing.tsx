@@ -28,6 +28,7 @@ import NewListingThumbs from 'app/listings/NewListingThumbs'
 import * as Sortable from 'react-sortable-hoc'
 import { checkFileSize } from '../../../lib'
 import { NotRequiredArraySchema } from 'yup'
+import FormTextField from '../../common/formFields/FormTextField'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -207,30 +208,20 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                     ) : null}
                   </Grid>
                   <Grid item md={ 8 } xs={ 12 }>
-                    <TextField
+                    <FormTextField
                       margin='normal'
-                      id='listing.title'
-                      value={ values.listing.title }
+                      name='listing.title'
                       label='Title'
-                      onChange={ handleChange }
+                      variant='standard'
                     />
-                    {errors.listing?.title && touched.listing?.title ? (
-                      <div>{errors.listing.title}</div>
-                    ) : null}
-
-                    <TextField
+                    <FormTextField
                       margin='normal'
-                      id='listing.description'
-                      multiline
-                      value={ values.listing.description }
+                      name='listing.description'
                       label='Description'
+                      variant='standard'
                       fullWidth
-                      onChange={ handleChange }
+                      multiline
                     />
-                    {errors.listing?.description &&
-                    touched.listing?.description ? (
-                        <div>{errors.listing.description}</div>
-                      ) : null}
                     <PlayerInputField
                       onChange={ (name: string) =>
                         setFieldValue('player.name', name)

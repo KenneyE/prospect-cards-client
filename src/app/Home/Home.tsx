@@ -5,61 +5,39 @@ import {
   ReactiveList,
   MultiList,
   SingleList,
-  RangeInput,
   ToggleButton,
   DynamicRangeSlider,
   SelectedFilters,
 } from '@appbaseio/reactivesearch'
 // import { Experiment, Variant } from '@marvelapp/react-ab-test'
 // import emitter from 'lib/abEmitter'
-import { Grid, LinearProgress, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './styles'
 import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
-import Spinner from 'app/common/Spinner'
-
-const { ResultCardsWrapper } = ReactiveList
+import ListingSkeletons from 'app/common/ListingSkeleton'
 
 interface Props {
   category?: string;
-  viewerId?: number;
 }
 
-const Home = ({ category, viewerId }: Props): JSX.Element => {
+const Home = ({ category }: Props): JSX.Element => {
   const classes = useStyles()
+  const token = localStorage.getItem('prospect-cards-token')
 
   return (
     <Grid container spacing={ 3 }>
       <Grid item xs={ 12 }>
         <ReactiveBase
-          app={ `listings${
-            process.env.NODE_ENV === 'development' ?
-              '_development' :
-              '_production'
-          }` }
-          url={ process.env.REACT_APP_ELASTICSEARCH_URI }
+          app='listings'
+          url={ process.env.REACT_APP_API_URI }
+          headers={ {
+            authorization: token || '',
+          } }
         >
           <Grid container spacing={ 3 }>
             <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
-              {/* Below is used to exclude listings created by current user */}
-              {viewerId && (
-                <RangeInput
-                  componentId='exclude-user-search'
-                  dataField='user.id'
-                  stepValue={ 25 }
-                  range={ { start: viewerId, end: viewerId } }
-                  style={ { display: 'none' } }
-                />
-              )}
-              {/*<DataSearch*/}
-              {/*  componentId='only-available-search'*/}
-              {/*  dataField='status'*/}
-              {/*  value='available'*/}
-              {/*  style={ { display: 'none' } }*/}
-              {/*  URLParams*/}
-              {/*/>*/}
-
               <CollapsibleSearch title='Sport'>
                 <SingleList
                   dataField='category.name'
@@ -161,13 +139,12 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
               <ReactiveList
                 infiniteScroll
                 showResultStats={ false }
-                loader={ <Spinner /> }
                 dataField='player.name'
+                showLoader={ false }
                 componentId='SearchResult'
                 react={ {
                   and: [
                     'Search',
-                    // 'only-available-search',
                     'Price',
                     'Description',
                     'Player Name',
@@ -178,7 +155,6 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                     'Grader',
                     'Rookie',
                   ],
-                  not: ['exclude-user-search'],
                 } }
                 sortOptions={ [
                   { label: 'Newest', dataField: 'createdAt', sortBy: 'desc' },
@@ -195,21 +171,20 @@ const Home = ({ category, viewerId }: Props): JSX.Element => {
                 ] }
                 defaultSortOption='Newest'
               >
-                {({
-                  data,
-                  loading,
-                }: {
-                  data: ElasticListing[];
-                  loading: boolean;
-                }) => (
-                  <ResultCardsWrapper className={ classes.resultsWrapper }>
-                    {loading && <LinearProgress />}
+                {(args): JSX.Element => {
+                  if (!args?.rawData) return <ListingSkeletons />
+                  const listings = args.rawData.responses.hits
 
-                    {data.map((item: ElasticListing) => (
-                      <SearchResult key={ item.id } item={ item } />
-                    ))}
-                  </ResultCardsWrapper>
-                )}
+                  return (
+                    <div className={ classes.resultsWrapper }>
+                      {listings.length ?
+                        listings.map((item: ElasticListing) => (
+                          <SearchResult key={ item.id } item={ item } />
+                        )) :
+                        'No results...'}
+                    </div>
+                  )
+                }}
               </ReactiveList>
             </Grid>
           </Grid>
