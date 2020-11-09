@@ -18,8 +18,6 @@ import { ElasticListing } from 'types'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
 import ListingSkeletons from 'app/common/ListingSkeleton'
 
-const { ResultCardsWrapper } = ReactiveList
-
 interface Props {
   category?: string;
 }
@@ -175,15 +173,16 @@ const Home = ({ category }: Props): JSX.Element => {
               >
                 {(args): JSX.Element => {
                   if (!args?.rawData) return <ListingSkeletons />
+                  const listings = args.rawData.responses.hits
 
                   return (
-                    <ResultCardsWrapper className={ classes.resultsWrapper }>
-                      {args.rawData.responses.hits.map(
-                        (item: ElasticListing) => (
+                    <div className={ classes.resultsWrapper }>
+                      {listings.length ?
+                        listings.map((item: ElasticListing) => (
                           <SearchResult key={ item.id } item={ item } />
-                        ),
-                      )}
-                    </ResultCardsWrapper>
+                        )) :
+                        'No results...'}
+                    </div>
                   )
                 }}
               </ReactiveList>
