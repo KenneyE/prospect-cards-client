@@ -34,7 +34,7 @@ const ListingsGrid = ({ listings }: Props): JSX.Element => {
         <Grid item key={ listing.id } md={ 3 } xs={ 12 }>
           <Card className={ classes.root }>
             <CardActionArea>
-              <CardMedia title={ listing.player.name }>
+              <CardMedia title={ listing.player }>
                 <Carousel listing={ listing } height={ 240 } />
               </CardMedia>
             </CardActionArea>
@@ -44,7 +44,7 @@ const ListingsGrid = ({ listings }: Props): JSX.Element => {
                 {listing.title}
               </Typography>
               <Typography variant='body2' color='textSecondary' component='p'>
-                {listing.player.name}
+                {listing.player}
               </Typography>
               <Typography variant='body2' color='textSecondary' component='p'>
                 {listing.description}

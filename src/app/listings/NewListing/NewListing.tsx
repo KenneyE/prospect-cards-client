@@ -4,24 +4,24 @@ import {
   Card,
   CardContent,
   Grid,
-  MenuItem,
-  Select,
   TextField,
   Typography,
 } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
-  NewListingFieldsQuery,
-  PlayerInput,
   SaveListingMutationFn,
   Scalars,
+  TagsLazyQueryHookResult,
+  TagsQuery,
+  TagsQueryVariables,
+  TagTypesEnum,
+  useTagsLazyQuery,
 } from 'types/graphql'
 import useStyles from './styles'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import arrayMove from 'array-move'
-import PlayerInputField from 'app/PlayerInputField'
 import LoadingButton from 'app/common/LoadingButton'
 import DollarField from 'app/common/formFields/DollarField'
 import NewListingThumbs from 'app/listings/NewListingThumbs'
@@ -29,6 +29,7 @@ import * as Sortable from 'react-sortable-hoc'
 import { checkFileSize } from 'lib'
 import { NotRequiredArraySchema } from 'yup'
 import FormTextField from 'app/common/formFields/FormTextField'
+import Autocomplete from 'app/common/Autocomplete'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -45,10 +46,10 @@ const listingInputSchema = Yup.object()
       .required('Required'),
     description: Yup.string().min(10, 'Too Short!').required('Required'),
     images: imagesSchema,
-    categoryId: Yup.number().required('Required'),
-    productTypeId: Yup.number().required('Required'),
-    manufacturerId: Yup.number().required('Required'),
-    setTypeId: Yup.number().required('Required'),
+    category: Yup.string().required('Required'),
+    productType: Yup.string().required('Required'),
+    manufacturer: Yup.string().required('Required'),
+    setType: Yup.string().required('Required'),
     price: Yup.number().required('Required'),
   })
   .defined()
@@ -56,36 +57,61 @@ const listingInputSchema = Yup.object()
 const ListingSchema = Yup.object()
   .shape({
     listing: listingInputSchema,
-    player: Yup.object().shape({ name: Yup.string().required('Required') }),
   })
   .defined()
 
 interface Props {
   loading: boolean;
   saveListing: SaveListingMutationFn;
-  data: NewListingFieldsQuery;
 }
 
-const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
+const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
   const classes = useStyles()
+  const playersHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.Player,
+    },
+  })
+  const categoriesHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.Category,
+    },
+  })
+  const productTypesHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.ProductType,
+    },
+  })
 
+  const manufacturersHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.Manufacturer,
+    },
+  })
+  const setTypesHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.SetType,
+    },
+  })
+  const gradersHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.Grader,
+    },
+  })
   const initialValues: {
     listing: ListingInput;
-    player: PlayerInput;
   } = {
     listing: {
       title: '',
       description: '',
       price: 10,
       images: [],
-      categoryId: data.categories[0].id,
-      productTypeId: data.productTypes[0].id,
-      manufacturerId: data.manufacturers[0].id,
-      setTypeId: data.setTypes[0].id,
-      graderId: data.graders[0].id,
-    },
-    player: {
-      name: '',
+      category: '',
+      productType: '',
+      manufacturer: '',
+      setType: '',
+      grader: '',
+      player: '',
     },
   }
 
@@ -102,13 +128,7 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
             })
           } }
         >
-          {({
-            values,
-            handleChange,
-            setFieldValue,
-            errors,
-            touched,
-          }): JSX.Element => {
+          {({ values, setFieldValue, errors, touched }): JSX.Element => {
             const dropzoneDisabled = values.listing.images.length >= 8
 
             const handleDelete = (
@@ -222,83 +242,90 @@ const NewListing = ({ saveListing, loading, data }: Props): JSX.Element => {
                       fullWidth
                       multiline
                     />
-                    <PlayerInputField
+
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
+                    >
+                      label='Player'
                       onChange={ (name: string) =>
-                        setFieldValue('player.name', name)
+                        setFieldValue('listing.player', name)
                       }
+                      hookResult={ playersHookResult }
+                      name='listing.player'
+                      values={ playersHookResult[1].data?.tags }
                     />
-                    {errors.player?.name && touched.player?.name ? (
-                      <div>{errors.player.name}</div>
-                    ) : null}
 
-                    <Select
-                      style={ { width: 300 } }
-                      name='listing.categoryId'
-                      value={ values.listing.categoryId }
-                      onChange={ handleChange }
-                      variant='outlined'
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
                     >
-                      {(data?.categories || []).map((cat) => (
-                        <MenuItem key={ cat.id } value={ cat.id }>
-                          {cat.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <Select
-                      style={ { width: 300 } }
-                      name='listing.productTypeId'
-                      value={ values.listing.productTypeId }
-                      onChange={ handleChange }
-                      variant='outlined'
-                    >
-                      {(data?.productTypes || []).map((type) => (
-                        <MenuItem key={ type.id } value={ type.id }>
-                          {type.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      label='Sport'
+                      onChange={ (name: string) =>
+                        setFieldValue('listing.category', name)
+                      }
+                      hookResult={ categoriesHookResult }
+                      name='listing.category'
+                      values={ categoriesHookResult[1].data?.tags }
+                    />
 
-                    <Select
-                      style={ { width: 300 } }
-                      name='listing.manufacturerId'
-                      value={ values.listing.manufacturerId }
-                      onChange={ handleChange }
-                      variant='outlined'
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
                     >
-                      {(data?.manufacturers || []).map((type) => (
-                        <MenuItem key={ type.id } value={ type.id }>
-                          {type.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      label='Product Type'
+                      onChange={ (name: string) =>
+                        setFieldValue('listing.productType', name)
+                      }
+                      hookResult={ productTypesHookResult }
+                      name='listing.productType'
+                      values={ productTypesHookResult[1].data?.tags }
+                    />
 
-                    <Select
-                      style={ { width: 300 } }
-                      name='listing.setTypeId'
-                      value={ values.listing.setTypeId }
-                      onChange={ handleChange }
-                      variant='outlined'
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
                     >
-                      {(data?.setTypes || []).map((type) => (
-                        <MenuItem key={ type.id } value={ type.id }>
-                          {type.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      label='Manufacturer'
+                      onChange={ (name: string) =>
+                        setFieldValue('listing.manufacturer', name)
+                      }
+                      hookResult={ manufacturersHookResult }
+                      name='listing.manufacturer'
+                      values={ manufacturersHookResult[1].data?.tags }
+                    />
 
-                    <Select
-                      style={ { width: 300 } }
-                      name='listing.graderId'
-                      value={ values.listing.graderId }
-                      onChange={ handleChange }
-                      variant='outlined'
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
                     >
-                      {(data?.graders || []).map((type) => (
-                        <MenuItem key={ type.id } value={ type.id }>
-                          {type.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      label='Set Type'
+                      onChange={ (name: string) =>
+                        setFieldValue('listing.setType', name)
+                      }
+                      hookResult={ setTypesHookResult }
+                      name='listing.setType'
+                      values={ setTypesHookResult[1].data?.tags }
+                    />
+
+                    <Autocomplete<
+                    TagsQuery,
+                    TagsQueryVariables,
+                    TagsLazyQueryHookResult
+                    >
+                      label='Set Type'
+                      onChange={ (name: string) =>
+                        setFieldValue('listing.grader', name)
+                      }
+                      hookResult={ gradersHookResult }
+                      name='listing.grader'
+                      values={ gradersHookResult[1].data?.tags }
+                    />
 
                     <TextField
                       value={ values.listing.price }

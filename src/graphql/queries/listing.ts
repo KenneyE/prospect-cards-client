@@ -9,31 +9,6 @@ gql`
 `
 
 gql`
-  query newListingFields {
-    categories {
-      id
-      name
-    }
-    productTypes {
-      id
-      name
-    }
-    manufacturers {
-      id
-      name
-    }
-    setTypes {
-      id
-      name
-    }
-    graders {
-      id
-      name
-    }
-  }
-`
-
-gql`
   query userListings {
     viewer {
       id
@@ -56,6 +31,15 @@ gql`
         createdAt
         reviewedAt
       }
+    }
+  }
+`
+
+gql`
+  query tags($context: TagTypesEnum!, $name: String) {
+    tags(context: $context, name: $name) {
+      id
+      name
     }
   }
 `
