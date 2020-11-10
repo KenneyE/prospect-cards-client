@@ -11,7 +11,6 @@ const FormTextField = (props: Props): JSX.Element => {
 
   const hasError = Boolean(meta.touched && meta.error)
 
-  debugger
   return (
     <TextField
       variant='outlined'

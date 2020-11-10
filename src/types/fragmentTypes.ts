@@ -17,11 +17,11 @@
       "Membership",
       "Notice",
       "Offer",
-      "Player",
       "Product",
       "Set",
       "StripeAccount",
       "StripePaymentMethod",
+      "Tag",
       "User"
     ]
   }

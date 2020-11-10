@@ -25,7 +25,7 @@ const Carousel = ({ listing, height }: Props): JSX.Element => {
             <img
               key={ image.id }
               src={ image.url }
-              alt={ `${listing.player.name} No. ${ind}` }
+              alt={ `${listing.player} No. ${ind}` }
               className={ classes.img }
             />
           )

@@ -33,7 +33,7 @@ const SearchResult = ({ item }: Props): JSX.Element => {
         <Carousel listing={ item } height={ 240 } />
       </div>
       <Typography variant='body2'>{item.title}</Typography>
-      <Typography variant='body2'>Player: {item.player.name}</Typography>
+      <Typography variant='body2'>Player: {item.player}</Typography>
       <Typography variant='body2'>Description: {item.description}</Typography>
       <div className={ classes.grow } />
       <Typography variant='body2'>{centsToDollars(item.price)}</Typography>

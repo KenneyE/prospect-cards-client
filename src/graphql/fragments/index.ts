@@ -21,13 +21,6 @@ gql`
 `
 
 gql`
-  fragment player on Player {
-    id
-    name
-  }
-`
-
-gql`
   fragment listing on Listing {
     id
     title
@@ -35,13 +28,10 @@ gql`
     description
     price
     status
+    player
     images {
       id
       url
-    }
-    player {
-      id
-      name
     }
     offers {
       id
