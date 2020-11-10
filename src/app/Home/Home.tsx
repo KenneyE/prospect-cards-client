@@ -40,7 +40,7 @@ const Home = ({ category }: Props): JSX.Element => {
             <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
               <CollapsibleSearch title='Sport'>
                 <SingleList
-                  dataField='category.name'
+                  dataField='category'
                   showRadio
                   componentId='Category'
                   value={ category }
@@ -67,7 +67,7 @@ const Home = ({ category }: Props): JSX.Element => {
               <CollapsibleSearch title='Type'>
                 <MultiList
                   componentId='Product Type'
-                  dataField='productType.name'
+                  dataField='productType'
                   placeholder='Search Types'
                   size={ 8 }
                   showCheckbox
@@ -77,7 +77,7 @@ const Home = ({ category }: Props): JSX.Element => {
               <CollapsibleSearch title='Player'>
                 <MultiList
                   componentId='Player Name'
-                  dataField='player.name'
+                  dataField='player'
                   placeholder='Player Name'
                   size={ 8 }
                   showCheckbox
@@ -87,10 +87,9 @@ const Home = ({ category }: Props): JSX.Element => {
               </CollapsibleSearch>
               <CollapsibleSearch title='Manufacturer'>
                 <SingleList
-                  dataField='manufacturer.name'
+                  dataField='manufacturer'
                   showRadio
                   componentId='Manufacturer'
-                  title='Manufacturer'
                   placeholder='Search Manufacturers'
                   showCount={ false }
                   URLParams
@@ -98,10 +97,9 @@ const Home = ({ category }: Props): JSX.Element => {
               </CollapsibleSearch>
               <CollapsibleSearch title='Set'>
                 <SingleList
-                  dataField='setType.name'
+                  dataField='setType'
                   showRadio
                   componentId='Set'
-                  title='Set'
                   placeholder='Search Sets'
                   showCount={ false }
                   URLParams
@@ -109,10 +107,9 @@ const Home = ({ category }: Props): JSX.Element => {
               </CollapsibleSearch>
               <CollapsibleSearch title='Grader'>
                 <SingleList
-                  dataField='grader.name'
+                  dataField='grader'
                   showRadio
                   componentId='Grader'
-                  title='Graded By'
                   placeholder='Search Graders'
                   showCount={ false }
                   URLParams
@@ -141,7 +138,7 @@ const Home = ({ category }: Props): JSX.Element => {
               <ReactiveList
                 infiniteScroll
                 showResultStats={ false }
-                dataField='player.name'
+                dataField='player'
                 showLoader={ false }
                 componentId='SearchResult'
                 react={ {
