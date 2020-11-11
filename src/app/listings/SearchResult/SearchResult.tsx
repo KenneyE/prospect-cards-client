@@ -26,17 +26,22 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
         history.push(`/listings/${listing.id}`)
       } }
     >
-      <Typography className={ classes.date }>
+      <Typography className={ classes.date } display='inline'>
         {dateFormat(listing.createdAt)}
+        <PrivateComponent>
+          <span
+            onClick={ (e) => e.stopPropagation() }
+            className={ classes.favoriteContainer }
+          >
+            <FavoriteListingToggle
+              listingId={ listing.id }
+              isFavorited={ Boolean(listing.isFavorited) }
+            />
+          </span>
+        </PrivateComponent>
       </Typography>
 
       <div onClick={ (e) => e.stopPropagation() }>
-        <PrivateComponent>
-          <FavoriteListingToggle
-            listingId={ listing.id }
-            isFavorited={ Boolean(listing.isFavorited) }
-          />
-        </PrivateComponent>
         <Carousel listing={ listing } height={ 240 } />
       </div>
       <Typography variant='body2'>{listing.title}</Typography>

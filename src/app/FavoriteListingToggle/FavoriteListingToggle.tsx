@@ -1,6 +1,7 @@
 import React from 'react'
-import { ToggleFavoriteMutationFn } from 'types/graphql'
-import { Button } from '@material-ui/core'
+import Favorite from '@material-ui/icons/Favorite'
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+import useStyles from './styles'
 
 interface Props {
   handleClick: VoidFunction;
@@ -11,7 +12,12 @@ const ReportListingButton = ({
   handleClick,
   isFavorited,
 }: Props): JSX.Element => {
-  return <Button onClick={ handleClick }>{isFavorited ? 'Faved' : 'Not'}</Button>
+  const classes = useStyles()
+  return isFavorited ? (
+    <Favorite className={ classes.icon } onClick={ handleClick } />
+  ) : (
+    <FavoriteBorder className={ classes.icon } onClick={ handleClick } />
+  )
 }
 
 export default ReportListingButton

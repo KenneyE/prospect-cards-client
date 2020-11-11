@@ -15,5 +15,6 @@ export default makeStyles(
       marginBottom: spacing(),
     },
     grow: { flexGrow: 1 },
+    favoriteContainer: { float: 'right' },
   }),
 )
