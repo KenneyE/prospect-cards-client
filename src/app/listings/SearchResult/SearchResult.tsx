@@ -5,47 +5,49 @@ import PrivateComponent from 'app/PrivateComponent'
 import OfferForm from 'app/OfferForm'
 import { useHistory } from 'react-router-dom'
 import Carousel from 'app/common/Carousel'
-import { ElasticListing } from 'types'
 import { centsToDollars } from 'lib/money'
 import { dateFormat } from 'lib/time'
 import FavoriteListingToggle from 'app/FavoriteListingToggle'
+import { ListingFragment } from 'types/graphql'
 
 interface Props {
-  item: ElasticListing;
+  listing: ListingFragment;
 }
 
-const SearchResult = ({ item }: Props): JSX.Element => {
+const SearchResult = ({ listing }: Props): JSX.Element => {
   const history = useHistory()
   const classes = useStyles()
 
   return (
     <Paper
-      key={ item._id }
+      key={ listing.id }
       className={ classes.resultCard }
       onClick={ () => {
-        history.push(`/listings/${item.id}`)
+        history.push(`/listings/${listing.id}`)
       } }
     >
       <Typography className={ classes.date }>
-        {dateFormat(item.createdAt)}
+        {dateFormat(listing.createdAt)}
       </Typography>
 
       <div onClick={ (e) => e.stopPropagation() }>
         <PrivateComponent>
           <FavoriteListingToggle
-            listingId={ item.id }
-            isFavorited={ Boolean(item.isFavorited) }
+            listingId={ listing.id }
+            isFavorited={ Boolean(listing.isFavorited) }
           />
         </PrivateComponent>
-        <Carousel listing={ item } height={ 240 } />
+        <Carousel listing={ listing } height={ 240 } />
       </div>
-      <Typography variant='body2'>{item.title}</Typography>
-      <Typography variant='body2'>Player: {item.player}</Typography>
-      <Typography variant='body2'>Description: {item.description}</Typography>
+      <Typography variant='body2'>{listing.title}</Typography>
+      <Typography variant='body2'>Player: {listing.player}</Typography>
+      <Typography variant='body2'>
+        Description: {listing.description}
+      </Typography>
       <div className={ classes.grow } />
-      <Typography variant='body2'>{centsToDollars(item.price)}</Typography>
+      <Typography variant='body2'>{centsToDollars(listing.price)}</Typography>
       <PrivateComponent>
-        <OfferForm listingId={ item.id } />
+        <OfferForm listingId={ listing.id } />
       </PrivateComponent>
     </Paper>
   )

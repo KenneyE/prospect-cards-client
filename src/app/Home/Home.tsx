@@ -17,6 +17,15 @@ import SearchResult from 'app/listings/SearchResult'
 import { ElasticListing } from 'types'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
 import ListingSkeletons from 'app/common/ListingSkeleton'
+import { useApolloClient } from '@apollo/client'
+import { listingFragment } from '../../graphql/fragments'
+import {
+  ListingDocument,
+  ListingFragment,
+  ListingQuery,
+  ListingQueryVariables,
+} from '../../types/graphql'
+import SearchResults from '../listings/SearchResults'
 
 interface Props {
   category?: string;
@@ -25,6 +34,7 @@ interface Props {
 const Home = ({ category }: Props): JSX.Element => {
   const classes = useStyles()
   const token = localStorage.getItem('prospect-cards-token')
+  const client = useApolloClient()
 
   return (
     <Grid container spacing={ 3 }>
@@ -176,11 +186,15 @@ const Home = ({ category }: Props): JSX.Element => {
 
                   return (
                     <div className={ classes.resultsWrapper }>
-                      {listings.length ?
-                        listings.map((item: ElasticListing) => (
-                          <SearchResult key={ item.id } item={ item } />
-                        )) :
-                        'No results...'}
+                      {listings.length ? (
+                        <SearchResults
+                          listingIds={ listings.map(
+                            (l: ListingFragment) => l.id,
+                          ) }
+                        />
+                      ) : (
+                        'No results...'
+                      )}
                     </div>
                   )
                 }}
