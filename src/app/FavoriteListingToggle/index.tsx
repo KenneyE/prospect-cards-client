@@ -17,6 +17,7 @@ const FavoriteListingToggle = ({
         __typename: 'ToggleFavoritePayload',
         listing: {
           id: listingId,
+          __typename: 'Listing',
           isFavorited: !isFavorited,
         },
       },
