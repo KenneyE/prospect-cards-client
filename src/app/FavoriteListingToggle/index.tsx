@@ -12,6 +12,15 @@ const FavoriteListingToggle = ({
 }: Props): JSX.Element => {
   const [toggle] = useToggleFavoriteMutation({
     variables: { listingId, isFavorited: !isFavorited },
+    optimisticResponse: {
+      toggleFavorite: {
+        __typename: 'ToggleFavoritePayload',
+        listing: {
+          id: listingId,
+          isFavorited: !isFavorited,
+        },
+      },
+    },
   })
 
   const handleClick = () => {
