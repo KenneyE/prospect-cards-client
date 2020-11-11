@@ -62,6 +62,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   className='custom-slider'
                   showHistogram={ false }
                   showFilter={ false }
+                  URLParams
                 />
               </Paper>
               <CollapsibleSearch title='Type'>
@@ -72,6 +73,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   size={ 8 }
                   showCheckbox
                   showCount={ false }
+                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Player'>
