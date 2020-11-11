@@ -9,6 +9,14 @@ gql`
 `
 
 gql`
+  query listings($listingIds: [Int!]!) {
+    listings(listingIds: $listingIds) {
+      ...listing
+    }
+  }
+`
+
+gql`
   query userListings {
     viewer {
       id

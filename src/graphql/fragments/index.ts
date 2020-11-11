@@ -20,7 +20,8 @@ gql`
   }
 `
 
-gql`
+// Used in search results to save to cache
+export const listingFragment = gql`
   fragment listing on Listing {
     id
     title
@@ -29,6 +30,7 @@ gql`
     price
     status
     player
+    isFavorited
     images {
       id
       url

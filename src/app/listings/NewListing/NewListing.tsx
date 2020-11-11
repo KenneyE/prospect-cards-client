@@ -318,7 +318,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                     TagsQueryVariables,
                     TagsLazyQueryHookResult
                     >
-                      label='Set Type'
+                      label='Grader'
                       onChange={ (name: string) =>
                         setFieldValue('listing.grader', name)
                       }
