@@ -21,3 +21,14 @@ gql`
     }
   }
 `
+
+gql`
+  mutation toggleFavorite($listingId: Int!, $isFavorited: Boolean!) {
+    toggleFavorite(listingId: $listingId, isFavorited: $isFavorited) {
+      listing {
+        id
+        isFavorited
+      }
+    }
+  }
+`

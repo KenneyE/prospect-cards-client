@@ -8,6 +8,7 @@ import Carousel from 'app/common/Carousel'
 import { ElasticListing } from 'types'
 import { centsToDollars } from 'lib/money'
 import { dateFormat } from 'lib/time'
+import FavoriteListingToggle from 'app/FavoriteListingToggle'
 
 interface Props {
   item: ElasticListing;
@@ -30,6 +31,12 @@ const SearchResult = ({ item }: Props): JSX.Element => {
       </Typography>
 
       <div onClick={ (e) => e.stopPropagation() }>
+        <PrivateComponent>
+          <FavoriteListingToggle
+            listingId={ item.id }
+            isFavorited={ Boolean(item.isFavorited) }
+          />
+        </PrivateComponent>
         <Carousel listing={ item } height={ 240 } />
       </div>
       <Typography variant='body2'>{item.title}</Typography>
