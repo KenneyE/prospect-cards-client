@@ -48,9 +48,6 @@ const Autocomplete = function <
     }
   }
 
-  console.log('value', value)
-  console.log('values', values)
-
   return (
     <Dumb
       label={ label }
