@@ -17,10 +17,13 @@ import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
 import DollarField from 'app/common/formFields/DollarField'
+import { centsToDollars } from 'lib/money'
 
 interface Props {
   listingId: number;
+  buyNow?: boolean;
   onSubmit: (variables: SaveOfferMutationVariables) => void;
+  price: number;
   loading: boolean;
   open: boolean;
   handleClose: VoidFunction;
@@ -29,9 +32,32 @@ interface Props {
   offerId?: number;
 }
 
+const title = (buyNow?: boolean): string => (buyNow ? 'Buy Now' : 'Make Offer')
+const message = (price: number, buyNow?: boolean): JSX.Element => {
+  return buyNow ? (
+    <>
+      You will be charged {`${centsToDollars(price)}`}.
+      <br />
+      As a "Buy Now" offer, it will be automatically accepted by the user.
+    </>
+  ) : (
+    <>
+      By agreeing, you authorize us to charge you at a later time upon the
+      seller accepting your offer.
+      <br />
+      Your offer is valid for 24 hours. The seller can reject your offer, make a
+      counter-offer, or accept it as is.
+      <br />
+      You can make 5 offers on this listing in total.
+    </>
+  )
+}
+
 const OfferForm = ({
   listingId,
+  buyNow,
   onSubmit,
+  price,
   loading,
   open,
   handleClose,
@@ -65,7 +91,7 @@ const OfferForm = ({
   return (
     <>
       <Formik
-        initialValues={ { offer: { listingId, price: 10 } } }
+        initialValues={ { offer: { listingId, price } } }
         onSubmit={ onSubmit }
       >
         {({ values, setFieldValue }) => {
@@ -79,9 +105,10 @@ const OfferForm = ({
                   inputComponent: DollarField as any,
                   name: 'offer.price',
                 } }
+                style={ buyNow ? { display: 'none' } : {} }
               />
               <LoadingButton loading={ loading } type='submit'>
-                Make Offer
+                {title(buyNow)}
               </LoadingButton>
             </Form>
           )
@@ -89,19 +116,13 @@ const OfferForm = ({
       </Formik>
       <Dialog
         onClose={ handleClose }
-        aria-labelledby='simple-dialog-title'
+        aria-labelledby='offer-dialog-title'
         open={ open }
       >
-        <DialogTitle id='alert-dialog-title'>Make an offer?</DialogTitle>
+        <DialogTitle id='offer-dialog-title'>{`${title(buyNow)}?`}</DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            By agreeing, you authorize us to charge you at a later time upon the
-            seller accepting your offer.
-            <br />
-            Your offer is valid for 24 hours. The seller can reject your offer,
-            make a counter-offer, or accept it as is.
-            <br />
-            You can make 5 offers on this listing in total.
+          <DialogContentText id='offer-dialog-description'>
+            {message(price, buyNow)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -115,7 +136,7 @@ const OfferForm = ({
             disabled={ !stripe || !clientSecret }
             onClick={ onAgree }
           >
-            Make Offer
+            {title(buyNow)}
           </LoadingButton>
         </DialogActions>
       </Dialog>

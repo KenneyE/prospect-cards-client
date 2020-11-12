@@ -3,15 +3,19 @@ import Dumb from './OfferForm'
 import {
   SaveOfferMutationVariables,
   useSaveOfferMutation,
+  useListingPriceQuery,
   useTempConfirmOfferMutation,
+  Maybe,
 } from 'types/graphql'
 import { toast } from 'react-toastify'
 
 interface Props {
   listingId: number;
+  buyNow?: boolean;
 }
 
-const OfferForm = (props: Props): JSX.Element => {
+const OfferForm = (props: Props): Maybe<JSX.Element> => {
+  const { data } = useListingPriceQuery({ variables: { id: props.listingId } })
   const [saveOffer, { loading }] = useSaveOfferMutation()
   const [confirmOffer] = useTempConfirmOfferMutation()
   const [open, setOpen] = useState(false)
@@ -36,9 +40,12 @@ const OfferForm = (props: Props): JSX.Element => {
     })
   }
 
+  if (!data) return null
+
   return (
     <Dumb
       onSubmit={ onSubmit }
+      price={ data.listing.price }
       loading={ loading }
       open={ open }
       handleClose={ handleClose }

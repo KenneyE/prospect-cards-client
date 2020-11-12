@@ -962,6 +962,19 @@ export type ListingQuery = (
   ) }
 );
 
+export type ListingPriceQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ListingPriceQuery = (
+  { __typename?: 'Query' }
+  & { listing: (
+    { __typename?: 'Listing' }
+    & Pick<Listing, 'id' | 'price'>
+  ) }
+);
+
 export type ListingsQueryVariables = Exact<{
   listingIds: Array<Scalars['Int']>;
 }>;
@@ -1998,6 +2011,40 @@ export function useListingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ListingQueryHookResult = ReturnType<typeof useListingQuery>;
 export type ListingLazyQueryHookResult = ReturnType<typeof useListingLazyQuery>;
 export type ListingQueryResult = ApolloReactCommon.QueryResult<ListingQuery, ListingQueryVariables>;
+export const ListingPriceDocument = gql`
+    query listingPrice($id: Int!) {
+  listing(id: $id) {
+    id
+    price
+  }
+}
+    `;
+
+/**
+ * __useListingPriceQuery__
+ *
+ * To run a query within a React component, call `useListingPriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListingPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListingPriceQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useListingPriceQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ListingPriceQuery, ListingPriceQueryVariables>) {
+        return ApolloReactHooks.useQuery<ListingPriceQuery, ListingPriceQueryVariables>(ListingPriceDocument, baseOptions);
+      }
+export function useListingPriceLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ListingPriceQuery, ListingPriceQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ListingPriceQuery, ListingPriceQueryVariables>(ListingPriceDocument, baseOptions);
+        }
+export type ListingPriceQueryHookResult = ReturnType<typeof useListingPriceQuery>;
+export type ListingPriceLazyQueryHookResult = ReturnType<typeof useListingPriceLazyQuery>;
+export type ListingPriceQueryResult = ApolloReactCommon.QueryResult<ListingPriceQuery, ListingPriceQueryVariables>;
 export const ListingsDocument = gql`
     query listings($listingIds: [Int!]!) {
   listings(listingIds: $listingIds) {

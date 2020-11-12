@@ -9,6 +9,15 @@ gql`
 `
 
 gql`
+  query listingPrice($id: Int!) {
+    listing(id: $id) {
+      id
+      price
+    }
+  }
+`
+
+gql`
   query listings($listingIds: [Int!]!) {
     listings(listingIds: $listingIds) {
       ...listing
