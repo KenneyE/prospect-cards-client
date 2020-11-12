@@ -55,10 +55,10 @@ const Footer = (): JSX.Element => {
               <StyledTableCell>
                 <FooterList
                   items={ [
-                    { label: 'Sell Now', path: '/' },
+                    { label: 'Sell Now', path: '/listings/new' },
                     { label: 'View Listings', path: '/' },
-                    { label: 'My Offers', path: '/' },
-                    { label: 'Account', path: '/' },
+                    { label: 'My Offers', path: '/listings' },
+                    { label: 'Account', path: '/profile' },
                   ] }
                 />
               </StyledTableCell>
@@ -67,7 +67,7 @@ const Footer = (): JSX.Element => {
                   items={ [
                     { label: 'Buying/Selling Guidelines', path: '/' },
                     { label: 'Terms and Conditions', path: '/' },
-                    { label: 'FAQs', path: '/' },
+                    { label: 'FAQs', path: '/faq' },
                   ] }
                 />
               </StyledTableCell>

@@ -18,6 +18,7 @@ import AccountListings from 'app/listings/AccountListings'
 import ConfirmEmail from 'app/ConfirmEmail'
 import ResetPassword from 'app/ResetPassword'
 import ForgotPassword from 'app/ForgotPassword'
+import FAQ from 'app/FAQ'
 import EmailPreferences from 'app/profile/EmailPreferences'
 
 const Router = (): JSX.Element => {
@@ -46,6 +47,8 @@ const Router = (): JSX.Element => {
       />
       <PrivateRoute exact path='/membership/new' component={ NewMembership } />
       <PrivateRoute exact path='/profile/:tab?' component={ Profile } />
+
+      <Route exact path='/faq' component={ FAQ } />
 
       <Route exact path='/login' component={ Login } />
       <Route exact path='/register' component={ Register } />
