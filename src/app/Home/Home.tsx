@@ -171,9 +171,9 @@ const Home = ({ category }: Props): JSX.Element => {
                 ] }
                 defaultSortOption='Newest'
               >
-                {(args): JSX.Element => {
-                  if (!args?.rawData) return <ListingSkeletons />
-                  const listings = args.rawData.responses.hits
+                {(result): JSX.Element => {
+                  if (!result?.rawData) return <ListingSkeletons />
+                  const listings = result.rawData.responses.hits
 
                   return (
                     <div className={ classes.resultsWrapper }>
