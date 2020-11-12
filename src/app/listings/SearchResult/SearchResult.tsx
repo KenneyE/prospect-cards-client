@@ -51,9 +51,6 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
       </Typography>
       <div className={ classes.grow } />
       <Typography variant='body2'>{centsToDollars(listing.price)}</Typography>
-      <PrivateComponent>
-        <OfferForm listingId={ listing.id } />
-      </PrivateComponent>
     </Paper>
   )
 }

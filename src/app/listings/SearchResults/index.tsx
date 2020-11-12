@@ -16,7 +16,7 @@ const SearchResults = ({ listingIds }: Props): JSX.Element => {
   if (loading && !data) return <ListingSkeletons />
   if (!data || error) return <ErrorMessage />
 
-  return <Dumb data={ data } />
+  return <Dumb data={ data } loading={ loading } />
 }
 
 export default SearchResults
