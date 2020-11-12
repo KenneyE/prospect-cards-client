@@ -8,6 +8,7 @@ import { centsToDollars } from 'lib/money'
 import { dateFormat } from 'lib/time'
 import FavoriteListingToggle from 'app/FavoriteListingToggle'
 import { ListingFragment } from 'types/graphql'
+import OfferForm from 'app/OfferForm'
 
 interface Props {
   listing: ListingFragment;
@@ -50,6 +51,11 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
       </Typography>
       <div className={ classes.grow } />
       <Typography variant='body2'>{centsToDollars(listing.price)}</Typography>
+      <PrivateComponent>
+        <span onClick={ (e) => e.stopPropagation() }>
+          <OfferForm listingId={ listing.id } buyNow />
+        </span>
+      </PrivateComponent>
     </Paper>
   )
 }
