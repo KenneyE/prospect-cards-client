@@ -12,6 +12,7 @@ interface Props {
   open: boolean;
   loading: boolean;
   handleChange: (name: string) => void;
+  handleFocus: VoidFunction;
   value: string;
   name: string;
 }
@@ -23,6 +24,7 @@ const Autocomplete = ({
   open,
   loading,
   handleChange,
+  handleFocus,
   value,
   name,
 }: Props): JSX.Element => {
@@ -55,6 +57,7 @@ const Autocomplete = ({
             helperText={ hasError && meta.error }
             value={ value }
             onChange={ (event) => handleChange(event.target.value) }
+            onFocus={ handleFocus }
             { ...params }
             label={ label }
             variant='outlined'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Dumb from './Autocomplete'
 import { QueryTuple } from '@apollo/client/react/types/types'
 import { Maybe } from 'types/graphql'
@@ -8,7 +8,7 @@ export interface Props<Result> {
   onChange: (name: string) => void;
   hookResult: Result;
   values?: { name: string; id: number }[];
-  fetchImmediatly?: boolean;
+  fetchImmediately?: boolean;
   name: string;
 }
 
@@ -21,16 +21,11 @@ const Autocomplete = function <
   onChange,
   hookResult,
   values,
-  fetchImmediatly,
+  fetchImmediately,
   name,
 }: Props<Result>): JSX.Element {
   const [fetch, { loading, refetch }] = hookResult
 
-  useEffect(() => {
-    if (fetchImmediatly && !refetch) {
-      fetch()
-    }
-  })
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
 
@@ -48,6 +43,12 @@ const Autocomplete = function <
     }
   }
 
+  const handleFocus = () => {
+    if (fetchImmediately && !refetch) {
+      fetch()
+    }
+  }
+
   return (
     <Dumb
       label={ label }
@@ -56,6 +57,7 @@ const Autocomplete = function <
       open={ open }
       setOpen={ setOpen }
       handleChange={ handleChange }
+      handleFocus={ handleFocus }
       value={ value }
       name={ name }
     />

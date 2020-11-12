@@ -269,6 +269,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       hookResult={ categoriesHookResult }
                       name='listing.category'
                       values={ categoriesHookResult[1].data?.tags }
+                      fetchImmediately
                     />
 
                     <Autocomplete<
@@ -283,6 +284,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       hookResult={ productTypesHookResult }
                       name='listing.productType'
                       values={ productTypesHookResult[1].data?.tags }
+                      fetchImmediately
                     />
 
                     <Autocomplete<
@@ -297,6 +299,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       hookResult={ manufacturersHookResult }
                       name='listing.manufacturer'
                       values={ manufacturersHookResult[1].data?.tags }
+                      fetchImmediately
                     />
 
                     <Autocomplete<
@@ -311,6 +314,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       hookResult={ setTypesHookResult }
                       name='listing.setType'
                       values={ setTypesHookResult[1].data?.tags }
+                      fetchImmediately
                     />
 
                     <Autocomplete<
@@ -325,6 +329,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       hookResult={ gradersHookResult }
                       name='listing.grader'
                       values={ gradersHookResult[1].data?.tags }
+                      fetchImmediately
                     />
 
                     <TextField
