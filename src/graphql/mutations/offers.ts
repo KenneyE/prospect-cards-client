@@ -18,8 +18,8 @@ gql`
 `
 
 gql`
-  mutation tempConfirmOffer($offerId: Int!) {
-    tempConfirmOffer(offerId: $offerId) {
+  mutation confirmOffer($offerId: Int!) {
+    confirmOffer(offerId: $offerId) {
       viewer {
         id
         offers {

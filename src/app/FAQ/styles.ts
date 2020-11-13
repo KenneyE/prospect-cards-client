@@ -2,7 +2,6 @@ import { makeStyles, StyleRules } from '@material-ui/core/styles'
 
 export default makeStyles(
   (): StyleRules => ({
-    listItem: { paddingLeft: 0 },
-    link: { textDecoration: 'none', color: 'inherit' },
+    container: { backgroundColor: 'red', height: 400, width: 400 },
   }),
 )

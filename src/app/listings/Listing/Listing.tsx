@@ -49,7 +49,7 @@ const Listing = ({ data: { listing } }: Props): JSX.Element => {
                   }
                 >
                   <>
-                    <Button variant='contained'>Buy Now</Button> or
+                    <OfferForm listingId={ id } buyNow /> or
                     <OfferForm listingId={ id } />
                   </>
                 </PrivateComponent>

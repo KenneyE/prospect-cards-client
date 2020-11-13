@@ -1,6 +1,7 @@
 import React from 'react'
 import useStyles from './styles'
 import { List, ListItem } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 export interface FooterListItem {
   label: string;
@@ -18,7 +19,9 @@ const FooterList = ({ items }: Props): JSX.Element => {
     <List>
       {items.map((item) => (
         <ListItem className={ classes.listItem } key={ item.label }>
-          {item.label}
+          <Link className={ classes.link } to={ item.path }>
+            {item.label}
+          </Link>
         </ListItem>
       ))}
     </List>

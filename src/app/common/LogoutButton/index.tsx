@@ -1,17 +1,11 @@
 import React from 'react'
 import Dumb from './LogoutButton'
-import { useApolloClient } from '@apollo/client'
+import useLogout from 'hooks/useLogout'
 
 const LogoutButton = (): JSX.Element => {
-  const client = useApolloClient()
+  const logout = useLogout()
 
-  const handleClick = (): void => {
-    localStorage.removeItem('prospect-cards-token')
-    client.clearStore()
-    window.location.href = '/login'
-  }
-
-  return <Dumb onClick={ handleClick } />
+  return <Dumb onClick={ logout } />
 }
 
 export default LogoutButton
