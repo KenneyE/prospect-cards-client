@@ -162,7 +162,7 @@ const NavBar = ({ data, loading }: Props): JSX.Element => {
           </Typography>
           <div className={ classes.grow } />
           <div className={ classes.rightNav }>
-            {isSeller && (
+            {isSeller ? (
               <RoundButton
                 variant='outlined'
                 color='secondary'
@@ -173,6 +173,8 @@ const NavBar = ({ data, loading }: Props): JSX.Element => {
               >
                 Sell Now
               </RoundButton>
+            ) : (
+              <span />
             )}
 
             <PrivateComponent>
