@@ -9,6 +9,15 @@ gql`
 `
 
 gql`
+  query confirmed {
+    viewer {
+      id
+      confirmed
+    }
+  }
+`
+
+gql`
   query address {
     viewer {
       ...address

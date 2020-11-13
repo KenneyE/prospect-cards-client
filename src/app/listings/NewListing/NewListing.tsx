@@ -30,6 +30,7 @@ import { checkFileSize } from 'lib'
 import { NotRequiredArraySchema } from 'yup'
 import FormTextField from 'app/common/formFields/FormTextField'
 import Autocomplete from 'app/common/Autocomplete'
+import ConfirmEmailDialog from 'app/ConfirmEmailDialog'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -116,250 +117,256 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
   }
 
   return (
-    <Card className={ classes.root }>
-      <CardContent>
-        <Formik
-          validationSchema={ ListingSchema }
-          initialValues={ initialValues }
-          onSubmit={ (variables, { setSubmitting, resetForm }): void => {
-            saveListing({ variables }).then((): void => {
-              setSubmitting(false)
-              resetForm()
-            })
-          } }
-        >
-          {({ values, setFieldValue, errors, touched }): JSX.Element => {
-            const dropzoneDisabled = values.listing.images.length >= 8
+    <>
+      <Card className={ classes.root }>
+        <CardContent>
+          <Formik
+            validationSchema={ ListingSchema }
+            initialValues={ initialValues }
+            onSubmit={ (variables, { setSubmitting, resetForm }): void => {
+              saveListing({ variables }).then((): void => {
+                setSubmitting(false)
+                resetForm()
+              })
+            } }
+          >
+            {({ values, setFieldValue, errors, touched }): JSX.Element => {
+              const dropzoneDisabled = values.listing.images.length >= 8
 
-            const handleDelete = (
-              documentName: string,
-            ): (() => void) => (): void => {
-              const newAtts = values.listing.images.filter(
-                (img): boolean => img.document.name !== documentName,
-              )
-              setFieldValue('listing.images', newAtts)
-            }
+              const handleDelete = (
+                documentName: string,
+              ): (() => void) => (): void => {
+                const newAtts = values.listing.images.filter(
+                  (img): boolean => img.document.name !== documentName,
+                )
+                setFieldValue('listing.images', newAtts)
+              }
 
-            const onSortEnd: Sortable.SortEndHandler = ({
-              oldIndex,
-              newIndex,
-            }) => {
-              setFieldValue(
-                'listing.images',
-                arrayMove(values.listing.images, oldIndex, newIndex),
-              )
-            }
+              const onSortEnd: Sortable.SortEndHandler = ({
+                oldIndex,
+                newIndex,
+              }) => {
+                setFieldValue(
+                  'listing.images',
+                  arrayMove(values.listing.images, oldIndex, newIndex),
+                )
+              }
 
-            return (
-              <Form>
-                <Grid container spacing={ 3 }>
-                  <Grid
-                    item
-                    md={ 4 }
-                    xs={ 12 }
-                    className={ classes.dropzoneContainer }
-                  >
-                    <Dropzone
-                      maxSize={ 5000000 }
-                      disabled={ dropzoneDisabled }
-                      accept='image/*'
-                      onDrop={ (images): void => {
-                        if (images.length === 0) {
-                          return
+              return (
+                <Form>
+                  <Grid container spacing={ 3 }>
+                    <Grid
+                      item
+                      md={ 4 }
+                      xs={ 12 }
+                      className={ classes.dropzoneContainer }
+                    >
+                      <Dropzone
+                        maxSize={ 5000000 }
+                        disabled={ dropzoneDisabled }
+                        accept='image/*'
+                        onDrop={ (images): void => {
+                          if (images.length === 0) {
+                            return
+                          }
+
+                          if (
+                            images.length + values.listing.images.length >
+                            8
+                          ) {
+                            toast.error('Sorry. Maximum of 8 images...')
+                            return
+                          }
+
+                          setFieldValue(
+                            'listing.images',
+                            values.listing.images.concat(
+                              images.map((img): Scalars['Upload'] => ({
+                                document: img,
+                                preview: URL.createObjectURL(img),
+                              })),
+                            ),
+                          )
+                        } }
+                      >
+                        {({
+                          getRootProps,
+                          getInputProps,
+                          isDragActive,
+                        }): JSX.Element => (
+                          <Card className={ classes.dropzone }>
+                            <CardContent
+                              { ...getRootProps() }
+                              className={ classes.dropzoneContent }
+                            >
+                              <input { ...getInputProps() } />
+                              {dropzoneDisabled ? (
+                                <Typography
+                                  variant='body2'
+                                  className={ classes.disabled }
+                                >
+                                  Maximum number of images reached...
+                                </Typography>
+                              ) : isDragActive ? (
+                                <Typography variant='body2'>
+                                  Drop your images here!
+                                </Typography>
+                              ) : (
+                                <Typography variant='body2'>
+                                  Drag and drop a document here, or click to
+                                  select files.
+                                </Typography>
+                              )}
+                            </CardContent>
+                          </Card>
+                        )}
+                      </Dropzone>
+                      <NewListingThumbs
+                        images={ values.listing.images }
+                        handleDelete={ handleDelete }
+                        onSortEnd={ onSortEnd }
+                        axis='x'
+                        lockAxis='x'
+                      />
+                      {errors.listing?.images && touched.listing?.images ? (
+                        <div>{errors.listing.images}</div>
+                      ) : null}
+                    </Grid>
+                    <Grid item md={ 8 } xs={ 12 }>
+                      <FormTextField
+                        margin='normal'
+                        name='listing.title'
+                        label='Title'
+                        variant='standard'
+                      />
+                      <FormTextField
+                        margin='normal'
+                        name='listing.description'
+                        label='Description'
+                        variant='standard'
+                        fullWidth
+                        multiline
+                      />
+
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Player'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.player', name)
                         }
+                        hookResult={ playersHookResult }
+                        name='listing.player'
+                        values={ playersHookResult[1].data?.tags }
+                      />
 
-                        if (images.length + values.listing.images.length > 8) {
-                          toast.error('Sorry. Maximum of 8 images...')
-                          return
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Sport'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.category', name)
                         }
+                        hookResult={ categoriesHookResult }
+                        name='listing.category'
+                        values={ categoriesHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
 
-                        setFieldValue(
-                          'listing.images',
-                          values.listing.images.concat(
-                            images.map((img): Scalars['Upload'] => ({
-                              document: img,
-                              preview: URL.createObjectURL(img),
-                            })),
-                          ),
-                        )
-                      } }
-                    >
-                      {({
-                        getRootProps,
-                        getInputProps,
-                        isDragActive,
-                      }): JSX.Element => (
-                        <Card className={ classes.dropzone }>
-                          <CardContent
-                            { ...getRootProps() }
-                            className={ classes.dropzoneContent }
-                          >
-                            <input { ...getInputProps() } />
-                            {dropzoneDisabled ? (
-                              <Typography
-                                variant='body2'
-                                className={ classes.disabled }
-                              >
-                                Maximum number of images reached...
-                              </Typography>
-                            ) : isDragActive ? (
-                              <Typography variant='body2'>
-                                Drop your images here!
-                              </Typography>
-                            ) : (
-                              <Typography variant='body2'>
-                                Drag and drop a document here, or click to
-                                select files.
-                              </Typography>
-                            )}
-                          </CardContent>
-                        </Card>
-                      )}
-                    </Dropzone>
-                    <NewListingThumbs
-                      images={ values.listing.images }
-                      handleDelete={ handleDelete }
-                      onSortEnd={ onSortEnd }
-                      axis='x'
-                      lockAxis='x'
-                    />
-                    {errors.listing?.images && touched.listing?.images ? (
-                      <div>{errors.listing.images}</div>
-                    ) : null}
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Product Type'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.productType', name)
+                        }
+                        hookResult={ productTypesHookResult }
+                        name='listing.productType'
+                        values={ productTypesHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
+
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Manufacturer'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.manufacturer', name)
+                        }
+                        hookResult={ manufacturersHookResult }
+                        name='listing.manufacturer'
+                        values={ manufacturersHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
+
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Set Type'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.setType', name)
+                        }
+                        hookResult={ setTypesHookResult }
+                        name='listing.setType'
+                        values={ setTypesHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
+
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Grader'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.grader', name)
+                        }
+                        hookResult={ gradersHookResult }
+                        name='listing.grader'
+                        values={ gradersHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
+
+                      <TextField
+                        value={ values.listing.price }
+                        onChange={ (price) =>
+                          setFieldValue('listing.price', +price)
+                        }
+                        variant='outlined'
+                        InputProps={ {
+                          inputComponent: DollarField as any,
+                          name: 'listing.price',
+                        } }
+                      />
+                      <br />
+                      <LoadingButton
+                        loading={ loading }
+                        type='submit'
+                        color='secondary'
+                        variant='contained'
+                      >
+                        Save
+                      </LoadingButton>
+                    </Grid>
                   </Grid>
-                  <Grid item md={ 8 } xs={ 12 }>
-                    <FormTextField
-                      margin='normal'
-                      name='listing.title'
-                      label='Title'
-                      variant='standard'
-                    />
-                    <FormTextField
-                      margin='normal'
-                      name='listing.description'
-                      label='Description'
-                      variant='standard'
-                      fullWidth
-                      multiline
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Player'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.player', name)
-                      }
-                      hookResult={ playersHookResult }
-                      name='listing.player'
-                      values={ playersHookResult[1].data?.tags }
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Sport'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.category', name)
-                      }
-                      hookResult={ categoriesHookResult }
-                      name='listing.category'
-                      values={ categoriesHookResult[1].data?.tags }
-                      fetchImmediately
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Product Type'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.productType', name)
-                      }
-                      hookResult={ productTypesHookResult }
-                      name='listing.productType'
-                      values={ productTypesHookResult[1].data?.tags }
-                      fetchImmediately
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Manufacturer'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.manufacturer', name)
-                      }
-                      hookResult={ manufacturersHookResult }
-                      name='listing.manufacturer'
-                      values={ manufacturersHookResult[1].data?.tags }
-                      fetchImmediately
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Set Type'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.setType', name)
-                      }
-                      hookResult={ setTypesHookResult }
-                      name='listing.setType'
-                      values={ setTypesHookResult[1].data?.tags }
-                      fetchImmediately
-                    />
-
-                    <Autocomplete<
-                    TagsQuery,
-                    TagsQueryVariables,
-                    TagsLazyQueryHookResult
-                    >
-                      label='Grader'
-                      onChange={ (name: string) =>
-                        setFieldValue('listing.grader', name)
-                      }
-                      hookResult={ gradersHookResult }
-                      name='listing.grader'
-                      values={ gradersHookResult[1].data?.tags }
-                      fetchImmediately
-                    />
-
-                    <TextField
-                      value={ values.listing.price }
-                      onChange={ (price) =>
-                        setFieldValue('listing.price', +price)
-                      }
-                      variant='outlined'
-                      InputProps={ {
-                        inputComponent: DollarField as any,
-                        name: 'listing.price',
-                      } }
-                    />
-                    <br />
-                    <LoadingButton
-                      loading={ loading }
-                      type='submit'
-                      color='secondary'
-                      variant='contained'
-                    >
-                      Save
-                    </LoadingButton>
-                  </Grid>
-                </Grid>
-              </Form>
-            )
-          }}
-        </Formik>
-      </CardContent>
-    </Card>
+                </Form>
+              )
+            }}
+          </Formik>
+        </CardContent>
+      </Card>
+      <ConfirmEmailDialog />
+    </>
   )
 }
 

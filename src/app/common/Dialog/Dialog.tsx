@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogProps,
   DialogTitle,
   Slide,
 } from '@material-ui/core'
@@ -13,10 +14,11 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { TransitionProps } from '@material-ui/core/transitions'
 import LoadingButton from 'app/common/LoadingButton'
 
-interface Props {
+interface Props extends DialogProps {
   open: boolean;
   loading?: boolean;
   header: string;
+  rejectText?: string;
   confirmText?: string;
   children: string | JSX.Element;
   proceed: (resp?: boolean) => void;
@@ -33,9 +35,11 @@ const CustomDialog = ({
   open,
   loading,
   header,
+  rejectText,
   confirmText,
   proceed,
   children,
+  ...props
 }: Props): JSX.Element => {
   return (
     <MuiThemeProvider theme={ theme }>
@@ -45,6 +49,7 @@ const CustomDialog = ({
         onClose={ () => proceed() }
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
+        { ...props }
       >
         <DialogTitle id='alert-dialog-title'>{header}</DialogTitle>
         <DialogContent>
@@ -54,14 +59,13 @@ const CustomDialog = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={ () => proceed() } color='secondary'>
-            Close
+            {rejectText || 'Close'}
           </Button>
           <LoadingButton
             loading={ loading || false }
             variant='contained'
             onClick={ () => proceed(true) }
             color='primary'
-            autoFocus
           >
             {confirmText || 'Submit'}
           </LoadingButton>
