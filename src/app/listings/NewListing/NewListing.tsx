@@ -1,12 +1,6 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
-import {
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Typography,
-} from '@material-ui/core'
+import { Card, CardContent, Grid, Typography } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
@@ -23,7 +17,6 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import arrayMove from 'array-move'
 import LoadingButton from 'app/common/LoadingButton'
-import DollarField from 'app/common/formFields/DollarField'
 import NewListingThumbs from 'app/listings/NewListingThumbs'
 import * as Sortable from 'react-sortable-hoc'
 import { checkFileSize } from 'lib'
@@ -31,6 +24,7 @@ import { NotRequiredArraySchema } from 'yup'
 import FormTextField from 'app/common/formFields/FormTextField'
 import Autocomplete from 'app/common/Autocomplete'
 import ConfirmEmailDialog from 'app/ConfirmEmailDialog'
+import DollarInput from '../../common/formFields/DollarInput'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -337,17 +331,12 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                         fetchImmediately
                       />
 
-                      <TextField
+                      <DollarInput
+                        name='listing.price'
                         value={ values.listing.price }
-                        onChange={ (price) =>
-                          setFieldValue('listing.price', +price)
-                        }
-                        variant='outlined'
-                        InputProps={ {
-                          inputComponent: DollarField as any,
-                          name: 'listing.price',
-                        } }
+                        textFieldProps={ { label: 'Buy Now Price' } }
                       />
+
                       <br />
                       <LoadingButton
                         loading={ loading }

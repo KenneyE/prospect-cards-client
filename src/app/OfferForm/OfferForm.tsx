@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
 } from '@material-ui/core'
 import {
   SaveOfferMutationVariables,
@@ -16,8 +15,8 @@ import {
 import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
-import DollarField from 'app/common/formFields/DollarField'
 import { centsToDollars } from 'lib/money'
+import DollarInput from '../common/formFields/DollarInput'
 
 interface Props {
   listingId: number;
@@ -100,14 +99,10 @@ const OfferForm = ({
         {({ values, setFieldValue }) => {
           return (
             <Form>
-              <TextField
+              <DollarInput
+                name='offer.price'
                 value={ values.offer.price }
-                onChange={ (price) => setFieldValue('offer.price', +price) }
-                variant='outlined'
-                InputProps={ {
-                  inputComponent: DollarField as any,
-                  name: 'offer.price',
-                } }
+                textFieldProps={ { label: 'Amount' } }
                 style={ buyNow ? { display: 'none' } : {} }
               />
               <LoadingButton loading={ loading } type='submit'>
