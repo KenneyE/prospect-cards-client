@@ -4,7 +4,7 @@ import {
   SaveOfferMutationVariables,
   useSaveOfferMutation,
   useListingPriceQuery,
-  useTempConfirmOfferMutation,
+  useConfirmOfferMutation,
   Maybe,
 } from 'types/graphql'
 import { toast } from 'react-toastify'
@@ -17,7 +17,7 @@ interface Props {
 const OfferForm = (props: Props): Maybe<JSX.Element> => {
   const { data } = useListingPriceQuery({ variables: { id: props.listingId } })
   const [saveOffer, { loading }] = useSaveOfferMutation()
-  const [confirmOffer] = useTempConfirmOfferMutation()
+  const [confirmOffer] = useConfirmOfferMutation()
   const [open, setOpen] = useState(false)
   const [clientSecret, setClientSecret] = useState<string>()
   const [offerId, setOfferId] = useState<number>()

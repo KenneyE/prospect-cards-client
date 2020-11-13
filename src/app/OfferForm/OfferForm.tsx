@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import {
   SaveOfferMutationVariables,
-  TempConfirmOfferMutationFn,
+  ConfirmOfferMutationFn,
 } from 'types/graphql'
 import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
@@ -27,7 +27,7 @@ interface Props {
   loading: boolean;
   open: boolean;
   handleClose: VoidFunction;
-  confirmOffer: TempConfirmOfferMutationFn;
+  confirmOffer: ConfirmOfferMutationFn;
   clientSecret?: string;
   offerId?: number;
 }
@@ -82,8 +82,8 @@ const OfferForm = ({
         if (error) {
           toast.error(error.message)
         } else {
-          toast.success(successMessage(buyNow))
           await confirmOffer({ variables: { offerId } })
+          toast.success(successMessage(buyNow))
           handleClose()
         }
         setLoadingAgreed(false)
