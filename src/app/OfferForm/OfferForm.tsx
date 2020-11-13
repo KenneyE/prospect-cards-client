@@ -52,6 +52,9 @@ const message = (price: number, buyNow?: boolean): JSX.Element => {
     </>
   )
 }
+const successMessage = (buyNow?: boolean) => {
+  return buyNow ? 'Purchased. Congratulations!' : 'Offer submitted. Good luck!'
+}
 
 const OfferForm = ({
   listingId,
@@ -79,7 +82,7 @@ const OfferForm = ({
         if (error) {
           toast.error(error.message)
         } else {
-          toast.success('Offer submitted. Good luck!')
+          toast.success(successMessage(buyNow))
           await confirmOffer({ variables: { offerId } })
           handleClose()
         }
