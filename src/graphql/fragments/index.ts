@@ -31,6 +31,7 @@ export const listingFragment = gql`
     status
     player
     isFavorited
+    ownedByUser
     images {
       id
       url

@@ -6,6 +6,12 @@ export default makeStyles(
       margin: 'auto',
       maxWidth: 1100,
       padding: '64px 56px',
+      position: 'relative',
+    },
+    favoriteContainer: {
+      position: 'absolute',
+      top: spacing(2),
+      right: spacing(2),
     },
     divider: {
       marginTop: spacing(2),

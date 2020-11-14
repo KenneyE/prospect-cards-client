@@ -18,6 +18,7 @@ import AcceptListingReportsButton from 'app/admin/AcceptListingReportsButton'
 import ToggleListingEnabledButton from 'app/admin/ToggleListingEnabledButton'
 import PrivateComponent from 'app/PrivateComponent'
 import OfferForm from 'app/OfferForm'
+import FavoriteListingToggle from 'app/FavoriteListingToggle'
 
 interface Props {
   data: ListingQuery;
@@ -25,11 +26,30 @@ interface Props {
 
 const Listing = ({ data: { listing } }: Props): JSX.Element => {
   const classes = useStyles()
-  const { id, title, description, player, status } = listing
+  const {
+    id,
+    title,
+    description,
+    player,
+    status,
+    ownedByUser,
+    isFavorited,
+  } = listing
 
   return (
     <Card className={ classes.root }>
       <CardContent>
+        <PrivateComponent>
+          <span
+            onClick={ (e) => e.stopPropagation() }
+            className={ classes.favoriteContainer }
+          >
+            <FavoriteListingToggle
+              listingId={ id }
+              isFavorited={ Boolean(isFavorited) }
+            />
+          </span>
+        </PrivateComponent>
         <Grid container spacing={ 4 }>
           <Grid item md={ 6 } xs={ 12 }>
             <Carousel listing={ listing } height={ 500 } />
@@ -40,22 +60,26 @@ const Listing = ({ data: { listing } }: Props): JSX.Element => {
               <Typography variant='h2'>{player}</Typography>
               <Typography>{description}</Typography>
               <Divider className={ classes.divider } />
-              <div className={ classes.offerButtonsContainer }>
-                <PrivateComponent
-                  loggedOut={
-                    <Button component={ Link } to='/login'>
-                      Login to Purchase
-                    </Button>
-                  }
-                >
-                  <>
-                    <OfferForm listingId={ id } buyNow /> or
-                    <OfferForm listingId={ id } />
-                  </>
-                </PrivateComponent>
-              </div>
+              {!ownedByUser && (
+                <div className={ classes.offerButtonsContainer }>
+                  <PrivateComponent
+                    loggedOut={
+                      <Button component={ Link } to='/login'>
+                        Login to Purchase
+                      </Button>
+                    }
+                  >
+                    <>
+                      <OfferForm listingId={ id } buyNow /> or
+                      <OfferForm listingId={ id } />
+                    </>
+                  </PrivateComponent>
+                </div>
+              )}
               <Typography variant='caption'>Seller</Typography>
-              <div className={ classes.sellerWrapper }>He's good</div>
+              <div className={ classes.sellerWrapper }>
+                This is info about the seller at some point.
+              </div>
               <AdminComponent>
                 {status !== ListingStatusEnum.Sold ? (
                   <>
@@ -74,9 +98,13 @@ const Listing = ({ data: { listing } }: Props): JSX.Element => {
         </Grid>
       </CardContent>
 
-      <CardActions>
-        <ReportListingButton listingId={ id } />
-      </CardActions>
+      {!ownedByUser && (
+        <PrivateComponent>
+          <CardActions>
+            <ReportListingButton listingId={ id } />
+          </CardActions>
+        </PrivateComponent>
+      )}
     </Card>
   )
 }

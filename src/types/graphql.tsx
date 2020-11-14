@@ -78,6 +78,7 @@ export type Listing = ActiveRecordInterface & {
   images: Array<ListingImage>;
   isFavorited: Scalars['Boolean'];
   offers: Array<Offer>;
+  ownedByUser: Scalars['Boolean'];
   player: Scalars['String'];
   price: Scalars['Int'];
   reports: Array<ListingReport>;
@@ -485,7 +486,7 @@ export type AddressFragment = (
 
 export type ListingFragment = (
   { __typename?: 'Listing' }
-  & Pick<Listing, 'id' | 'title' | 'createdAt' | 'description' | 'price' | 'status' | 'player' | 'isFavorited'>
+  & Pick<Listing, 'id' | 'title' | 'createdAt' | 'description' | 'price' | 'status' | 'player' | 'isFavorited' | 'ownedByUser'>
   & { images: Array<(
     { __typename?: 'ListingImage' }
     & Pick<ListingImage, 'id' | 'url'>
@@ -1041,6 +1042,7 @@ export const ListingFragmentDoc = gql`
   status
   player
   isFavorited
+  ownedByUser
   images {
     id
     url
