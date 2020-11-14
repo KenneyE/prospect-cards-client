@@ -13,6 +13,7 @@ const FavoriteListingToggle = ({
   const [toggle] = useToggleFavoriteMutation({
     variables: { listingId, isFavorited: !isFavorited },
     optimisticResponse: {
+      __typename: 'Mutation',
       toggleFavorite: {
         __typename: 'ToggleFavoritePayload',
         listing: {
