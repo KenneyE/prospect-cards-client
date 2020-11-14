@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import MaskedInput, { MaskedInputProps } from 'react-text-mask'
 import { useField } from 'formik'
@@ -37,11 +37,17 @@ const DollarInput = ({
   // decimal places.
   const [amount, setAmount] = useState(value)
 
-  const [field, meta] = useField(name)
+  const [field, meta, helpers] = useField(name)
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const cleanValue = parseFloat(event.target.value.replace(/[$,]/g, ''))
     setAmount(isNaN(cleanValue) ? 0 : cleanValue)
   }
+
+  useEffect(() => {
+    if (amount !== field.value) {
+      helpers.setValue(amount)
+    }
+  }, [helpers, field, name, amount])
 
   const hasError = Boolean(meta.error && meta.touched)
 
