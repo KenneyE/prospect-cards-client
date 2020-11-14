@@ -145,6 +145,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                         onSortEnd={ onSortEnd }
                         axis='xy'
                         images={ values.listing.images }
+                        distance={ 5 }
                       />
                     </Grid>
                     <Grid item md={ 8 } xs={ 12 }>
