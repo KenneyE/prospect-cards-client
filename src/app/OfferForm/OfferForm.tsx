@@ -16,7 +16,8 @@ import { useStripe } from '@stripe/react-stripe-js'
 import { toast } from 'react-toastify'
 import LoadingButton from 'app/common/LoadingButton'
 import { centsToDollars } from 'lib/money'
-import DollarInput from '../common/formFields/DollarInput'
+import * as Yup from 'yup'
+import DollarInput from 'app/common/formFields/DollarInput'
 
 interface Props {
   listingId: number;
@@ -30,6 +31,12 @@ interface Props {
   clientSecret?: string;
   offerId?: number;
 }
+
+const inputSchema = Yup.object().shape({
+  offer: Yup.object().shape({
+    price: Yup.number().min(5),
+  }),
+})
 
 const title = (buyNow?: boolean): string => (buyNow ? 'Buy Now' : 'Make Offer')
 const message = (price: number, buyNow?: boolean): JSX.Element => {
@@ -93,10 +100,11 @@ const OfferForm = ({
   return (
     <>
       <Formik
-        initialValues={ { offer: { listingId, price } } }
+        initialValues={ { offer: { listingId, price: price / 100 } } }
+        validationSchema={ inputSchema }
         onSubmit={ onSubmit }
       >
-        {({ values, setFieldValue }) => {
+        {({ values }) => {
           return (
             <Form>
               <DollarInput

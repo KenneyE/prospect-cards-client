@@ -26,6 +26,8 @@ export default makeStyles(
     thumbImg: {
       width: 'auto',
       height: '100%',
+      margin: 'auto',
+      maxHeight: 250,
     },
   }),
 )

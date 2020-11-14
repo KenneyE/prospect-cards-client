@@ -19,7 +19,7 @@ const NewListingThumb = ({
   // https://github.com/STRML/react-draggable/issues/69#issuecomment-115372058
   return (
     <div
-      className={ `${classes.thumb} ${thumbIndex === 0 && classes.primaryThumb}` }
+      className={ `${thumbIndex === 0 ? classes.primaryThumb : classes.thumb}` }
     >
       <div className={ classes.thumbInner }>
         <CloseIcon onClick={ handleDelete(document.name) } />

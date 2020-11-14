@@ -1,11 +1,9 @@
 import React from 'react'
-import Dropzone from 'react-dropzone'
-import { Card, CardContent, Grid, Typography } from '@material-ui/core'
+import { Card, CardContent, Grid } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
   SaveListingMutationFn,
-  Scalars,
   TagsLazyQueryHookResult,
   TagsQuery,
   TagsQueryVariables,
@@ -14,17 +12,16 @@ import {
 } from 'types/graphql'
 import useStyles from './styles'
 import * as Yup from 'yup'
-import { toast } from 'react-toastify'
 import arrayMove from 'array-move'
 import LoadingButton from 'app/common/LoadingButton'
-import NewListingThumbs from 'app/listings/NewListingThumbs'
 import * as Sortable from 'react-sortable-hoc'
 import { checkFileSize } from 'lib'
 import { NotRequiredArraySchema } from 'yup'
 import FormTextField from 'app/common/formFields/FormTextField'
 import Autocomplete from 'app/common/Autocomplete'
 import ConfirmEmailDialog from 'app/ConfirmEmailDialog'
-import DollarInput from '../../common/formFields/DollarInput'
+import DollarInput from 'app/common/formFields/DollarInput'
+import ImageUploader from 'app/listings/ImageUploader'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -124,18 +121,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
               })
             } }
           >
-            {({ values, setFieldValue, errors, touched }): JSX.Element => {
-              const dropzoneDisabled = values.listing.images.length >= 8
-
-              const handleDelete = (
-                documentName: string,
-              ): (() => void) => (): void => {
-                const newAtts = values.listing.images.filter(
-                  (img): boolean => img.document.name !== documentName,
-                )
-                setFieldValue('listing.images', newAtts)
-              }
-
+            {({ values, setFieldValue }): JSX.Element => {
               const onSortEnd: Sortable.SortEndHandler = ({
                 oldIndex,
                 newIndex,
@@ -155,76 +141,11 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       xs={ 12 }
                       className={ classes.dropzoneContainer }
                     >
-                      <Dropzone
-                        maxSize={ 5000000 }
-                        disabled={ dropzoneDisabled }
-                        accept='image/*'
-                        onDrop={ (images): void => {
-                          if (images.length === 0) {
-                            return
-                          }
-
-                          if (
-                            images.length + values.listing.images.length >
-                            8
-                          ) {
-                            toast.error('Sorry. Maximum of 8 images...')
-                            return
-                          }
-
-                          setFieldValue(
-                            'listing.images',
-                            values.listing.images.concat(
-                              images.map((img): Scalars['Upload'] => ({
-                                document: img,
-                                preview: URL.createObjectURL(img),
-                              })),
-                            ),
-                          )
-                        } }
-                      >
-                        {({
-                          getRootProps,
-                          getInputProps,
-                          isDragActive,
-                        }): JSX.Element => (
-                          <Card className={ classes.dropzone }>
-                            <CardContent
-                              { ...getRootProps() }
-                              className={ classes.dropzoneContent }
-                            >
-                              <input { ...getInputProps() } />
-                              {dropzoneDisabled ? (
-                                <Typography
-                                  variant='body2'
-                                  className={ classes.disabled }
-                                >
-                                  Maximum number of images reached...
-                                </Typography>
-                              ) : isDragActive ? (
-                                <Typography variant='body2'>
-                                  Drop your images here!
-                                </Typography>
-                              ) : (
-                                <Typography variant='body2'>
-                                  Drag and drop a document here, or click to
-                                  select files.
-                                </Typography>
-                              )}
-                            </CardContent>
-                          </Card>
-                        )}
-                      </Dropzone>
-                      <NewListingThumbs
-                        images={ values.listing.images }
-                        handleDelete={ handleDelete }
+                      <ImageUploader
                         onSortEnd={ onSortEnd }
-                        axis='x'
-                        lockAxis='x'
+                        axis='xy'
+                        images={ values.listing.images }
                       />
-                      {errors.listing?.images && touched.listing?.images ? (
-                        <div>{errors.listing.images}</div>
-                      ) : null}
                     </Grid>
                     <Grid item md={ 8 } xs={ 12 }>
                       <FormTextField
