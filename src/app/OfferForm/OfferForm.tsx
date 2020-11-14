@@ -32,9 +32,9 @@ interface Props {
   offerId?: number;
 }
 
-const inputSchema = Yup.object().shape({
+const InputSchema = Yup.object().shape({
   offer: Yup.object().shape({
-    price: Yup.number().min(5),
+    price: Yup.number().min(5, 'Must be at least $5'),
   }),
 })
 
@@ -101,7 +101,7 @@ const OfferForm = ({
     <>
       <Formik
         initialValues={ { offer: { listingId, price: price / 100 } } }
-        validationSchema={ inputSchema }
+        validationSchema={ InputSchema }
         onSubmit={ onSubmit }
       >
         {({ values }) => {
