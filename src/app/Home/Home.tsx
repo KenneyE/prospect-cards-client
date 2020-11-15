@@ -127,17 +127,19 @@ const Home = ({ category }: Props): JSX.Element => {
               <DataSearch
                 componentId='Search'
                 dataField={ [
+                  'title',
+                  'description',
                   'category',
                   'productType',
                   'setType',
                   'manufacturer',
                   'player',
                   'grader',
-                  'title',
-                  'description',
                 ] }
+                fieldWeights={ [1, 1, 3, 3, 3, 3, 3, 3] }
                 fuzziness='AUTO'
                 autosuggest
+                showClear
                 URLParams
                 showIcon={ false }
                 innerClass={ {
