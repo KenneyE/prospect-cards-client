@@ -17,6 +17,7 @@ interface Props extends RouteComponentProps {
 const Register = ({ history, location, refresh }: Props): JSX.Element => {
   const [fields, setFields] = useState({
     email: '',
+    username: '',
     password: '',
     password_confirmation: '',
   })
@@ -64,7 +65,7 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
     )
   }
 
-  const { email, password, password_confirmation } = fields
+  const { email, username, password, password_confirmation } = fields
 
   return (
     <AuthScreen>
@@ -76,6 +77,15 @@ const Register = ({ history, location, refresh }: Props): JSX.Element => {
           onChange={ handleChange('email') }
           margin='normal'
           autoFocus
+          fullWidth
+        />
+        <br />
+        <TextField
+          id='user-username'
+          label='Username'
+          value={ username }
+          onChange={ handleChange('username') }
+          margin='normal'
           fullWidth
         />
         <br />

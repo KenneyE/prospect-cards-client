@@ -18,7 +18,7 @@ interface Props extends RouteComponentProps {
 
 const Login = ({ history, location, refresh }: Props): JSX.Element => {
   const [fields, setFields] = useState({
-    email: '',
+    login: '',
     password: '',
   })
   const [loading, setLoading] = useState(false)
@@ -65,16 +65,16 @@ const Login = ({ history, location, refresh }: Props): JSX.Element => {
     )
   }
 
-  const { email, password } = fields
+  const { login, password } = fields
 
   return (
     <AuthScreen>
       <form noValidate autoComplete='off' onSubmit={ handleSubmit }>
         <TextField
-          id='user-email'
-          label='Email'
-          value={ email }
-          onChange={ handleChange('email') }
+          id='user-login'
+          label='Email or Username'
+          value={ login }
+          onChange={ handleChange('login') }
           margin='normal'
           autoFocus
           fullWidth
