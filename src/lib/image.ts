@@ -1,0 +1,15 @@
+export const acceptedFormats = [
+  'image/apng',
+  'image/bmp',
+  'image/gif',
+  'image/jpeg',
+  'image/jpg',
+  'image/jp2',
+  'image/png',
+  'image/png8',
+  'image/tiff',
+  'image/webp',
+  'application/pdf',
+  'application/x-pdf',
+  'image/heif',
+]

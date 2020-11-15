@@ -8,6 +8,7 @@ import NewListingThumbs from '../NewListingThumbs'
 import { useField } from 'formik'
 import useStyles from './styles'
 import NewListingThumb from 'app/listings/NewListingThumb'
+import { acceptedFormats } from 'lib/image'
 
 interface Props {
   images: Scalars['Upload'][];
@@ -32,7 +33,7 @@ const ImageUploader = ({ images }: Props): JSX.Element => {
       <Dropzone
         maxSize={ 5000000 }
         disabled={ dropzoneDisabled }
-        accept='image/*'
+        accept={ acceptedFormats }
         onDrop={ (newImages): void => {
           if (newImages.length === 0) {
             return
