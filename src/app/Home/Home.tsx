@@ -126,7 +126,14 @@ const Home = ({ category }: Props): JSX.Element => {
             <Grid item md={ 10 } sm={ 9 } xs={ 12 }>
               <DataSearch
                 componentId='Search'
-                dataField={ ['*'] }
+                dataField={ [
+                  'category',
+                  'productType',
+                  'setType',
+                  'manufacturer',
+                  'player',
+                  'grader',
+                ] }
                 fuzziness='AUTO'
                 autosuggest
                 URLParams
