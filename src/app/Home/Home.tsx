@@ -168,6 +168,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   ],
                 } }
                 sortOptions={ [
+                  { label: 'Relevance', dataField: '_score', sortBy: 'desc' },
                   { label: 'Newest', dataField: 'createdAt', sortBy: 'desc' },
                   {
                     label: 'Price - Highest to Lowest',
@@ -180,7 +181,7 @@ const Home = ({ category }: Props): JSX.Element => {
                     sortBy: 'asc',
                   },
                 ] }
-                defaultSortOption='Newest'
+                defaultSortOption='Relevance'
               >
                 {(result): JSX.Element => {
                   if (!result?.rawData) return <ListingSkeletons />
