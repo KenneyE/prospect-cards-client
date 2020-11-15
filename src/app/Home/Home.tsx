@@ -133,6 +133,8 @@ const Home = ({ category }: Props): JSX.Element => {
                   'manufacturer',
                   'player',
                   'grader',
+                  'title',
+                  'description',
                 ] }
                 fuzziness='AUTO'
                 autosuggest
