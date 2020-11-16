@@ -136,7 +136,7 @@ const Home = ({ category }: Props): JSX.Element => {
                   'player',
                   'grader',
                 ] }
-                fieldWeights={ [1, 1, 3, 3, 3, 3, 3, 3] }
+                fieldWeights={ [1, 1, 5, 5, 5, 5, 5, 5] }
                 fuzziness='AUTO'
                 autosuggest
                 showClear
