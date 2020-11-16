@@ -32,11 +32,17 @@ interface Props {
   offerId?: number;
 }
 
-const InputSchema = Yup.object().shape({
-  offer: Yup.object().shape({
-    price: Yup.number().min(5, 'Must be at least $5'),
-  }),
-})
+const InputSchema = (price: number) =>
+  Yup.object().shape({
+    offer: Yup.object().shape({
+      price: Yup.number()
+        .min(5, 'Must be at least $5')
+        .max(
+          price,
+          'No offers above asking price. Offering the asking price is the same as "Buy Now".',
+        ),
+    }),
+  })
 
 const title = (buyNow?: boolean): string => (buyNow ? 'Buy Now' : 'Make Offer')
 const message = (price: number, buyNow?: boolean): JSX.Element => {
@@ -101,7 +107,7 @@ const OfferForm = ({
     <>
       <Formik
         initialValues={ { offer: { listingId, price: price / 100 } } }
-        validationSchema={ InputSchema }
+        validationSchema={ InputSchema(price / 100) }
         onSubmit={ onSubmit }
       >
         {({ values }) => {
