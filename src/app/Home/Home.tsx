@@ -129,11 +129,11 @@ const Home = ({ category }: Props): JSX.Element => {
                 dataField={ [
                   'title',
                   'description',
+                  'playerText',
                   'category',
                   'productType',
                   'setType',
                   'manufacturer',
-                  'player',
                   'grader',
                 ] }
                 fieldWeights={ [1, 1, 5, 5, 5, 5, 5, 5] }
