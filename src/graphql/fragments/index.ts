@@ -33,8 +33,7 @@ export const listingFragment = gql`
     isFavorited
     ownedByUser
     images {
-      id
-      url
+      ...listingImage
     }
     offers {
       id
@@ -44,6 +43,13 @@ export const listingFragment = gql`
 `
 
 gql`
+  fragment listingImage on ListingImage {
+    id
+    urls
+    fallbackUrl
+  }
+`
+gql`
   fragment offer on Offer {
     id
     price
@@ -51,8 +57,7 @@ gql`
       id
       title
       images {
-        id
-        url
+        ...listingImage
       }
     }
   }

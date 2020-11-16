@@ -96,10 +96,11 @@ export type ListingImage = ActiveRecordInterface & {
   __typename?: 'ListingImage';
   createdAt: Scalars['ISO8601DateTime'];
   errors: Array<Scalars['String']>;
+  fallbackUrl: Scalars['String'];
   id: Scalars['Int'];
   position: Scalars['Int'];
   updatedAt: Scalars['ISO8601DateTime'];
-  url: Scalars['String'];
+  urls: Array<Scalars['String']>;
 };
 
 export type ListingInput = {
@@ -489,11 +490,16 @@ export type ListingFragment = (
   & Pick<Listing, 'id' | 'title' | 'createdAt' | 'description' | 'price' | 'status' | 'player' | 'isFavorited' | 'ownedByUser'>
   & { images: Array<(
     { __typename?: 'ListingImage' }
-    & Pick<ListingImage, 'id' | 'url'>
+    & ListingImageFragment
   )>, offers: Array<(
     { __typename?: 'Offer' }
     & Pick<Offer, 'id' | 'price'>
   )> }
+);
+
+export type ListingImageFragment = (
+  { __typename?: 'ListingImage' }
+  & Pick<ListingImage, 'id' | 'urls' | 'fallbackUrl'>
 );
 
 export type OfferFragment = (
@@ -504,7 +510,7 @@ export type OfferFragment = (
     & Pick<Listing, 'id' | 'title'>
     & { images: Array<(
       { __typename?: 'ListingImage' }
-      & Pick<ListingImage, 'id' | 'url'>
+      & ListingImageFragment
     )> }
   ) }
 );
@@ -1032,6 +1038,13 @@ export const UserFragmentDoc = gql`
   ...address
 }
     ${AddressFragmentDoc}`;
+export const ListingImageFragmentDoc = gql`
+    fragment listingImage on ListingImage {
+  id
+  urls
+  fallbackUrl
+}
+    `;
 export const ListingFragmentDoc = gql`
     fragment listing on Listing {
   id
@@ -1044,15 +1057,14 @@ export const ListingFragmentDoc = gql`
   isFavorited
   ownedByUser
   images {
-    id
-    url
+    ...listingImage
   }
   offers {
     id
     price
   }
 }
-    `;
+    ${ListingImageFragmentDoc}`;
 export const OfferFragmentDoc = gql`
     fragment offer on Offer {
   id
@@ -1061,12 +1073,11 @@ export const OfferFragmentDoc = gql`
     id
     title
     images {
-      id
-      url
+      ...listingImage
     }
   }
 }
-    `;
+    ${ListingImageFragmentDoc}`;
 export const EmailPreferenceFragmentDoc = gql`
     fragment emailPreference on EmailPreference {
   id

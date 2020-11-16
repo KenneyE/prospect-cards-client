@@ -36,7 +36,7 @@ const MyOffers = ({
                   className={ classes.img }
                   component='img'
                   alt={ offer.listing.title }
-                  image={ offer.listing.images[0].url }
+                  image={ offer.listing.images[0].fallbackUrl }
                   title={ offer.listing.title }
                 />
               </div>

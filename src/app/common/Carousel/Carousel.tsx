@@ -1,6 +1,7 @@
 import React from 'react'
 import { Carousel as ReactCarousel } from 'react-responsive-carousel'
 import { ListingFragment } from 'types/graphql'
+import Image from 'app/common/Image'
 import useStyles from './styles'
 
 interface Props {
@@ -22,9 +23,9 @@ const Carousel = ({ listing, height }: Props): JSX.Element => {
       >
         {listing.images.map((image, ind: number) => {
           return (
-            <img
+            <Image
               key={ image.id }
-              src={ image.url }
+              image={ image }
               alt={ `${listing.player} No. ${ind}` }
               className={ classes.img }
             />
