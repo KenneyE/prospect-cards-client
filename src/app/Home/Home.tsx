@@ -4,7 +4,6 @@ import {
   DataSearch,
   ReactiveList,
   MultiList,
-  SingleList,
   ToggleButton,
   DynamicRangeSlider,
   SelectedFilters,
@@ -39,12 +38,12 @@ const Home = ({ category }: Props): JSX.Element => {
           <Grid container spacing={ 3 }>
             <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
               <CollapsibleSearch title='Sport'>
-                <SingleList
+                <MultiList
                   dataField='category'
-                  showRadio
                   componentId='Category'
-                  value={ category }
+                  value={ category ? [category] : undefined }
                   placeholder='Search Categories'
+                  showCheckbox
                   showCount={ false }
                   URLParams
                 />
@@ -87,31 +86,31 @@ const Home = ({ category }: Props): JSX.Element => {
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Manufacturer'>
-                <SingleList
+                <MultiList
                   dataField='manufacturer'
-                  showRadio
                   componentId='Manufacturer'
                   placeholder='Search Manufacturers'
+                  showCheckbox
                   showCount={ false }
                   URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Set'>
-                <SingleList
+                <MultiList
                   dataField='setType'
-                  showRadio
                   componentId='Set'
                   placeholder='Search Sets'
+                  showCheckbox
                   showCount={ false }
                   URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Grader'>
-                <SingleList
+                <MultiList
                   dataField='grader'
-                  showRadio
                   componentId='Grader'
                   placeholder='Search Graders'
+                  showCheckbox
                   showCount={ false }
                   URLParams
                 />
