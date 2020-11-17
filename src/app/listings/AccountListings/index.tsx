@@ -7,7 +7,7 @@ import ErrorMessage from 'app/common/ErrorMessage'
 const AccountListings = (): JSX.Element => {
   const { data, loading, error } = useUserListingsQuery()
 
-  if (loading) return <Spinner />
+  if (loading) return <Spinner fullHeight />
   if (!data || error) return <ErrorMessage />
 
   return <Dumb data={ data } />
