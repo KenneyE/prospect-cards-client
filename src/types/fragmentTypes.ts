@@ -14,6 +14,7 @@
       "Membership",
       "Notice",
       "Offer",
+      "Purchase",
       "StripeAccount",
       "StripePaymentMethod",
       "Tag",

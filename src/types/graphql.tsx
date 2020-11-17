@@ -82,6 +82,7 @@ export type Listing = ActiveRecordInterface & {
   player: Scalars['String'];
   price: Scalars['Int'];
   reports: Array<ListingReport>;
+  seller: User;
   status: ListingStatusEnum;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
@@ -283,6 +284,16 @@ export type ProfileInput = {
   zip?: Maybe<Scalars['String']>;
 };
 
+export type Purchase = ActiveRecordInterface & {
+  __typename?: 'Purchase';
+  createdAt: Scalars['ISO8601DateTime'];
+  errors: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  listing: Listing;
+  offer: Offer;
+  updatedAt: Scalars['ISO8601DateTime'];
+};
+
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
@@ -450,12 +461,14 @@ export type User = ActiveRecordInterface & {
   offers: Array<Offer>;
   paymentMethod: Maybe<StripePaymentMethod>;
   profilePictureUrl: Scalars['String'];
+  purchases: Array<Purchase>;
   state: Maybe<Scalars['String']>;
   street1: Maybe<Scalars['String']>;
   street2: Maybe<Scalars['String']>;
   stripeAccount: StripeAccount;
   unreadNotices: Array<Notice>;
   updatedAt: Scalars['ISO8601DateTime'];
+  username: Scalars['String'];
   zip: Maybe<Scalars['String']>;
 };
 
@@ -1016,6 +1029,35 @@ export type UserOffersQuery = (
     & { offers: Array<(
       { __typename?: 'Offer' }
       & OfferFragment
+    )> }
+  ) }
+);
+
+export type PurchasesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PurchasesQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { purchases: Array<(
+      { __typename?: 'Purchase' }
+      & Pick<Purchase, 'id' | 'createdAt'>
+      & { offer: (
+        { __typename?: 'Offer' }
+        & Pick<Offer, 'id' | 'price'>
+      ), listing: (
+        { __typename?: 'Listing' }
+        & Pick<Listing, 'id' | 'title'>
+        & { seller: (
+          { __typename?: 'User' }
+          & Pick<User, 'id' | 'username'>
+        ), images: Array<(
+          { __typename?: 'ListingImage' }
+          & ListingImageFragment
+        )> }
+      ) }
     )> }
   ) }
 );
@@ -2232,3 +2274,54 @@ export function useUserOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type UserOffersQueryHookResult = ReturnType<typeof useUserOffersQuery>;
 export type UserOffersLazyQueryHookResult = ReturnType<typeof useUserOffersLazyQuery>;
 export type UserOffersQueryResult = ApolloReactCommon.QueryResult<UserOffersQuery, UserOffersQueryVariables>;
+export const PurchasesDocument = gql`
+    query purchases {
+  viewer {
+    id
+    purchases {
+      id
+      createdAt
+      offer {
+        id
+        price
+      }
+      listing {
+        id
+        title
+        seller {
+          id
+          username
+        }
+        images {
+          ...listingImage
+        }
+      }
+    }
+  }
+}
+    ${ListingImageFragmentDoc}`;
+
+/**
+ * __usePurchasesQuery__
+ *
+ * To run a query within a React component, call `usePurchasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePurchasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePurchasesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePurchasesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PurchasesQuery, PurchasesQueryVariables>) {
+        return ApolloReactHooks.useQuery<PurchasesQuery, PurchasesQueryVariables>(PurchasesDocument, baseOptions);
+      }
+export function usePurchasesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PurchasesQuery, PurchasesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PurchasesQuery, PurchasesQueryVariables>(PurchasesDocument, baseOptions);
+        }
+export type PurchasesQueryHookResult = ReturnType<typeof usePurchasesQuery>;
+export type PurchasesLazyQueryHookResult = ReturnType<typeof usePurchasesLazyQuery>;
+export type PurchasesQueryResult = ApolloReactCommon.QueryResult<PurchasesQuery, PurchasesQueryVariables>;

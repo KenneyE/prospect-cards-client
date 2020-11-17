@@ -4,6 +4,7 @@ import { Typography, withStyles, createStyles } from '@material-ui/core'
 import ListingsGrid from 'app/listings/ListingsGrid'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import MyListings from 'app/listings/MyListings'
+import PurchaseHistory from 'app/PurchaseHistory'
 
 interface Props {
   data: UserListingsQuery;
@@ -78,7 +79,7 @@ const AccountListings = ({
           My Bids
         </StyledToggleButton>
         <StyledToggleButton value={ 2 } aria-label='centered'>
-          Order History
+          Purchase History
         </StyledToggleButton>
         <StyledToggleButton value={ 3 } aria-label='centered'>
           Sale History
@@ -97,6 +98,9 @@ const AccountListings = ({
         ) : (
           <Typography>You have no sold listings</Typography>
         )}
+      </TabPanel>
+      <TabPanel value={ value } index={ 2 }>
+        <PurchaseHistory />
       </TabPanel>
     </>
   )
