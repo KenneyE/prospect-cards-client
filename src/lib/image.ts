@@ -11,5 +11,5 @@ export const acceptedFormats = [
   'image/webp',
   'application/pdf',
   'application/x-pdf',
-  'image/heif',
+  'image/heic',
 ]

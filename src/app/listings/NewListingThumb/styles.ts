@@ -21,6 +21,7 @@ export default makeStyles(
     thumbInner: {
       display: 'flex',
       minWidth: 0,
+      width: '100%',
       overflow: 'hidden',
     },
     thumbImg: {
@@ -28,6 +29,11 @@ export default makeStyles(
       height: '100%',
       margin: 'auto',
       maxHeight: 250,
+    },
+    spinner: {
+      height: 70,
+      width: '100%',
+      paddingTop: 20,
     },
   }),
 )

@@ -9,7 +9,7 @@ const Spinner = ({ fullHeight }: Props): JSX.Element => {
   const classes = useStyles()
 
   return (
-    <span className={ `${fullHeight && classes.container}` }>
+    <span className={ `${fullHeight ? classes.container : ''}` }>
       <div className='loader loader-1' />
     </span>
   )
