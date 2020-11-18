@@ -1116,6 +1116,16 @@
             "defaultValue": null
           },
           {
+            "name": "parallel",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "player",
             "description": null,
             "type": {
@@ -3349,6 +3359,12 @@
           {
             "name": "grader",
             "description": "grader",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "parallel",
+            "description": "parallel",
             "isDeprecated": false,
             "deprecationReason": null
           }

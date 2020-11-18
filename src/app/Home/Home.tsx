@@ -105,6 +105,16 @@ const Home = ({ category }: Props): JSX.Element => {
                   URLParams
                 />
               </CollapsibleSearch>
+              <CollapsibleSearch title='Parallel'>
+                <MultiList
+                  dataField='parallel'
+                  componentId='Parallel'
+                  placeholder='Search Parallels'
+                  showCheckbox
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
               <CollapsibleSearch title='Grader'>
                 <MultiList
                   dataField='grader'

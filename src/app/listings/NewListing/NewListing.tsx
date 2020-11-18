@@ -90,6 +90,12 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
       context: TagTypesEnum.Grader,
     },
   })
+  const parallelsHookResult = useTagsLazyQuery({
+    variables: {
+      context: TagTypesEnum.Parallel,
+    },
+  })
+
   const initialValues: {
     listing: ListingInput;
   } = {
@@ -102,6 +108,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
       productType: '',
       manufacturer: '',
       setType: '',
+      parallel: '',
       grader: '',
       player: '',
     },
@@ -240,6 +247,22 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                         placeholder='Prizm, Chrome, Optic, ...'
                         name='listing.setType'
                         values={ setTypesHookResult[1].data?.tags }
+                        fetchImmediately
+                      />
+
+                      <Autocomplete<
+                      TagsQuery,
+                      TagsQueryVariables,
+                      TagsLazyQueryHookResult
+                      >
+                        label='Parallel'
+                        onChange={ (name: string) =>
+                          setFieldValue('listing.parallel', name)
+                        }
+                        hookResult={ parallelsHookResult }
+                        placeholder='Prizm, Chrome, Optic, ...'
+                        name='listing.parallel'
+                        values={ parallelsHookResult[1].data?.tags }
                         fetchImmediately
                       />
 
