@@ -174,6 +174,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                           setFieldValue('listing.player', name)
                         }
                         hookResult={ playersHookResult }
+                        placeholder='LeBron James, Mike Trout, ...'
                         name='listing.player'
                         values={ playersHookResult[1].data?.tags }
                       />
@@ -188,6 +189,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                           setFieldValue('listing.category', name)
                         }
                         hookResult={ categoriesHookResult }
+                        placeholder='Basketball, Baseball, Soccer, ...'
                         name='listing.category'
                         values={ categoriesHookResult[1].data?.tags }
                         fetchImmediately
@@ -198,11 +200,12 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       TagsQueryVariables,
                       TagsLazyQueryHookResult
                       >
-                        label='Product Type'
+                        label='Card Type'
                         onChange={ (name: string) =>
                           setFieldValue('listing.productType', name)
                         }
                         hookResult={ productTypesHookResult }
+                        placeholder='Base, Insert, Patch Autograph, ...'
                         name='listing.productType'
                         values={ productTypesHookResult[1].data?.tags }
                         fetchImmediately
@@ -218,6 +221,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                           setFieldValue('listing.manufacturer', name)
                         }
                         hookResult={ manufacturersHookResult }
+                        placeholder='Panini, Upper Deck, ...'
                         name='listing.manufacturer'
                         values={ manufacturersHookResult[1].data?.tags }
                         fetchImmediately
@@ -233,6 +237,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                           setFieldValue('listing.setType', name)
                         }
                         hookResult={ setTypesHookResult }
+                        placeholder='Prizm, Chrome, Optic, ...'
                         name='listing.setType'
                         values={ setTypesHookResult[1].data?.tags }
                         fetchImmediately
@@ -243,11 +248,12 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       TagsQueryVariables,
                       TagsLazyQueryHookResult
                       >
-                        label='Grader'
+                        label='Grader and Grade'
                         onChange={ (name: string) =>
                           setFieldValue('listing.grader', name)
                         }
                         hookResult={ gradersHookResult }
+                        placeholder='PSA 10, CGC 9.5, (leave blank if none), ...'
                         name='listing.grader'
                         values={ gradersHookResult[1].data?.tags }
                         fetchImmediately
