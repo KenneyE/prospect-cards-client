@@ -22,6 +22,8 @@ import Autocomplete from 'app/common/Autocomplete'
 import ConfirmEmailDialog from 'app/ConfirmEmailDialog'
 import DollarInput from 'app/common/formFields/DollarInput'
 import ImageUploader from 'app/listings/ImageUploader'
+import { DateTime } from 'luxon'
+import YearSelector from 'app/common/formFields/YearSelector'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -103,6 +105,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
       title: '',
       description: '',
       price: 10,
+      year: DateTime.local().year,
       images: [],
       category: '',
       productType: '',
@@ -201,6 +204,8 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                         values={ categoriesHookResult[1].data?.tags }
                         fetchImmediately
                       />
+
+                      <YearSelector name='listing.year' />
 
                       <Autocomplete<
                       TagsQuery,

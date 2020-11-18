@@ -86,6 +86,7 @@ export type Listing = ActiveRecordInterface & {
   status: ListingStatusEnum;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
+  year: Maybe<Scalars['Int']>;
 };
 
 
@@ -110,6 +111,7 @@ export type ListingInput = {
   description: Scalars['String'];
   price: Scalars['Float'];
   images: Array<Scalars['Upload']>;
+  year?: Maybe<Scalars['Int']>;
   category: Scalars['String'];
   productType: Scalars['String'];
   manufacturer: Scalars['String'];

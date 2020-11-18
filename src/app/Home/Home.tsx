@@ -48,6 +48,17 @@ const Home = ({ category }: Props): JSX.Element => {
                   URLParams
                 />
               </CollapsibleSearch>
+
+              <CollapsibleSearch title='Year'>
+                <MultiList
+                  dataField='year'
+                  componentId='Year'
+                  placeholder='Search Years'
+                  showCheckbox
+                  showCount={ false }
+                  URLParams
+                />
+              </CollapsibleSearch>
               <Paper className={ classes.filterPaper }>
                 <Typography>Price Range</Typography>
                 <DynamicRangeSlider
@@ -140,12 +151,14 @@ const Home = ({ category }: Props): JSX.Element => {
                   'description',
                   'playerText',
                   'category',
+                  'year',
                   'productType',
                   'setType',
+                  'parallel',
                   'manufacturer',
                   'grader',
                 ] }
-                fieldWeights={ [1, 1, 5, 5, 5, 5, 5, 5] }
+                fieldWeights={ [1, 1, 5, 5, 5, 5, 5, 5, 5, 5] }
                 fuzziness='AUTO'
                 autosuggest
                 showClear
@@ -169,10 +182,12 @@ const Home = ({ category }: Props): JSX.Element => {
                     'Description',
                     'Player Name',
                     'Category',
+                    'Year',
                     'Product Type',
                     'Manufacturer',
                     'Set',
                     'Grader',
+                    'Parallel',
                     'Rookie',
                   ],
                 } }
