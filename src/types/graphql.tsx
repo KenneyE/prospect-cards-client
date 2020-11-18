@@ -297,12 +297,18 @@ export type Purchase = ActiveRecordInterface & {
 export type Query = {
   __typename?: 'Query';
   auth: Scalars['Boolean'];
+  invitedViewer: Maybe<User>;
   listing: Listing;
   listings: Array<Listing>;
   maybeViewer: Maybe<User>;
   stripeSetupIntentId: Scalars['String'];
   tags: Array<Tag>;
   viewer: User;
+};
+
+
+export type QueryInvitedViewerArgs = {
+  token: Scalars['String'];
 };
 
 
@@ -913,6 +919,19 @@ export type MaybeViewerQuery = (
   & { maybeViewer: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'admin'>
+  )> }
+);
+
+export type InvitedViewerQueryVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type InvitedViewerQuery = (
+  { __typename?: 'Query' }
+  & { invitedViewer: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email'>
   )> }
 );
 
@@ -1991,6 +2010,40 @@ export function useMaybeViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MaybeViewerQueryHookResult = ReturnType<typeof useMaybeViewerQuery>;
 export type MaybeViewerLazyQueryHookResult = ReturnType<typeof useMaybeViewerLazyQuery>;
 export type MaybeViewerQueryResult = ApolloReactCommon.QueryResult<MaybeViewerQuery, MaybeViewerQueryVariables>;
+export const InvitedViewerDocument = gql`
+    query invitedViewer($token: String!) {
+  invitedViewer(token: $token) {
+    id
+    email
+  }
+}
+    `;
+
+/**
+ * __useInvitedViewerQuery__
+ *
+ * To run a query within a React component, call `useInvitedViewerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInvitedViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInvitedViewerQuery({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useInvitedViewerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<InvitedViewerQuery, InvitedViewerQueryVariables>) {
+        return ApolloReactHooks.useQuery<InvitedViewerQuery, InvitedViewerQueryVariables>(InvitedViewerDocument, baseOptions);
+      }
+export function useInvitedViewerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<InvitedViewerQuery, InvitedViewerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<InvitedViewerQuery, InvitedViewerQueryVariables>(InvitedViewerDocument, baseOptions);
+        }
+export type InvitedViewerQueryHookResult = ReturnType<typeof useInvitedViewerQuery>;
+export type InvitedViewerLazyQueryHookResult = ReturnType<typeof useInvitedViewerLazyQuery>;
+export type InvitedViewerQueryResult = ApolloReactCommon.QueryResult<InvitedViewerQuery, InvitedViewerQueryVariables>;
 export const ProductsDocument = gql`
     query products {
   viewer {

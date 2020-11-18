@@ -10,6 +10,15 @@ gql`
 `
 
 gql`
+  query invitedViewer($token: String!) {
+    invitedViewer(token: $token) {
+      id
+      email
+    }
+  }
+`
+
+gql`
   query products {
     viewer {
       id
