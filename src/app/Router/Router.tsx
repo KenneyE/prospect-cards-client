@@ -13,6 +13,7 @@ import AddPayment from 'app/account/AddPayment'
 import PaymentAdded from 'app/account/PaymentAdded'
 import NewMembership from 'app/memberships/NewMembership'
 import Register from 'app/Register'
+import AcceptInvitation from 'app/AcceptInvitation'
 import Profile from 'app/profile/Profile'
 import AccountListings from 'app/listings/AccountListings'
 import ConfirmEmail from 'app/ConfirmEmail'
@@ -52,6 +53,11 @@ const Router = (): JSX.Element => {
 
       <Route exact path='/login' component={ Login } />
       <Route exact path='/register' component={ Register } />
+      <Route
+        exact
+        path='/accept-invitation/:token'
+        component={ AcceptInvitation }
+      />
       <Route exact path='/confirm/:token' component={ ConfirmEmail } />
       <Route exact path='/forgot-password' component={ ForgotPassword } />
       <Route exact path='/reset-password/:token' component={ ResetPassword } />
