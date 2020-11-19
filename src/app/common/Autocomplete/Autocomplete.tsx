@@ -15,6 +15,7 @@ interface Props {
   handleFocus: VoidFunction;
   value: string;
   name: string;
+  placeholder?: string;
 }
 
 const Autocomplete = ({
@@ -27,6 +28,7 @@ const Autocomplete = ({
   handleFocus,
   value,
   name,
+  placeholder,
 }: Props): JSX.Element => {
   const classes = useStyles()
   const [, meta] = useField(name)
@@ -61,6 +63,7 @@ const Autocomplete = ({
             { ...params }
             label={ label }
             variant='outlined'
+            placeholder={ placeholder }
             InputProps={ {
               ...params.InputProps,
               endAdornment: (

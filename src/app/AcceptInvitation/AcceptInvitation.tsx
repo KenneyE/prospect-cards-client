@@ -57,7 +57,6 @@ const AcceptInvitation = ({
         setLoading(false)
 
         const token = response.headers.get('Authorization')
-        debugger
         if (response.status === 204 && token) {
           localStorage.setItem('prospect-cards-token', token)
           await refresh()

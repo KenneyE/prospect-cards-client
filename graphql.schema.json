@@ -811,6 +811,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "year",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1050,6 +1062,16 @@
             "defaultValue": null
           },
           {
+            "name": "year",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "category",
             "description": null,
             "type": {
@@ -1107,6 +1129,16 @@
           },
           {
             "name": "grader",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "parallel",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3349,6 +3381,12 @@
           {
             "name": "grader",
             "description": "grader",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "parallel",
+            "description": "parallel",
             "isDeprecated": false,
             "deprecationReason": null
           }

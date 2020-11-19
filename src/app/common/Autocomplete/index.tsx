@@ -10,6 +10,7 @@ export interface Props<Result> {
   values?: { name: string; id: number }[];
   fetchImmediately?: boolean;
   name: string;
+  placeholder?: string;
 }
 
 const Autocomplete = function <
@@ -23,6 +24,7 @@ const Autocomplete = function <
   values,
   fetchImmediately,
   name,
+  placeholder,
 }: Props<Result>): JSX.Element {
   const [fetch, { loading, refetch }] = hookResult
 
@@ -60,6 +62,7 @@ const Autocomplete = function <
       handleFocus={ handleFocus }
       value={ value }
       name={ name }
+      placeholder={ placeholder }
     />
   )
 }
