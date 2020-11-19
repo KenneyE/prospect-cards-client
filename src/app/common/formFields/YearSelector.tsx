@@ -7,16 +7,11 @@ import {
   Select,
   SelectProps,
 } from '@material-ui/core'
-import { DateTime } from 'luxon'
+import { validYears } from 'lib/time'
 
 type Props = SelectProps & {
   name: string;
 };
-
-const validYears = Array.from(
-  new Array(DateTime.local().year - 1899),
-  (x, i) => i + 1900,
-).reverse()
 
 const YearSelector = (props: Props): JSX.Element => {
   const [field] = useField(props.name)

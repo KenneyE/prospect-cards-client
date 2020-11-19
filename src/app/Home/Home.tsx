@@ -3,7 +3,6 @@ import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
-  MultiList,
   ToggleButton,
   DynamicRangeSlider,
   SelectedFilters,
@@ -14,14 +13,16 @@ import { Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './styles'
 import CollapsibleSearch from 'app/search/CollapsibleSearch'
 import ListingSkeletons from 'app/common/ListingSkeleton'
-import { ListingFragment } from 'types/graphql'
+import { ListingFragment, TagTypesEnum } from 'types/graphql'
 import SearchResults from 'app/listings/SearchResults'
+import CheckboxSearch from 'app/search/CheckboxSearch'
+import YearSearch from 'app/search/YearSearch'
 
-interface Props {
-  category?: string;
-}
+// interface Props {
+//   category?: string;
+// }
 
-const Home = ({ category }: Props): JSX.Element => {
+const Home = (): JSX.Element => {
   const classes = useStyles()
   const token = localStorage.getItem('prospect-cards-token')
 
@@ -38,25 +39,18 @@ const Home = ({ category }: Props): JSX.Element => {
           <Grid container spacing={ 3 }>
             <Grid item md={ 2 } sm={ 3 } xs={ 12 }>
               <CollapsibleSearch title='Sport'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.Category }
                   dataField='category'
                   componentId='Category'
-                  value={ category ? [category] : undefined }
                   placeholder='Search Categories'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
-
               <CollapsibleSearch title='Year'>
-                <MultiList
+                <YearSearch
                   dataField='year'
                   componentId='Year'
                   placeholder='Search Years'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <Paper className={ classes.filterPaper }>
@@ -75,65 +69,51 @@ const Home = ({ category }: Props): JSX.Element => {
                 />
               </Paper>
               <CollapsibleSearch title='Type'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.ProductType }
                   componentId='Product Type'
                   dataField='productType'
                   placeholder='Search Types'
-                  size={ 8 }
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Player'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.Player }
                   componentId='Player Name'
                   dataField='player'
                   placeholder='Player Name'
-                  size={ 8 }
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Manufacturer'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.Manufacturer }
                   dataField='manufacturer'
                   componentId='Manufacturer'
                   placeholder='Search Manufacturers'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Set'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.SetType }
                   dataField='setType'
                   componentId='Set'
                   placeholder='Search Sets'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Parallel'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.Parallel }
                   dataField='parallel'
                   componentId='Parallel'
                   placeholder='Search Parallels'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <CollapsibleSearch title='Grader'>
-                <MultiList
+                <CheckboxSearch
+                  tagType={ TagTypesEnum.Grader }
                   dataField='grader'
                   componentId='Grader'
                   placeholder='Search Graders'
-                  showCheckbox
-                  showCount={ false }
-                  URLParams
                 />
               </CollapsibleSearch>
               <ToggleButton

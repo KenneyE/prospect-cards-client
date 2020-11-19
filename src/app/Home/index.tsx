@@ -1,11 +1,11 @@
 import React from 'react'
 import Dumb from './Home'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 
 const Home = (): JSX.Element => {
-  const { category } = useParams<{ category?: string }>()
+  // const { category } = useParams<{ category?: string }>()
 
-  return <Dumb category={ category } />
+  return <Dumb />
 }
 
 export default Home

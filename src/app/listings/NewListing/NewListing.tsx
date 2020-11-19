@@ -4,26 +4,22 @@ import { Form, Formik } from 'formik'
 import {
   ListingInput,
   SaveListingMutationFn,
-  TagsLazyQueryHookResult,
-  TagsQuery,
-  TagsQueryVariables,
   TagTypesEnum,
-  useTagsLazyQuery,
 } from 'types/graphql'
 import useStyles from './styles'
 import * as Yup from 'yup'
+import { NotRequiredArraySchema } from 'yup'
 import arrayMove from 'array-move'
 import LoadingButton from 'app/common/LoadingButton'
 import * as Sortable from 'react-sortable-hoc'
 import { checkFileSize } from 'lib'
-import { NotRequiredArraySchema } from 'yup'
 import FormTextField from 'app/common/formFields/FormTextField'
-import Autocomplete from 'app/common/Autocomplete'
 import ConfirmEmailDialog from 'app/ConfirmEmailDialog'
 import DollarInput from 'app/common/formFields/DollarInput'
 import ImageUploader from 'app/listings/ImageUploader'
 import { DateTime } from 'luxon'
 import YearSelector from 'app/common/formFields/YearSelector'
+import NewListingTagField from 'app/listings/NewListingTagField'
 
 const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
   document: File;
@@ -61,42 +57,6 @@ interface Props {
 
 const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
   const classes = useStyles()
-  const playersHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.Player,
-    },
-  })
-  const categoriesHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.Category,
-    },
-  })
-  const productTypesHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.ProductType,
-    },
-  })
-
-  const manufacturersHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.Manufacturer,
-    },
-  })
-  const setTypesHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.SetType,
-    },
-  })
-  const gradersHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.Grader,
-    },
-  })
-  const parallelsHookResult = useTagsLazyQuery({
-    variables: {
-      context: TagTypesEnum.Parallel,
-    },
-  })
 
   const initialValues: {
     listing: ListingInput;
@@ -174,117 +134,55 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                         multiline
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Player'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.player', name)
-                        }
-                        hookResult={ playersHookResult }
                         placeholder='LeBron James, Mike Trout, ...'
                         name='listing.player'
-                        values={ playersHookResult[1].data?.tags }
+                        context={ TagTypesEnum.Player }
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Sport'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.category', name)
-                        }
-                        hookResult={ categoriesHookResult }
                         placeholder='Basketball, Baseball, Soccer, ...'
                         name='listing.category'
-                        values={ categoriesHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.Category }
                       />
 
                       <YearSelector name='listing.year' />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Card Type'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.productType', name)
-                        }
-                        hookResult={ productTypesHookResult }
                         placeholder='Base, Insert, Patch Autograph, ...'
                         name='listing.productType'
-                        values={ productTypesHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.ProductType }
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Manufacturer'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.manufacturer', name)
-                        }
-                        hookResult={ manufacturersHookResult }
                         placeholder='Panini, Upper Deck, ...'
                         name='listing.manufacturer'
-                        values={ manufacturersHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.Manufacturer }
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Set Type'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.setType', name)
-                        }
-                        hookResult={ setTypesHookResult }
                         placeholder='Prizm, Chrome, Optic, ...'
                         name='listing.setType'
-                        values={ setTypesHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.SetType }
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Parallel'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.parallel', name)
-                        }
-                        hookResult={ parallelsHookResult }
                         placeholder='Prizm, Chrome, Optic, ...'
                         name='listing.parallel'
-                        values={ parallelsHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.Parallel }
                       />
 
-                      <Autocomplete<
-                      TagsQuery,
-                      TagsQueryVariables,
-                      TagsLazyQueryHookResult
-                      >
+                      <NewListingTagField
                         label='Grader and Grade'
-                        onChange={ (name: string) =>
-                          setFieldValue('listing.grader', name)
-                        }
-                        hookResult={ gradersHookResult }
                         placeholder='PSA 10, CGC 9.5, (leave blank if none), ...'
                         name='listing.grader'
-                        values={ gradersHookResult[1].data?.tags }
-                        fetchImmediately
+                        context={ TagTypesEnum.Grader }
                       />
 
                       <DollarInput
