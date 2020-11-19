@@ -5,7 +5,6 @@ import PrivateComponent from 'app/PrivateComponent'
 import { useHistory } from 'react-router-dom'
 import Carousel from 'app/common/Carousel'
 import { centsToDollars } from 'lib/money'
-import { dateFormat } from 'lib/time'
 import FavoriteListingToggle from 'app/FavoriteListingToggle'
 import { ListingFragment } from 'types/graphql'
 import OfferForm from 'app/OfferForm'
@@ -27,7 +26,6 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
       } }
     >
       <Typography className={ classes.date } display='inline'>
-        {dateFormat(listing.createdAt)}
         <PrivateComponent>
           <span
             onClick={ (e) => e.stopPropagation() }
@@ -45,10 +43,6 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
         <Carousel listing={ listing } height={ 240 } />
       </div>
       <Typography variant='body2'>{listing.title}</Typography>
-      <Typography variant='body2'>Player: {listing.player}</Typography>
-      <Typography variant='body2'>
-        Description: {listing.description}
-      </Typography>
       <div className={ classes.grow } />
       <Typography variant='body2'>{centsToDollars(listing.price)}</Typography>
       <PrivateComponent>

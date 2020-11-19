@@ -107,7 +107,7 @@ export type ListingImage = ActiveRecordInterface & {
 
 export type ListingInput = {
   id?: Maybe<Scalars['Int']>;
-  title: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   price: Scalars['Float'];
   images: Array<Scalars['Upload']>;
