@@ -173,7 +173,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
 
                       <NewListingTagField
                         label='Parallel'
-                        placeholder='Prizm, Chrome, Optic, ...'
+                        placeholder='Silver, Holo, Gold /10, ...'
                         name='listing.parallel'
                         context={ TagTypesEnum.Parallel }
                       />
