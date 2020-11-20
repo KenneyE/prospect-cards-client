@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardContent, Grid } from '@material-ui/core'
+import { Card, CardContent, Grid, Typography } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import {
   ListingInput,
@@ -30,10 +30,10 @@ const imagesSchema: NotRequiredArraySchema<{ document: File }> = Yup.array<{
 
 const listingInputSchema = Yup.object()
   .shape({
-    title: Yup.string()
-      .min(5, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+    // title: Yup.string()
+    //   .min(5, 'Too Short!')
+    //   .max(50, 'Too Long!')
+    //   .required('Required'),
     description: Yup.string().min(10, 'Too Short!').required('Required'),
     images: imagesSchema,
     category: Yup.string().required('Required'),
@@ -55,6 +55,18 @@ interface Props {
   saveListing: SaveListingMutationFn;
 }
 
+const title = ({
+  year,
+  manufacturer,
+  setType,
+  player,
+  parallel,
+}: ListingInput) => {
+  return player?.length ?
+    `${year} ${manufacturer} ${setType} ${player} ${parallel}` :
+    ''
+}
+
 const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
   const classes = useStyles()
 
@@ -62,7 +74,7 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
     listing: ListingInput;
   } = {
     listing: {
-      title: '',
+      // title: '',
       description: '',
       price: 10,
       year: DateTime.local().year,
@@ -119,12 +131,13 @@ const NewListing = ({ saveListing, loading }: Props): JSX.Element => {
                       />
                     </Grid>
                     <Grid item md={ 8 } xs={ 12 }>
-                      <FormTextField
-                        margin='normal'
-                        name='listing.title'
-                        label='Title'
-                        variant='standard'
-                      />
+                      <Typography>{title(values.listing)}</Typography>
+                      {/*<FormTextField*/}
+                      {/*  margin='normal'*/}
+                      {/*  name='listing.title'*/}
+                      {/*  label='Title'*/}
+                      {/*  variant='standard'*/}
+                      {/*/>*/}
                       <FormTextField
                         margin='normal'
                         name='listing.description'

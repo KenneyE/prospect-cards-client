@@ -5,10 +5,10 @@ import PrivateComponent from 'app/PrivateComponent'
 import { useHistory } from 'react-router-dom'
 import Carousel from 'app/common/Carousel'
 import { centsToDollars } from 'lib/money'
-import { dateFormat } from 'lib/time'
-import FavoriteListingToggle from 'app/FavoriteListingToggle'
+import FavoriteListingToggle from 'app/favorites/FavoriteListingToggle'
 import { ListingFragment } from 'types/graphql'
 import OfferForm from 'app/OfferForm'
+import StopPropogation from 'app/common/StopPropogation'
 
 interface Props {
   listing: ListingFragment;
@@ -27,34 +27,26 @@ const SearchResult = ({ listing }: Props): JSX.Element => {
       } }
     >
       <Typography className={ classes.date } display='inline'>
-        {dateFormat(listing.createdAt)}
         <PrivateComponent>
-          <span
-            onClick={ (e) => e.stopPropagation() }
-            className={ classes.favoriteContainer }
-          >
+          <StopPropogation className={ classes.favoriteContainer }>
             <FavoriteListingToggle
               listingId={ listing.id }
               isFavorited={ Boolean(listing.isFavorited) }
             />
-          </span>
+          </StopPropogation>
         </PrivateComponent>
       </Typography>
 
-      <div onClick={ (e) => e.stopPropagation() }>
+      <StopPropogation>
         <Carousel listing={ listing } height={ 240 } />
-      </div>
+      </StopPropogation>
       <Typography variant='body2'>{listing.title}</Typography>
-      <Typography variant='body2'>Player: {listing.player}</Typography>
-      <Typography variant='body2'>
-        Description: {listing.description}
-      </Typography>
       <div className={ classes.grow } />
       <Typography variant='body2'>{centsToDollars(listing.price)}</Typography>
       <PrivateComponent>
-        <span onClick={ (e) => e.stopPropagation() }>
+        <StopPropogation>
           <OfferForm listingId={ listing.id } buyNow />
-        </span>
+        </StopPropogation>
       </PrivateComponent>
     </Paper>
   )

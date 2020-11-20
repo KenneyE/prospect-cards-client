@@ -18,7 +18,8 @@ import AcceptListingReportsButton from 'app/admin/AcceptListingReportsButton'
 import ToggleListingEnabledButton from 'app/admin/ToggleListingEnabledButton'
 import PrivateComponent from 'app/PrivateComponent'
 import OfferForm from 'app/OfferForm'
-import FavoriteListingToggle from 'app/FavoriteListingToggle'
+import FavoriteListingToggle from 'app/favorites/FavoriteListingToggle'
+import StopPropogation from 'app/common/StopPropogation'
 
 interface Props {
   data: ListingQuery;
@@ -40,15 +41,12 @@ const Listing = ({ data: { listing } }: Props): JSX.Element => {
     <Card className={ classes.root }>
       <CardContent>
         <PrivateComponent>
-          <span
-            onClick={ (e) => e.stopPropagation() }
-            className={ classes.favoriteContainer }
-          >
+          <StopPropogation className={ classes.favoriteContainer }>
             <FavoriteListingToggle
               listingId={ id }
               isFavorited={ Boolean(isFavorited) }
             />
-          </span>
+          </StopPropogation>
         </PrivateComponent>
         <Grid container spacing={ 4 }>
           <Grid item md={ 6 } xs={ 12 }>
