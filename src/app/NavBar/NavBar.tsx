@@ -72,6 +72,9 @@ const NavBar = ({ data, loading }: Props): JSX.Element => {
       <MenuItem onClick={ handleMenuClose } component={ Link } to='/profile'>
         Profile
       </MenuItem>
+      <MenuItem onClick={ handleMenuClose } component={ Link } to='/favorites'>
+        Favorites
+      </MenuItem>
       {isSeller && (
         <MenuItem onClick={ handleMenuClose } component={ Link } to='/listings'>
           My Listings

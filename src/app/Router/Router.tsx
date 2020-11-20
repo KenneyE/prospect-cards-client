@@ -21,6 +21,7 @@ import ResetPassword from 'app/ResetPassword'
 import ForgotPassword from 'app/ForgotPassword'
 import FAQ from 'app/FAQ'
 import EmailPreferences from 'app/profile/EmailPreferences'
+import Favorites from 'app/favorites/Favorites'
 
 const Router = (): JSX.Element => {
   return (
@@ -48,6 +49,7 @@ const Router = (): JSX.Element => {
       />
       <PrivateRoute exact path='/membership/new' component={ NewMembership } />
       <PrivateRoute exact path='/profile/:tab?' component={ Profile } />
+      <PrivateRoute exact path='/favorites' component={ Favorites } />
 
       <Route exact path='/faq' component={ FAQ } />
 

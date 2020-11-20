@@ -464,6 +464,7 @@ export type User = ActiveRecordInterface & {
   email: Scalars['String'];
   emailPreferences: Array<EmailPreference>;
   errors: Array<Scalars['String']>;
+  favoriteListings: Array<Listing>;
   fullName: Maybe<Scalars['String']>;
   hasActiveSubscription: Scalars['Boolean'];
   hasPaymentMethod: Scalars['Boolean'];
@@ -512,7 +513,10 @@ export type AddressFragment = (
 export type ListingFragment = (
   { __typename?: 'Listing' }
   & Pick<Listing, 'id' | 'title' | 'createdAt' | 'description' | 'price' | 'status' | 'player' | 'isFavorited' | 'ownedByUser'>
-  & { images: Array<(
+  & { seller: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username'>
+  ), images: Array<(
     { __typename?: 'ListingImage' }
     & ListingImageFragment
   )>, offers: Array<(
@@ -916,6 +920,20 @@ export type EmailPreferencesQuery = (
   ) }
 );
 
+export type FavoritesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FavoritesQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & { favoriteListings: Array<(
+      { __typename?: 'Listing' }
+      & ListingFragment
+    )> }
+  ) }
+);
+
 export type MaybeViewerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1122,6 +1140,10 @@ export const ListingFragmentDoc = gql`
   player
   isFavorited
   ownedByUser
+  seller {
+    id
+    username
+  }
   images {
     ...listingImage
   }
@@ -1982,6 +2004,40 @@ export function useEmailPreferencesLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type EmailPreferencesQueryHookResult = ReturnType<typeof useEmailPreferencesQuery>;
 export type EmailPreferencesLazyQueryHookResult = ReturnType<typeof useEmailPreferencesLazyQuery>;
 export type EmailPreferencesQueryResult = ApolloReactCommon.QueryResult<EmailPreferencesQuery, EmailPreferencesQueryVariables>;
+export const FavoritesDocument = gql`
+    query favorites {
+  viewer {
+    favoriteListings {
+      ...listing
+    }
+  }
+}
+    ${ListingFragmentDoc}`;
+
+/**
+ * __useFavoritesQuery__
+ *
+ * To run a query within a React component, call `useFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFavoritesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFavoritesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FavoritesQuery, FavoritesQueryVariables>) {
+        return ApolloReactHooks.useQuery<FavoritesQuery, FavoritesQueryVariables>(FavoritesDocument, baseOptions);
+      }
+export function useFavoritesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FavoritesQuery, FavoritesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FavoritesQuery, FavoritesQueryVariables>(FavoritesDocument, baseOptions);
+        }
+export type FavoritesQueryHookResult = ReturnType<typeof useFavoritesQuery>;
+export type FavoritesLazyQueryHookResult = ReturnType<typeof useFavoritesLazyQuery>;
+export type FavoritesQueryResult = ApolloReactCommon.QueryResult<FavoritesQuery, FavoritesQueryVariables>;
 export const MaybeViewerDocument = gql`
     query maybeViewer {
   maybeViewer {

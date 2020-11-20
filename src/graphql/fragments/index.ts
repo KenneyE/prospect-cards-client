@@ -32,6 +32,10 @@ export const listingFragment = gql`
     player
     isFavorited
     ownedByUser
+    seller {
+      id
+      username
+    }
     images {
       ...listingImage
     }
